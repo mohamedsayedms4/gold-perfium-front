@@ -1,0 +1,1829 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة تحكم عطور جولد</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --gold-primary: #d4af37;
+      --gold-secondary: #ffd700;
+      --gold-light: #f0e6d2;
+      --gold-dark: #b8941f;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.16);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+      color: #2c3e50;
+      min-height: 100vh;
+    }
+    
+    .gold-gradient {
+      background: linear-gradient(45deg, var(--gold-primary), var(--gold-secondary), var(--gold-primary));
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 900;
+      animation: shimmer 3s linear infinite;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      text-align: center;
+    }
+    
+    @keyframes shimmer {
+      to {
+        background-position: 200% center;
+      }
+    }
+    
+    .gold-bg {
+      background: linear-gradient(135deg, var(--gold-primary), var(--gold-secondary));
+    }
+    
+    .gold-border {
+      border-color: var(--gold-primary) !important;
+    }
+    
+    .gold-shadow {
+      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
+    }
+    
+    .nav-tabs {
+      border-bottom: 2px solid var(--gold-light);
+      gap: 0.5rem;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: var(--gold-primary) var(--gold-light);
+    }
+    
+    .nav-tabs::-webkit-scrollbar {
+      height: 4px;
+    }
+    
+    .nav-tabs::-webkit-scrollbar-track {
+      background: var(--gold-light);
+      border-radius: 4px;
+    }
+    
+    .nav-tabs::-webkit-scrollbar-thumb {
+      background: var(--gold-primary);
+      border-radius: 4px;
+    }
+    
+    .nav-tabs .nav-link {
+      color: #666;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border-radius: 8px 8px 0 0;
+      padding: 0.75rem 1.5rem;
+      white-space: nowrap;
+      border: none;
+      position: relative;
+    }
+    
+    .nav-tabs .nav-link:hover {
+      color: var(--gold-primary);
+      background-color: rgba(212, 175, 55, 0.05);
+    }
+    
+    .nav-tabs .nav-link.active {
+      color: var(--gold-primary);
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(250, 250, 250, 1));
+      border-bottom: 3px solid var(--gold-primary);
+      font-weight: 700;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .nav-tabs .nav-link.active::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold-primary), var(--gold-secondary), var(--gold-primary));
+      background-size: 200% auto;
+      animation: shimmer 2s linear infinite;
+    }
+    
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold-primary), var(--gold-secondary));
+      color: white;
+      border: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-gold::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .btn-gold:hover::before {
+      left: 100%;
+    }
+    
+    .btn-gold:hover {
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold-primary));
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .btn-gold:active {
+      transform: translateY(0);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .table-responsive {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      background: white;
+      margin-bottom: 1.5rem;
+    }
+    
+    .table {
+      margin-bottom: 0;
+      font-size: 0.95rem;
+    }
+    
+    .table th {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(255, 215, 0, 0.1));
+      color: var(--gold-dark);
+      font-weight: 700;
+      padding: 1rem;
+      border: none;
+      text-align: center;
+      white-space: nowrap;
+    }
+    
+    .table td {
+      padding: 1rem;
+      vertical-align: middle;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+      text-align: center;
+    }
+    
+    .table tbody tr {
+      transition: all 0.3s ease;
+    }
+    
+    .table tbody tr:hover {
+      background-color: rgba(212, 175, 55, 0.05);
+      transform: scale(1.01);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .table tbody tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .form-control:focus, .form-select:focus {
+      border-color: var(--gold-primary);
+      box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25);
+    }
+    
+    .pagination {
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .pagination .page-item {
+      margin: 0.25rem;
+    }
+    
+    .pagination .page-item.active .page-link {
+      background: linear-gradient(135deg, var(--gold-primary), var(--gold-secondary));
+      border-color: var(--gold-primary);
+      box-shadow: var(--shadow-sm);
+      font-weight: 700;
+    }
+    
+    .pagination .page-link {
+      color: var(--gold-dark);
+      transition: all 0.3s ease;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      border: 2px solid var(--gold-light);
+      font-weight: 600;
+    }
+    
+    .pagination .page-link:hover {
+      color: white;
+      background: linear-gradient(135deg, var(--gold-primary), var(--gold-secondary));
+      border-color: var(--gold-primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .product-image {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 2px solid var(--gold-light);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+    }
+    
+    .product-image:hover {
+      transform: scale(2);
+      z-index: 10;
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .status-badge {
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: inline-block;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .status-NEW {
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      color: #0d47a1;
+    }
+    
+    .status-PROCESSING {
+      background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+      color: #e65100;
+    }
+    
+    .status-SHIPPED {
+      background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+      color: #1b5e20;
+    }
+    
+    .status-DELIVERED {
+      background: linear-gradient(135deg, #e1f5fe, #b3e5fc);
+      color: #01579b;
+    }
+    
+    .status-CANCELED {
+      background: linear-gradient(135deg, #ffebee, #ffcdd2);
+      color: #b71c1c;
+    }
+    
+    .active-badge {
+      background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+      color: #1b5e20;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: inline-block;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .inactive-badge {
+      background: linear-gradient(135deg, #ffebee, #ffcdd2);
+      color: #b71c1c;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: inline-block;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .header-section {
+      background: linear-gradient(135deg, #ffffff 0%, #fffef8 100%);
+      padding: 1.5rem 0;
+      border-bottom: 3px solid var(--gold-primary);
+      box-shadow: var(--shadow-md);
+      margin-bottom: 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+    
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      justify-content: center;
+    }
+    
+    .logo {
+      width: 50px;
+      height: 50px;
+      filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.4));
+      transition: transform 0.3s ease;
+    }
+    
+    .logo:hover {
+      transform: rotate(360deg) scale(1.1);
+    }
+    
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top: 2px solid white;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* نماذج التعديل المحسنة */
+    .edit-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      z-index: 1050;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .edit-modal-content {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      width: 100%;
+      max-width: 700px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+      border: 3px solid var(--gold-light);
+      animation: slideUp 0.3s ease;
+      margin: auto;
+    }
+    
+    @keyframes slideUp {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .edit-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--gold-light);
+      padding-bottom: 1rem;
+    }
+
+    .edit-modal-title {
+      font-size: 1.5rem;
+      background: linear-gradient(45deg, var(--gold-primary), var(--gold-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+    }
+
+    .close-edit-modal {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--gold-primary);
+      transition: all 0.3s ease;
+    }
+
+    .close-edit-modal:hover {
+      transform: scale(1.1);
+      color: var(--gold-dark);
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #666;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px solid var(--gold-light);
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--gold-primary);
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+    }
+
+    .form-check {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-check-input {
+      width: 20px;
+      height: 20px;
+      margin: 0;
+    }
+
+    .form-check-label {
+      margin: 0;
+      font-weight: 600;
+    }
+
+    .edit-modal-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      justify-content: flex-end;
+    }
+
+    /* نماذج الإضافة */
+    .add-form {
+      background: linear-gradient(135deg, #ffffff 0%, #fffef8 100%);
+      border: 3px solid var(--gold-light);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-lg);
+      transition: all 0.3s ease;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .add-form:hover {
+      box-shadow: 0 12px 32px rgba(212, 175, 55, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .add-form-title {
+      font-size: 1.5rem;
+      background: linear-gradient(45deg, var(--gold-primary), var(--gold-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .form-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-section-title {
+      font-size: 1.1rem;
+      color: var(--gold-dark);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--gold-light);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header-section {
+        padding: 1rem 0;
+      }
+      
+      .logo-container {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      
+      .logo {
+        width: 40px;
+        height: 40px;
+      }
+      
+      .gold-gradient {
+        font-size: 1.5rem;
+      }
+      
+      .nav-tabs {
+        justify-content: flex-start;
+      }
+      
+      .nav-tabs .nav-link {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+      
+      .table {
+        font-size: 0.85rem;
+      }
+      
+      .table th,
+      .table td {
+        padding: 0.75rem 0.5rem;
+      }
+      
+      .btn-gold {
+        width: 100%;
+        margin-bottom: 0.5rem;
+      }
+      
+      .edit-modal-content {
+        padding: 1.5rem;
+        border-radius: 15px;
+      }
+      
+      .add-form {
+        padding: 1.5rem;
+      }
+      
+      .product-image {
+        width: 50px;
+        height: 50px;
+      }
+      
+      .edit-modal-actions {
+        flex-direction: column;
+      }
+      
+      .edit-modal-actions button {
+        width: 100%;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .container {
+        padding: 0 0.5rem;
+      }
+      
+      .table-responsive {
+        font-size: 0.75rem;
+      }
+      
+      .table th,
+      .table td {
+        padding: 0.5rem 0.25rem;
+        font-size: 0.75rem;
+      }
+      
+      .product-image {
+        width: 40px;
+        height: 40px;
+      }
+      
+      .status-badge,
+      .active-badge,
+      .inactive-badge {
+        font-size: 0.65rem;
+        padding: 0.3rem 0.6rem;
+      }
+      
+      .btn-sm {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.5rem;
+      }
+      
+      .pagination .page-link {
+        padding: 0.4rem 0.7rem;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <div class="header-section">
+    <div class="container">
+      <div class="logo-container">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 10 L90 50 L50 90 L10 50 Z' fill='none' stroke='%23D4AF37' stroke-width='3'/%3E%3Cpath d='M30 50 L50 30 L70 50 L50 70 Z' fill='none' stroke='%23D4AF37' stroke-width='2'/%3E%3Cline x1='30' y1='50' x2='70' y2='50' stroke='%23D4AF37' stroke-width='2'/%3E%3Cline x1='50' y1='30' x2='50' y2='70' stroke='%23D4AF37' stroke-width='2'/%3E%3Crect x='45' y='5' width='10' height='15' fill='%23D4AF37'/%3E%3Cpath d='M40 8 L35 15 L45 15 Z' fill='%23D4AF37'/%3E%3C/svg%3E" alt="Logo" class="logo">
+        <h1 class="gold-gradient mb-0">لوحة تحكم عطور جولد</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-4">
+    <!-- Tabs -->
+    <ul class="nav nav-tabs" id="adminTabs" role="tablist">
+      <li class="nav-item">
+        <button class="nav-link active" id="products-tab" data-bs-toggle="tab" data-bs-target="#products" type="button">المنتجات</button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" id="categories-tab" data-bs-toggle="tab" data-bs-target="#categories" type="button">التصنيفات</button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders" type="button">الطلبات</button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button">الإعدادات</button>
+      </li>
+    </ul>
+
+    <div class="tab-content mt-4">
+      <!-- Products Tab -->
+      <div class="tab-pane fade show active" id="products" role="tabpanel">
+        <button class="btn btn-gold mb-3" onclick="showProductForm()">إضافة منتج</button>
+        
+        <!-- نموذج إضافة منتج -->
+        <div id="productForm" class="add-form" style="display:none;">
+          <h5 class="add-form-title">نموذج إضافة منتج جديد</h5>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-section">
+                <h6 class="form-section-title">المعلومات الأساسية</h6>
+                <div class="form-group">
+                  <label for="productName">اسم المنتج</label>
+                  <input type="text" id="productName" placeholder="أدخل اسم المنتج" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="productDescription">وصف المنتج</label>
+                  <textarea id="productDescription" placeholder="أدخل وصف المنتج" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="productPrice">سعر المنتج</label>
+                  <input type="number" id="productPrice" placeholder="أدخل السعر" class="form-control" step="0.01">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-section">
+                <h6 class="form-section-title">التفاصيل الإضافية</h6>
+                <div class="form-group">
+                  <label for="productQuantity">الكمية المتاحة</label>
+                  <input type="number" id="productQuantity" placeholder="أدخل الكمية" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="productCategory">التصنيف</label>
+                  <select id="productCategory" class="form-select">
+                    <option value="">اختر التصنيف</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="productImage">صورة المنتج</label>
+                  <input type="file" id="productImage" class="form-control" accept="image/*">
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="productActive" checked>
+                  <label class="form-check-label" for="productActive">منتج نشط</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="edit-modal-actions">
+            <button class="btn btn-gold" onclick="createProduct()" id="saveProductBtn">
+              <span id="saveProductText">حفظ المنتج</span>
+              <span id="saveProductSpinner" style="display:none;" class="loading-spinner"></span>
+            </button>
+            <button class="btn btn-outline-secondary" onclick="hideProductForm()">إلغاء</button>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover gold-shadow">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>الاسم</th>
+                <th>السعر</th>
+                <th>الكمية</th>
+                <th>التصنيف</th>
+                <th>الصورة</th>
+                <th>الحالة</th>
+                <th>الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="productsTable">
+              <tr>
+                <td colspan="8" class="text-center py-4">جاري التحميل...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <nav>
+          <ul class="pagination justify-content-center" id="productsPagination"></ul>
+        </nav>
+      </div>
+
+      <!-- Categories Tab -->
+      <div class="tab-pane fade" id="categories" role="tabpanel">
+        <button class="btn btn-gold mb-3" onclick="showCategoryForm()">إضافة تصنيف</button>
+        
+        <!-- نموذج إضافة تصنيف -->
+        <div id="categoryForm" class="add-form" style="display:none;">
+          <h5 class="add-form-title">نموذج إضافة تصنيف جديد</h5>
+          <div class="row">
+            <div class="col-md-8">
+              <div class="form-group">
+                <label for="categoryName">اسم التصنيف</label>
+                <input type="text" id="categoryName" placeholder="أدخل اسم التصنيف" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="categoryDescription">وصف التصنيف</label>
+                <textarea id="categoryDescription" placeholder="أدخل وصف التصنيف" class="form-control" rows="3"></textarea>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="categoryActive" checked>
+                <label class="form-check-label" for="categoryActive">تصنيف نشط</label>
+              </div>
+            </div>
+          </div>
+          <div class="edit-modal-actions">
+            <button class="btn btn-gold" onclick="createCategory()" id="saveCategoryBtn">
+              <span id="saveCategoryText">حفظ التصنيف</span>
+              <span id="saveCategorySpinner" style="display:none;" class="loading-spinner"></span>
+            </button>
+            <button class="btn btn-outline-secondary" onclick="hideCategoryForm()">إلغاء</button>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover gold-shadow">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>الاسم</th>
+                <th>الوصف</th>
+                <th>الحالة</th>
+                <th>الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="categoriesTable">
+              <tr>
+                <td colspan="5" class="text-center py-4">جاري التحميل...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <nav>
+          <ul class="pagination justify-content-center" id="categoriesPagination"></ul>
+        </nav>
+      </div>
+
+      <!-- Orders Tab -->
+      <div class="tab-pane fade" id="orders" role="tabpanel">
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover gold-shadow">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>العميل</th>
+                <th>البريد الإلكتروني</th>
+                <th>الهاتف</th>
+                <th>العنوان</th>
+                <th>المجموع</th>
+                <th>الحالة</th>
+                <th>الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="ordersTable">
+              <tr>
+                <td colspan="8" class="text-center py-4">جاري التحميل...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <nav>
+          <ul class="pagination justify-content-center" id="ordersPagination"></ul>
+        </nav>
+      </div>
+
+      <!-- Settings Tab -->
+      <div class="tab-pane fade" id="settings" role="tabpanel">
+        <div class="add-form">
+          <h5 class="add-form-title">إعدادات المتجر</h5>
+          <form id="adminSettingsForm">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-section">
+                  <h6 class="form-section-title">معلومات الاتصال</h6>
+                  <div class="form-group">
+                    <label for="settingsPhone">رقم الهاتف</label>
+                    <input type="text" id="settingsPhone" class="form-control" placeholder="أدخل رقم الهاتف">
+                  </div>
+                  <div class="form-group">
+                    <label for="settingsOrderEmails">بريد استقبال الطلبات (مفصول بفاصلة)</label>
+                    <textarea id="settingsOrderEmails" class="form-control" rows="2" placeholder="email1@example.com, email2@example.com"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-section">
+                  <h6 class="form-section-title">روابط السوشيال ميديا</h6>
+                  <div class="form-group">
+                    <label for="settingsTiktok">رابط TikTok</label>
+                    <input type="url" id="settingsTiktok" class="form-control" placeholder="https://tiktok.com/...">
+                  </div>
+                  <div class="form-group">
+                    <label for="settingsFacebook">رابط Facebook</label>
+                    <input type="url" id="settingsFacebook" class="form-control" placeholder="https://facebook.com/...">
+                  </div>
+                  <div class="form-group">
+                    <label for="settingsInstagram">رابط Instagram</label>
+                    <input type="url" id="settingsInstagram" class="form-control" placeholder="https://instagram.com/...">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-section">
+                  <h6 class="form-section-title">الصور</h6>
+                  <div class="form-group">
+                    <label for="settingsMainDivImage">صورة الهيدر الرئيسية</label>
+                    <input type="file" id="settingsMainDivImage" class="form-control" accept="image/*">
+                  </div>
+                  <div class="form-group">
+                    <label for="settingsLogoImage">صورة الشعار</label>
+                    <input type="file" id="settingsLogoImage" class="form-control" accept="image/*">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="edit-modal-actions">
+              <button type="submit" class="btn btn-gold" id="saveSettingsBtn">
+                <span id="saveSettingsText">حفظ الإعدادات</span>
+                <span id="saveSettingsSpinner" style="display:none;" class="loading-spinner"></span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal لتعديل المنتج -->
+  <div class="edit-modal" id="editProductModal">
+    <div class="edit-modal-content">
+      <div class="edit-modal-header">
+        <h3 class="edit-modal-title">تعديل المنتج</h3>
+        <button class="close-edit-modal" onclick="closeEditProductModal()">✕</button>
+      </div>
+      <form id="editProductForm">
+        <input type="hidden" id="editProductId">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="editProductName">اسم المنتج</label>
+              <input type="text" id="editProductName" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="editProductDescription">وصف المنتج</label>
+              <textarea id="editProductDescription" class="form-control" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="editProductPrice">السعر</label>
+              <input type="number" id="editProductPrice" class="form-control" step="0.01" required>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="editProductQuantity">الكمية</label>
+              <input type="number" id="editProductQuantity" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="editProductCategory">التصنيف</label>
+              <select id="editProductCategory" class="form-select" required>
+                <option value="">اختر التصنيف</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="editProductImage">صورة جديدة (اختياري)</label>
+              <input type="file" id="editProductImage" class="form-control" accept="image/*">
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="editProductActive">
+              <label class="form-check-label" for="editProductActive">منتج نشط</label>
+            </div>
+          </div>
+        </div>
+        <div class="edit-modal-actions">
+          <button type="submit" class="btn btn-gold">حفظ التعديلات</button>
+          <button type="button" class="btn btn-outline-secondary" onclick="closeEditProductModal()">إلغاء</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal لتعديل التصنيف -->
+  <div class="edit-modal" id="editCategoryModal">
+    <div class="edit-modal-content">
+      <div class="edit-modal-header">
+        <h3 class="edit-modal-title">تعديل التصنيف</h3>
+        <button class="close-edit-modal" onclick="closeEditCategoryModal()">✕</button>
+      </div>
+      <form id="editCategoryForm">
+        <input type="hidden" id="editCategoryId">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="form-group">
+              <label for="editCategoryName">اسم التصنيف</label>
+              <input type="text" id="editCategoryName" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="editCategoryDescription">وصف التصنيف</label>
+              <textarea id="editCategoryDescription" class="form-control" rows="3"></textarea>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="editCategoryActive">
+              <label class="form-check-label" for="editCategoryActive">تصنيف نشط</label>
+            </div>
+          </div>
+        </div>
+        <div class="edit-modal-actions">
+          <button type="submit" class="btn btn-gold">حفظ التعديلات</button>
+          <button type="button" class="btn btn-outline-secondary" onclick="closeEditCategoryModal()">إلغاء</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal لتعديل الطلب -->
+  <div class="edit-modal" id="editOrderModal">
+    <div class="edit-modal-content">
+      <div class="edit-modal-header">
+        <h3 class="edit-modal-title">تعديل حالة الطلب</h3>
+        <button class="close-edit-modal" onclick="closeEditOrderModal()">✕</button>
+      </div>
+      <form id="editOrderForm">
+        <input type="hidden" id="editOrderId">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="form-group">
+              <label for="editOrderStatus">حالة الطلب</label>
+              <select id="editOrderStatus" class="form-select" required>
+                <option value="NEW">جديد</option>
+                <option value="PROCESSING">قيد المعالجة</option>
+                <option value="SHIPPED">تم الشحن</option>
+                <option value="DELIVERED">تم التوصيل</option>
+                <option value="CANCELED">ملغي</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="edit-modal-actions">
+          <button type="submit" class="btn btn-gold">تحديث الحالة</button>
+          <button type="button" class="btn btn-outline-secondary" onclick="closeEditOrderModal()">إلغاء</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = "http://72.60.188.251:8082/api";
+    const ADMIN_API = `${API_BASE}/admin`;
+    let currentProductPage = 0;
+    let currentCategoryPage = 0;
+    let currentOrderPage = 0;
+
+    // ===================== Products =====================
+    function fetchProducts(page = 0) {
+      currentProductPage = page;
+      showLoading('productsTable', 8);
+      
+      fetch(`${ADMIN_API}/products?page=${page}&size=5`, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'omit'
+      })
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+          return res.json();
+        })
+        .then(data => {
+          const tbody = document.getElementById("productsTable");
+          tbody.innerHTML = "";
+          
+          if (!data.content || data.content.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="8" class="text-center py-4">لا توجد منتجات</td></tr>`;
+            setupPagination(0, "productsPagination", fetchProducts);
+            return;
+          }
+          
+          data.content.forEach(p => {
+            const statusBadge = p.active 
+              ? '<span class="active-badge">نشط</span>' 
+              : '<span class="inactive-badge">غير نشط</span>';
+              
+            tbody.innerHTML += `<tr>
+              <td>${p.id}</td>
+              <td>${p.name}</td>
+              <td>${p.price} جنيه</td>
+              <td>${p.quantity}</td>
+              <td>${p.category?.name || ''}</td>
+              <td>${p.imageUrl ? `<img src="${API_BASE}${p.imageUrl}" class="product-image">` : 'لا توجد صورة'}</td>
+              <td>${statusBadge}</td>
+              <td>
+                <button class="btn btn-sm btn-gold" onclick="openEditProductModal(${p.id})">تعديل</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteProduct(${p.id})">حذف</button>
+              </td>
+            </tr>`;
+          });
+          setupPagination(data.totalPages, "productsPagination", fetchProducts);
+        })
+        .catch(error => {
+          console.error("Error fetching products:", error);
+          document.getElementById("productsTable").innerHTML = 
+            `<tr><td colspan="8" class="text-center text-danger py-4">
+              خطأ في تحميل البيانات: ${error.message}
+              <br><button class="btn btn-sm btn-gold mt-2" onclick="fetchProducts(${page})">إعادة المحاولة</button>
+            </td></tr>`;
+        });
+    }
+
+    function createProduct() {
+      const name = document.getElementById("productName").value;
+      const description = document.getElementById("productDescription").value;
+      const price = document.getElementById("productPrice").value;
+      const quantity = document.getElementById("productQuantity").value;
+      const active = document.getElementById("productActive").checked;
+      const categoryId = document.getElementById("productCategory").value;
+      
+      if (!name || !description || !price || !quantity || !categoryId) {
+        alert("يرجى ملء جميع الحقول المطلوبة");
+        return;
+      }
+
+      // إظهار مؤشر التحميل
+      const saveBtn = document.getElementById("saveProductBtn");
+      const saveText = document.getElementById("saveProductText");
+      const saveSpinner = document.getElementById("saveProductSpinner");
+      
+      saveBtn.disabled = true;
+      saveText.style.display = 'none';
+      saveSpinner.style.display = 'inline-block';
+
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("price", price);
+      formData.append("quantity", quantity);
+      formData.append("active", active);
+      formData.append("categoryId", categoryId);
+      
+      const image = document.getElementById("productImage").files[0];
+      if (image) formData.append("image", image);
+
+      fetch(`${ADMIN_API}/products/upload`, {
+        method: "POST",
+        mode: 'cors',
+        credentials: 'omit',
+        body: formData
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(() => { 
+        fetchProducts(currentProductPage); 
+        alert("تم إنشاء المنتج بنجاح");
+        hideProductForm();
+        resetProductForm();
+      })
+      .catch(error => {
+        console.error("Error creating product:", error);
+        alert(`حدث خطأ أثناء إنشاء المنتج: ${error.message}`);
+      })
+      .finally(() => {
+        // إخفاء مؤشر التحميل
+        saveBtn.disabled = false;
+        saveText.style.display = 'inline-block';
+        saveSpinner.style.display = 'none';
+      });
+    }
+
+    function openEditProductModal(id) {
+      fetch(`${ADMIN_API}/products/${id}`, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'omit'
+      })
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+          return res.json();
+        })
+        .then(p => {
+          document.getElementById("editProductId").value = p.id;
+          document.getElementById("editProductName").value = p.name;
+          document.getElementById("editProductDescription").value = p.description;
+          document.getElementById("editProductPrice").value = p.price;
+          document.getElementById("editProductQuantity").value = p.quantity;
+          document.getElementById("editProductActive").checked = p.active;
+          
+          // ملء التصنيفات في القائمة المنسدلة
+          populateEditCategorySelect(p.category?.id);
+          
+          document.getElementById("editProductModal").style.display = 'flex';
+        })
+        .catch(error => {
+          console.error("Error fetching product:", error);
+          alert(`حدث خطأ أثناء جلب بيانات المنتج: ${error.message}`);
+        });
+    }
+
+    function closeEditProductModal() {
+      document.getElementById("editProductModal").style.display = 'none';
+    }
+
+    // إضافة event listener لنموذج تعديل المنتج
+    document.getElementById("editProductForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      
+      const id = document.getElementById("editProductId").value;
+      const name = document.getElementById("editProductName").value;
+      const description = document.getElementById("editProductDescription").value;
+      const price = document.getElementById("editProductPrice").value;
+      const quantity = document.getElementById("editProductQuantity").value;
+      const active = document.getElementById("editProductActive").checked;
+      const categoryId = document.getElementById("editProductCategory").value;
+
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("price", parseFloat(price));
+      formData.append("quantity", parseInt(quantity));
+      formData.append("active", active);
+      formData.append("categoryId", parseInt(categoryId));
+
+      const image = document.getElementById("editProductImage").files[0];
+      if (image) formData.append("image", image);
+
+      fetch(`${ADMIN_API}/products/${id}`, {
+        method: "PUT",
+        mode: 'cors',
+        credentials: 'omit',
+        body: formData
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(() => {
+        fetchProducts(currentProductPage);
+        closeEditProductModal();
+        alert("تم تحديث المنتج بنجاح");
+      })
+      .catch(error => {
+        console.error("Error updating product:", error);
+        alert(`حدث خطأ أثناء تحديث المنتج: ${error.message}`);
+      });
+    });
+
+    function deleteProduct(id) {
+      if (confirm("هل أنت متأكد من حذف هذا المنتج؟")) {
+        fetch(`${ADMIN_API}/products/${id}`, {
+          method: "DELETE",
+          mode: 'cors',
+          credentials: 'omit'
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            fetchProducts(currentProductPage);
+            alert("تم حذف المنتج بنجاح");
+          })
+          .catch(error => {
+            console.error("Error deleting product:", error);
+            alert(`حدث خطأ أثناء حذف المنتج: ${error.message}`);
+          });
+      }
+    }
+
+    // ===================== Categories =====================
+    function fetchCategories(page = 0) {
+      currentCategoryPage = page;
+      showLoading('categoriesTable', 5);
+      
+      fetch(`${ADMIN_API}/categories?page=${page}&size=5`, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'omit'
+      })
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+          return res.json();
+        })
+        .then(data => {
+          const tbody = document.getElementById("categoriesTable");
+          tbody.innerHTML = "";
+          
+          if (!data.content || data.content.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4">لا توجد تصنيفات</td></tr>`;
+            setupPagination(0, "categoriesPagination", fetchCategories);
+            return;
+          }
+          
+          data.content.forEach(c => {
+            const statusBadge = c.active 
+              ? '<span class="active-badge">نشط</span>' 
+              : '<span class="inactive-badge">غير نشط</span>';
+              
+            tbody.innerHTML += `<tr>
+              <td>${c.id}</td>
+              <td>${c.name}</td>
+              <td>${c.description || 'لا يوجد وصف'}</td>
+              <td>${statusBadge}</td>
+              <td>
+                <button class="btn btn-sm btn-gold" onclick="openEditCategoryModal(${c.id})">تعديل</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteCategory(${c.id})">حذف</button>
+              </td>
+            </tr>`;
+          });
+          setupPagination(data.totalPages, "categoriesPagination", fetchCategories);
+          populateCategorySelect();
+        })
+        .catch(error => {
+          console.error("Error fetching categories:", error);
+          document.getElementById("categoriesTable").innerHTML = 
+            `<tr><td colspan="5" class="text-center text-danger py-4">
+              خطأ في تحميل البيانات: ${error.message}
+              <br><button class="btn btn-sm btn-gold mt-2" onclick="fetchCategories(${page})">إعادة المحاولة</button>
+            </td></tr>`;
+        });
+    }
+
+    function createCategory() {
+      const name = document.getElementById("categoryName").value;
+      const description = document.getElementById("categoryDescription").value;
+      const active = document.getElementById("categoryActive").checked;
+      
+      if (!name) {
+        alert("يرجى إدخال اسم التصنيف");
+        return;
+      }
+      
+      // إظهار مؤشر التحميل
+      const saveBtn = document.getElementById("saveCategoryBtn");
+      const saveText = document.getElementById("saveCategoryText");
+      const saveSpinner = document.getElementById("saveCategorySpinner");
+      
+      saveBtn.disabled = true;
+      saveText.style.display = 'none';
+      saveSpinner.style.display = 'inline-block';
+
+      const category = {
+        name: name,
+        description: description,
+        active: active
+      };
+      
+      fetch(`${ADMIN_API}/categories`, {
+        method: "POST",
+        mode: 'cors',
+        credentials: 'omit',
+        headers: {"Content-Type": "application/json"}, 
+        body: JSON.stringify(category)
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(() => { 
+        fetchCategories(currentCategoryPage); 
+        alert("تم إنشاء التصنيف بنجاح");
+        hideCategoryForm();
+        resetCategoryForm();
+      })
+      .catch(error => {
+        console.error("Error creating category:", error);
+        alert(`حدث خطأ أثناء إنشاء التصنيف: ${error.message}`);
+      })
+      .finally(() => {
+        // إخفاء مؤشر التحميل
+        saveBtn.disabled = false;
+        saveText.style.display = 'inline-block';
+        saveSpinner.style.display = 'none';
+      });
+    }
+
+    function openEditCategoryModal(id) {
+      fetch(`${ADMIN_API}/categories/${id}`, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'omit'
+      })
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+          return res.json();
+        })
+        .then(c => {
+          document.getElementById("editCategoryId").value = c.id;
+          document.getElementById("editCategoryName").value = c.name;
+          document.getElementById("editCategoryDescription").value = c.description || '';
+          document.getElementById("editCategoryActive").checked = c.active;
+          
+          document.getElementById("editCategoryModal").style.display = 'flex';
+        })
+        .catch(error => {
+          console.error("Error fetching category:", error);
+          alert(`حدث خطأ أثناء جلب بيانات التصنيف: ${error.message}`);
+        });
+    }
+
+    function closeEditCategoryModal() {
+      document.getElementById("editCategoryModal").style.display = 'none';
+    }
+
+    // إضافة event listener لنموذج تعديل التصنيف
+    document.getElementById("editCategoryForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      
+      const id = document.getElementById("editCategoryId").value;
+      const name = document.getElementById("editCategoryName").value;
+      const description = document.getElementById("editCategoryDescription").value;
+      const active = document.getElementById("editCategoryActive").checked;
+      
+      const data = {
+        name: name,
+        description: description,
+        active: active
+      };
+      
+      fetch(`${ADMIN_API}/categories/${id}`, {
+        method: "PUT",
+        mode: 'cors',
+        credentials: 'omit',
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(() => {
+        fetchCategories(currentCategoryPage);
+        closeEditCategoryModal();
+        alert("تم تحديث التصنيف بنجاح");
+      })
+      .catch(error => {
+        console.error("Error updating category:", error);
+        alert(`حدث خطأ أثناء تحديث التصنيف: ${error.message}`);
+      });
+    });
+
+    function deleteCategory(id) {
+      if (confirm("هل أنت متأكد من حذف هذا التصنيف؟")) {
+        fetch(`${ADMIN_API}/categories/${id}`, {
+          method: "DELETE",
+          mode: 'cors',
+          credentials: 'omit'
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            fetchCategories(currentCategoryPage);
+            alert("تم حذف التصنيف بنجاح");
+          })
+          .catch(error => {
+            console.error("Error deleting category:", error);
+            alert(`حدث خطأ أثناء حذف التصنيف: ${error.message}`);
+          });
+      }
+    }
+
+    function populateCategorySelect() {
+      fetch(`${ADMIN_API}/categories?page=0&size=100`, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'omit'
+      })
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+          return res.json();
+        })
+        .then(data => {
+          const select = document.getElementById("productCategory");
+          select.innerHTML = '<option value="">اختر التصنيف</option>';
+          
+          if (data.content && data.content.length > 0) {
+            data.content.forEach(c => {
+              if (c.active) {
+                select.innerHTML += `<option value="${c.id}">${c.name}</option>`;
+              }
+            });
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching categories for select:", error);
+        });
+    }
+
+    function populateEditCategorySelect(selectedId = null) {
+      fetch(`${ADMIN_API}/categories?page=0&size=100`, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'omit'
+      })
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+          return res.json();
+        })
+        .then(data => {
+          const select = document.getElementById("editProductCategory");
+          select.innerHTML = '<option value="">اختر التصنيف</option>';
+          
+          if (data.content && data.content.length > 0) {
+            data.content.forEach(c => {
+              if (c.active) {
+                const selected = selectedId && c.id === selectedId ? 'selected' : '';
+                select.innerHTML += `<option value="${c.id}" ${selected}>${c.name}</option>`;
+              }
+            });
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching categories for edit select:", error);
+        });
+    }
+
+    // ===================== Orders =====================
+    function fetchOrders(page = 0) {
+      currentOrderPage = page;
+      showLoading('ordersTable', 8);
+      
+      fetch(`${ADMIN_API}/orders?page=${page}&size=5`, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'omit'
+      })
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+          return res.json();
+        })
+        .then(data => {
+          const tbody = document.getElementById("ordersTable");
+          tbody.innerHTML = "";
+          
+          if (!data.content || data.content.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="8" class="text-center py-4">لا توجد طلبات</td></tr>`;
+            setupPagination(0, "ordersPagination", fetchOrders);
+            return;
+          }
+          
+          data.content.forEach(o => {
+            tbody.innerHTML += `<tr>
+              <td>${o.id}</td>
+              <td>${o.customerName}</td>
+              <td>${o.customerEmail || 'لا يوجد'}</td>
+              <td>${o.customerPhone || 'لا يوجد'}</td>
+              <td>${o.shippingAddress || 'لا يوجد'}</td>
+              <td>${o.totalAmount} جنيه</td>
+              <td><span class="status-badge status-${o.status}">${getStatusText(o.status)}</span></td>
+              <td>
+                <button class="btn btn-sm btn-gold" onclick="openEditOrderModal(${o.id})">تعديل</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteOrder(${o.id})">حذف</button>
+              </td>
+            </tr>`;
+          });
+          setupPagination(data.totalPages, "ordersPagination", fetchOrders);
+        })
+        .catch(error => {
+          console.error("Error fetching orders:", error);
+          document.getElementById("ordersTable").innerHTML = 
+            `<tr><td colspan="8" class="text-center text-danger py-4">
+              خطأ في تحميل البيانات: ${error.message}
+              <br><button class="btn btn-sm btn-gold mt-2" onclick="fetchOrders(${page})">إعادة المحاولة</button>
+            </td></tr>`;
+        });
+    }
+
+    function getStatusText(status) {
+      const statusMap = {
+        'NEW': 'جديد',
+        'PROCESSING': 'قيد المعالجة',
+        'SHIPPED': 'تم الشحن',
+        'DELIVERED': 'تم التوصيل',
+        'CANCELED': 'ملغي'
+      };
+      return statusMap[status] || status;
+    }
+
+    function openEditOrderModal(id) {
+      fetch(`${ADMIN_API}/orders/${id}`, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'omit'
+      })
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+          return res.json();
+        })
+        .then(o => {
+          document.getElementById("editOrderId").value = o.id;
+          document.getElementById("editOrderStatus").value = o.status;
+          
+          document.getElementById("editOrderModal").style.display = 'flex';
+        })
+        .catch(error => {
+          console.error("Error fetching order:", error);
+          alert(`حدث خطأ أثناء جلب بيانات الطلب: ${error.message}`);
+        });
+    }
+
+    function closeEditOrderModal() {
+      document.getElementById("editOrderModal").style.display = 'none';
+    }
+
+    // إضافة event listener لنموذج تعديل الطلب
+    document.getElementById("editOrderForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      
+      const id = document.getElementById("editOrderId").value;
+      const status = document.getElementById("editOrderStatus").value;
+
+      fetch(`${ADMIN_API}/orders/${id}`, {
+        method: "PUT",
+        mode: 'cors',
+        credentials: 'omit',
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ status: status })
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(() => {
+        fetchOrders(currentOrderPage);
+        closeEditOrderModal();
+        alert("تم تحديث حالة الطلب بنجاح");
+      })
+      .catch(error => {
+        console.error("Error updating order:", error);
+        alert(`حدث خطأ أثناء تحديث حالة الطلب: ${error.message}`);
+      });
+    });
+
+    function deleteOrder(id) {
+      if (confirm("هل أنت متأكد من حذف هذا الطلب؟")) {
+        fetch(`${ADMIN_API}/orders/${id}`, {
+          method: "DELETE",
+          mode: 'cors',
+          credentials: 'omit'
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            fetchOrders(currentOrderPage);
+            alert("تم حذف الطلب بنجاح");
+          })
+          .catch(error => {
+            console.error("Error deleting order:", error);
+            alert(`حدث خطأ أثناء حذف الطلب: ${error.message}`);
+          });
+      }
+    }
+
+    // ===================== Settings =====================
+    function fetchAdminSettings() {
+      fetch(`${API_BASE}/admin/info`, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'omit'
+      })
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+          return res.json();
+        })
+        .then(settings => {
+          document.getElementById("settingsPhone").value = settings.phone || '';
+          document.getElementById("settingsOrderEmails").value = settings.orderEmails || '';
+          document.getElementById("settingsTiktok").value = settings.tiktokLink || '';
+          document.getElementById("settingsFacebook").value = settings.facebookLink || '';
+          document.getElementById("settingsInstagram").value = settings.instagramLink || '';
+        })
+        .catch(error => {
+          console.error("Error fetching admin settings:", error);
+        });
+    }
+
+    // إضافة event listener لنموذج الإعدادات
+    document.getElementById("adminSettingsForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      
+      const saveBtn = document.getElementById("saveSettingsBtn");
+      const saveText = document.getElementById("saveSettingsText");
+      const saveSpinner = document.getElementById("saveSettingsSpinner");
+      
+      saveBtn.disabled = true;
+      saveText.style.display = 'none';
+      saveSpinner.style.display = 'inline-block';
+
+      const formData = new FormData();
+      formData.append("phone", document.getElementById("settingsPhone").value);
+      formData.append("orderEmails", document.getElementById("settingsOrderEmails").value);
+      formData.append("tiktokLink", document.getElementById("settingsTiktok").value);
+      formData.append("facebookLink", document.getElementById("settingsFacebook").value);
+      formData.append("instagramLink", document.getElementById("settingsInstagram").value);
+
+      const mainDivImage = document.getElementById("settingsMainDivImage").files[0];
+      if (mainDivImage) formData.append("mainDivImage", mainDivImage);
+
+      const logoImage = document.getElementById("settingsLogoImage").files[0];
+      if (logoImage) formData.append("logoImage", logoImage);
+
+      fetch(`${API_BASE}/admin/info`, {
+        method: "PUT",
+        mode: 'cors',
+        credentials: 'omit',
+        body: formData
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(() => {
+        alert("تم حفظ الإعدادات بنجاح");
+      })
+      .catch(error => {
+        console.error("Error updating settings:", error);
+        alert(`حدث خطأ أثناء حفظ الإعدادات: ${error.message}`);
+      })
+      .finally(() => {
+        saveBtn.disabled = false;
+        saveText.style.display = 'inline-block';
+        saveSpinner.style.display = 'none';
+      });
+    });
+
+    // ===================== Pagination =====================
+    function setupPagination(totalPages, containerId, fetchFunction) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = "";
+      
+      if (totalPages <= 1) return;
+      
+      let currentPage;
+      if (fetchFunction.name === 'fetchProducts') currentPage = currentProductPage;
+      else if (fetchFunction.name === 'fetchCategories') currentPage = currentCategoryPage;
+      else if (fetchFunction.name === 'fetchOrders') currentPage = currentOrderPage;
+      else currentPage = 0;
+      
+      // Previous button
+      if (currentPage > 0) {
+        container.innerHTML += `<li class="page-item">
+          <button class="page-link" onclick="${fetchFunction.name}(${currentPage - 1})">السابق</button>
+        </li>`;
+      }
+      
+      // Page numbers
+      for(let i = 0; i < totalPages; i++){
+        container.innerHTML += `<li class="page-item ${i === currentPage ? 'active' : ''}">
+          <button class="page-link" onclick="${fetchFunction.name}(${i})">${i + 1}</button>
+        </li>`;
+      }
+      
+      // Next button
+      if (currentPage < totalPages - 1) {
+        container.innerHTML += `<li class="page-item">
+          <button class="page-link" onclick="${fetchFunction.name}(${currentPage + 1})">التالي</button>
+        </li>`;
+      }
+    }
+
+    // ===================== Helper Functions =====================
+    function showLoading(tableId, colCount) {
+      const tbody = document.getElementById(tableId);
+      tbody.innerHTML = `<tr><td colspan="${colCount}" class="text-center py-4">جاري التحميل...</td></tr>`;
+    }
+
+    function showProductForm(){ 
+      document.getElementById("productForm").style.display = 'block'; 
+    }
+    
+    function hideProductForm(){ 
+      document.getElementById("productForm").style.display = 'none'; 
+    }
+    
+    function resetProductForm() {
+      document.getElementById("productName").value = '';
+      document.getElementById("productDescription").value = '';
+      document.getElementById("productPrice").value = '';
+      document.getElementById("productQuantity").value = '';
+      document.getElementById("productCategory").value = '';
+      document.getElementById("productImage").value = '';
+      document.getElementById("productActive").checked = true;
+    }
+    
+    function showCategoryForm(){ 
+      document.getElementById("categoryForm").style.display = 'block'; 
+    }
+    
+    function hideCategoryForm(){ 
+      document.getElementById("categoryForm").style.display = 'none'; 
+    }
+    
+    function resetCategoryForm() {
+      document.getElementById("categoryName").value = '';
+      document.getElementById("categoryDescription").value = '';
+      document.getElementById("categoryActive").checked = true;
+    }
+
+    // إغلاق النماذج بالنقر خارجها
+    window.addEventListener('click', (e) => {
+      if (e.target === document.getElementById('editProductModal')) {
+        closeEditProductModal();
+      }
+      if (e.target === document.getElementById('editCategoryModal')) {
+        closeEditCategoryModal();
+      }
+      if (e.target === document.getElementById('editOrderModal')) {
+        closeEditOrderModal();
+      }
+    });
+
+    // ===================== Initial Fetch =====================
+    document.addEventListener('DOMContentLoaded', function() {
+      fetchProducts();
+      fetchCategories();
+      fetchOrders();
+      fetchAdminSettings();
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
