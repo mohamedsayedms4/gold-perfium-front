@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم الأدمن - عطور جولد</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #d4af37;
+            --primary-light: #ffd700;
+            --bg-color: #ffffff;
+            --bg-secondary: #f8f8f8;
+            --text-color: #333;
+            --text-secondary: #666;
+            --card-bg: #ffffff;
+            --border-color: #f0e6d2;
+            --shadow-color: rgba(212, 175, 55, 0.2);
+        }
+
+        .dark-mode {
+            --bg-color: #1a0000;
+            --bg-secondary: #4a1010;
+            --text-color: #fff;
+            --text-secondary: #ccc;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(212, 175, 55, 0.3);
+            --shadow-color: rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, var(--bg-secondary) 100%);
+            color: var(--text-color);
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, var(--bg-color) 0%, var(--bg-secondary) 100%);
+            box-shadow: 0 2px 20px var(--shadow-color);
+            padding: 1.5rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .brand-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--primary-color), var(--primary-light), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .dark-mode-toggle {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 0.5rem;
+            border-radius: 50%;
+        }
+
+        .dark-mode-toggle:hover {
+            background: rgba(212, 175, 55, 0.1);
+            transform: scale(1.1);
+        }
+
+        .back-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 25px;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 100px auto 2rem;
+            padding: 2rem 5%;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+        }
+
+        /* Admin Form Card */
+        .admin-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            backdrop-filter: blur(10px);
+        }
+
+        .section-header {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+            background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        /* Form Groups */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 1rem;
+            background: var(--bg-color);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            color: var(--text-color);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+
+        /* Image Upload Section */
+        .image-upload-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .image-upload-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .image-upload-card {
+            background: var(--bg-secondary);
+            border: 2px dashed var(--border-color);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .image-upload-card:hover {
+            border-color: var(--primary-color);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .image-upload-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .image-preview {
+            width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: none;
+            border: 2px solid var(--border-color);
+        }
+
+        .image-preview.show {
+            display: block;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input-label {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            display: inline-block;
+            width: 100%;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .file-input-label:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .current-image-name {
+            margin-top: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Submit Button */
+        .submit-section {
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            border: none;
+            padding: 1.2rem 4rem;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Loading & Messages */
+        .loading {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .loading.show {
+            display: flex;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(212, 175, 55, 0.3);
+            border-left: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        .message.show {
+            display: block;
+        }
+
+        .message.success {
+            background: #e6ffe6;
+            color: #2ed573;
+            border: 2px solid #2ed573;
+        }
+
+        .message.error {
+            background: #ffe6e6;
+            color: #ff4757;
+            border: 2px solid #ff4757;
+        }
+
+        /* Current Info Display */
+        .current-info {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .current-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .info-item {
+            padding: 1rem;
+            background: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .info-item label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .info-item span {
+            color: var(--text-color);
+            word-break: break-all;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin-top: 80px;
+                padding: 1rem 3%;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .admin-card {
+                padding: 1.5rem;
+            }
+
+            .form-grid,
+            .image-upload-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .submit-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo-container">
+            <span class="brand-name">لوحة تحكم الأدمن</span>
+        </div>
+        <div class="nav-actions">
+            <button class="dark-mode-toggle" id="darkModeToggle">🌙</button>
+            <a href="index.html" class="back-link">← العودة للمتجر</a>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <h1 class="page-title">إدارة معلومات المتجر</h1>
+
+        <!-- Loading Indicator -->
+        <div class="loading" id="loadingIndicator">
+            <div class="spinner"></div>
+        </div>
+
+        <!-- Messages -->
+        <div class="message" id="messageBox"></div>
+
+        <!-- Current Info Display -->
+        <div class="current-info" id="currentInfoSection" style="display: none;">
+            <h3>المعلومات الحالية</h3>
+            <div class="info-grid" id="currentInfoGrid"></div>
+        </div>
+
+        <!-- Admin Form -->
+        <div class="admin-card">
+            <form id="adminForm">
+                <!-- Contact Information Section -->
+                <h2 class="section-header">معلومات الاتصال</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="phone">رقم الهاتف</label>
+                        <input type="tel" id="phone" name="phone" placeholder="مثال: 01234567890">
+                    </div>
+                    <div class="form-group">
+                        <!-- <label for="orderEmails">البريد الإلكتروني للطلبات</label>
+                        <input type="text" id="orderEmails" name="orderEmails" placeholder="email1@example.com, email2@example.com"> -->
+                    </div>
+                </div>
+
+                <!-- Social Media Section -->
+                <h2 class="section-header">روابط التواصل الاجتماعي</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="facebookLink">رابط فيسبوك</label>
+                        <input type="url" id="facebookLink" name="facebookLink" placeholder="https://facebook.com/...">
+                    </div>
+                    <div class="form-group">
+                        <label for="instagramLink">رابط إنستجرام</label>
+                        <input type="url" id="instagramLink" name="instagramLink" placeholder="https://instagram.com/...">
+                    </div>
+                    <div class="form-group">
+                        <label for="tiktokLink">رابط تيك توك</label>
+                        <input type="url" id="tiktokLink" name="tiktokLink" placeholder="https://tiktok.com/@...">
+                    </div>
+                </div>
+
+                <!-- Image Upload Section -->
+                <div class="image-upload-section">
+                    <h2 class="section-header">الصور</h2>
+                    <div class="image-upload-grid">
+                        <!-- Logo Upload -->
+                        <div class="image-upload-card">
+                            <h3>شعار المتجر (Logo)</h3>
+                            <img id="logoPreview" class="image-preview" alt="معاينة الشعار">
+                            <div class="file-input-wrapper">
+                                <label for="logoImage" class="file-input-label">
+                                    📷 اختر صورة الشعار
+                                </label>
+                                <input type="file" id="logoImage" name="logoImage" accept="image/*">
+                            </div>
+                            <p class="current-image-name" id="logoImageName">لم يتم اختيار ملف</p>
+                        </div>
+
+                        <!-- Main Div Image Upload -->
+                        <div class="image-upload-card">
+                            <h3>صورة القسم الرئيسي</h3>
+                            <img id="mainDivPreview" class="image-preview" alt="معاينة الصورة الرئيسية">
+                            <div class="file-input-wrapper">
+                                <label for="mainDivImage" class="file-input-label">
+                                    📷 اختر الصورة الرئيسية
+                                </label>
+                                <input type="file" id="mainDivImage" name="mainDivImage" accept="image/*">
+                            </div>
+                            <p class="current-image-name" id="mainDivImageName">لم يتم اختيار ملف</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="submit-section">
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        💾 حفظ التعديلات
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'https://api.gold-perfumes.com/api';
+        const ADMIN_INFO_URL = `${API_BASE_URL}/admin/info`;
+
+        // DOM Elements
+        const adminForm = document.getElementById('adminForm');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const messageBox = document.getElementById('messageBox');
+        const submitBtn = document.getElementById('submitBtn');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const currentInfoSection = document.getElementById('currentInfoSection');
+        const currentInfoGrid = document.getElementById('currentInfoGrid');
+
+        // Form inputs
+        const phoneInput = document.getElementById('phone');
+        // const orderEmailsInput = document.getElementById('orderEmails');
+        const facebookLinkInput = document.getElementById('facebookLink');
+        const instagramLinkInput = document.getElementById('instagramLink');
+        const tiktokLinkInput = document.getElementById('tiktokLink');
+        const logoImageInput = document.getElementById('logoImage');
+        const mainDivImageInput = document.getElementById('mainDivImage');
+        const logoPreview = document.getElementById('logoPreview');
+        const mainDivPreview = document.getElementById('mainDivPreview');
+        const logoImageName = document.getElementById('logoImageName');
+        const mainDivImageName = document.getElementById('mainDivImageName');
+
+        // Dark Mode
+        function initDarkMode() {
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.textContent = '☀️';
+            }
+        }
+
+        function toggleDarkMode() {
+            const isDarkMode = document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode);
+            darkModeToggle.textContent = isDarkMode ? '☀️' : '🌙';
+        }
+
+        // Show/Hide Loading
+        function showLoading() {
+            loadingIndicator.classList.add('show');
+            submitBtn.disabled = true;
+        }
+
+        function hideLoading() {
+            loadingIndicator.classList.remove('show');
+            submitBtn.disabled = false;
+        }
+
+        // Show Message
+        function showMessage(text, type) {
+            messageBox.textContent = text;
+            messageBox.className = `message ${type} show`;
+            setTimeout(() => {
+                messageBox.classList.remove('show');
+            }, 5000);
+        }
+
+        // Build Image URL
+        function buildImageUrl(imagePath) {
+            if (!imagePath) return '';
+            if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+                return imagePath;
+            }
+            return `https://api.gold-perfumes.com${imagePath.startsWith('/') ? '' : '/'}${imagePath}`;
+        }
+
+        // Load Current Admin Info
+        async function loadAdminInfo() {
+            showLoading();
+            try {
+                const response = await fetch(ADMIN_INFO_URL);
+                if (!response.ok) throw new Error('فشل في تحميل البيانات');
+                
+                const data = await response.json();
+                displayCurrentInfo(data);
+                populateForm(data);
+            } catch (error) {
+                console.error('Error loading admin info:', error);
+                showMessage('فشل في تحميل البيانات الحالية', 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Display Current Info
+        function displayCurrentInfo(data) {
+            currentInfoSection.style.display = 'block';
+            currentInfoGrid.innerHTML = `
+                <div class="info-item">
+                    <label>رقم الهاتف:</label>
+                    <span>${data.phone || 'غير محدد'}</span>
+                </div>
+                <div class="info-item">
+                    <label>البريد الإلكتروني:</label>
+                    <span>${data.orderEmails || 'غير محدد'}</span>
+                </div>
+                <div class="info-item">
+                    <label>فيسبوك:</label>
+                    <span>${data.facebookLink ? '✓ محدد' : 'غير محدد'}</span>
+                </div>
+                <div class="info-item">
+                    <label>إنستجرام:</label>
+                    <span>${data.instagramLink ? '✓ محدد' : 'غير محدد'}</span>
+                </div>
+                <div class="info-item">
+                    <label>تيك توك:</label>
+                    <span>${data.tiktokLink ? '✓ محدد' : 'غير محدد'}</span>
+                </div>
+                <div class="info-item">
+                    <label>الشعار:</label>
+                    <span>${data.logoImage ? '✓ محدد' : 'غير محدد'}</span>
+                </div>
+                <div class="info-item">
+                    <label>الصورة الرئيسية:</label>
+                    <span>${data.mainDivImage ? '✓ محدد' : 'غير محدد'}</span>
+                </div>
+            `;
+        }
+
+        // Populate Form with Current Data
+        function populateForm(data) {
+            phoneInput.value = data.phone || '';
+            orderEmailsInput.value = data.orderEmails || '';
+            facebookLinkInput.value = data.facebookLink || '';
+            instagramLinkInput.value = data.instagramLink || '';
+            tiktokLinkInput.value = data.tiktokLink || '';
+
+            if (data.logoImage) {
+                const logoUrl = buildImageUrl(data.logoImage);
+                logoPreview.src = logoUrl;
+                logoPreview.classList.add('show');
+                logoImageName.textContent = 'الصورة الحالية موجودة';
+            }
+
+            if (data.mainDivImage) {
+                const mainDivUrl = buildImageUrl(data.mainDivImage);
+                mainDivPreview.src = mainDivUrl;
+                mainDivPreview.classList.add('show');
+                mainDivImageName.textContent = 'الصورة الحالية موجودة';
+            }
+        }
+
+        // Image Preview Handlers
+        logoImageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    logoPreview.src = e.target.result;
+                    logoPreview.classList.add('show');
+                };
+                reader.readAsDataURL(file);
+                logoImageName.textContent = file.name;
+            }
+        });
+
+        mainDivImageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    mainDivPreview.src = e.target.result;
+                    mainDivPreview.classList.add('show');
+                };
+                reader.readAsDataURL(file);
+                mainDivImageName.textContent = file.name;
+            }
+        });
+
+        // Submit Form
+        adminForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            showLoading();
+            const formData = new FormData();
+
+            // Add text fields
+            if (phoneInput.value) formData.append('phone', phoneInput.value);
+            if (orderEmailsInput.value) formData.append('orderEmails', orderEmailsInput.value);
+            if (facebookLinkInput.value) formData.append('facebookLink', facebookLinkInput.value);
+            if (instagramLinkInput.value) formData.append('instagramLink', instagramLinkInput.value);
+            if (tiktokLinkInput.value) formData.append('tiktokLink', tiktokLinkInput.value);
+
+            // Add images
+            if (logoImageInput.files[0]) {
+                formData.append('logoImage', logoImageInput.files[0]);
+            }
+            if (mainDivImageInput.files[0]) {
+                formData.append('mainDivImage', mainDivImageInput.files[0]);
+            }
+
+            try {
+                const response = await fetch(ADMIN_INFO_URL, {
+                    method: 'PUT',
+                    body: formData
+                });
+
+                if (!response.ok) throw new Error('فشل في حفظ البيانات');
+
+                const result = await response.json();
+                showMessage('✓ تم حفظ التعديلات بنجاح', 'success');
+                displayCurrentInfo(result);
+                populateForm(result);
+                
+                // Reset file inputs
+                logoImageInput.value = '';
+                mainDivImageInput.value = '';
+                
+            } catch (error) {
+                console.error('Error updating admin info:', error);
+                showMessage('فشل في حفظ التعديلات. يرجى المحاولة مرة أخرى', 'error');
+            } finally {
+                hideLoading();
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initDarkMode();
+            darkModeToggle.addEventListener('click', toggleDarkMode);
+            loadAdminInfo();
+        });
+    </script>
+</body>
+</html>

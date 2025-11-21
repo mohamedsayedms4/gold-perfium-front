@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة الفئات - عطور جولد</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #d4af37;
+            --primary-light: #ffd700;
+            --bg-color: #ffffff;
+            --bg-secondary: #f8f8f8;
+            --text-color: #333;
+            --text-secondary: #666;
+            --card-bg: #ffffff;
+            --border-color: #f0e6d2;
+            --shadow-color: rgba(212, 175, 55, 0.2);
+        }
+
+        .dark-mode {
+            --bg-color: #1a0000;
+            --bg-secondary: #4a1010;
+            --text-color: #fff;
+            --text-secondary: #ccc;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(212, 175, 55, 0.3);
+            --shadow-color: rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, var(--bg-secondary) 100%);
+            color: var(--text-color);
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        nav {
+            background: linear-gradient(135deg, var(--bg-color) 0%, var(--bg-secondary) 100%);
+            box-shadow: 0 2px 20px var(--shadow-color);
+            padding: 1.5rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .brand-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--primary-color), var(--primary-light), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .dark-mode-toggle, .add-btn {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 0.5rem;
+            border-radius: 50%;
+        }
+
+        .dark-mode-toggle:hover, .add-btn:hover {
+            background: rgba(212, 175, 55, 0.1);
+            transform: scale(1.1);
+        }
+
+        .back-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 25px;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 100px auto 2rem;
+            padding: 2rem 5%;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            padding: 1rem;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            color: var(--text-color);
+            display: block;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .category-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px var(--shadow-color);
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .category-name {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .category-description {
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 1rem;
+            min-height: 60px;
+        }
+
+        .category-meta {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+        }
+
+        .meta-item {
+            text-align: center;
+        }
+
+        .meta-label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.3rem;
+        }
+
+        .meta-value {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .category-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-edit {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+        }
+
+        .btn-delete {
+            background: #ff4757;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bg-color);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .page-btn {
+            padding: 0.8rem 1.2rem;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            color: var(--text-color);
+            font-weight: bold;
+        }
+
+        .page-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .page-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(212, 175, 55, 0.3);
+            border-left: 5px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        .message.show {
+            display: block;
+        }
+
+        .message.success {
+            background: #e6ffe6;
+            color: #2ed573;
+            border: 2px solid #2ed573;
+        }
+
+        .message.error {
+            background: #ffe6e6;
+            color: #ff4757;
+            border: 2px solid #ff4757;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin-top: 80px;
+                padding: 1rem 3%;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="brand-name">إدارة الفئات</div>
+        <div class="nav-actions">
+            <button class="add-btn" onclick="openAddModal()" title="إضافة فئة جديدة">➕</button>
+            <button class="dark-mode-toggle" id="darkModeToggle">🌙</button>
+            <a href="index.html" class="back-link">← المتجر</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="page-title">إدارة الفئات</h1>
+
+        <div class="message" id="messageBox"></div>
+
+        <input type="text" class="search-box" id="searchBox" placeholder="🔍 بحث عن فئة...">
+
+        <div class="loading" id="loadingIndicator">
+            <div class="spinner"></div>
+        </div>
+
+        <div class="categories-grid" id="categoriesGrid"></div>
+
+        <div class="pagination" id="pagination"></div>
+    </div>
+
+    <!-- Add/Edit Category Modal -->
+    <div class="modal" id="categoryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">إضافة فئة جديدة</h2>
+                <button class="close-modal" onclick="closeCategoryModal()">✕</button>
+            </div>
+            <form id="categoryForm">
+                <input type="hidden" id="categoryId">
+                
+                <div class="form-group">
+                    <label for="categoryName">اسم الفئة *</label>
+                    <input type="text" id="categoryName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="categoryDescription">الوصف</label>
+                    <textarea id="categoryDescription" rows="4"></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">💾 حفظ الفئة</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'https://api.gold-perfumes.com/api';
+        const ADMIN_CATEGORIES_URL = `${API_BASE_URL}/admin/categories`;
+
+        let currentPage = 0;
+        const pageSize = 12;
+        let totalPages = 0;
+        let currentEditId = null;
+        let allCategories = [];
+
+        // DOM Elements
+        const categoriesGrid = document.getElementById('categoriesGrid');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const messageBox = document.getElementById('messageBox');
+        const pagination = document.getElementById('pagination');
+        const categoryModal = document.getElementById('categoryModal');
+        const categoryForm = document.getElementById('categoryForm');
+        const modalTitle = document.getElementById('modalTitle');
+        const searchBox = document.getElementById('searchBox');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+
+        // Dark Mode
+        function initDarkMode() {
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.textContent = '☀️';
+            }
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            const isDarkMode = document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode);
+            darkModeToggle.textContent = isDarkMode ? '☀️' : '🌙';
+        });
+
+        // Show Message
+        function showMessage(text, type) {
+            messageBox.textContent = text;
+            messageBox.className = `message ${type} show`;
+            setTimeout(() => messageBox.classList.remove('show'), 5000);
+        }
+
+        // Load Categories
+        async function loadCategories() {
+            loadingIndicator.style.display = 'flex';
+            categoriesGrid.innerHTML = '';
+
+            try {
+                const response = await fetch(`${ADMIN_CATEGORIES_URL}?page=${currentPage}&size=${pageSize}`);
+                const data = await response.json();
+                
+                allCategories = data.content || [];
+                totalPages = data.totalPages || 0;
+
+                if (allCategories.length === 0) {
+                    categoriesGrid.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📂</div>
+                            <h3>لا توجد فئات</h3>
+                            <p>ابدأ بإضافة فئة جديدة</p>
+                        </div>
+                    `;
+                } else {
+                    allCategories.forEach(category => displayCategory(category));
+                }
+
+                renderPagination();
+            } catch (error) {
+                console.error('Error loading categories:', error);
+                showMessage('فشل في تحميل الفئات', 'error');
+            } finally {
+                loadingIndicator.style.display = 'none';
+            }
+        }
+
+        // Display Category Card
+        function displayCategory(category) {
+            const productsCount = category.products?.length || 0;
+            const icons = ['🌹', '💐', '🌺', '🌸', '🏵️', '🌻', '🌼'];
+            const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+
+            const card = document.createElement('div');
+            card.className = 'category-card';
+            card.innerHTML = `
+                <div class="category-icon">${randomIcon}</div>
+                <h3 class="category-name">${category.name}</h3>
+                <p class="category-description">${category.description || 'لا يوجد وصف'}</p>
+                <div class="category-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">عدد المنتجات</span>
+                        <span class="meta-value">${productsCount}</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">تاريخ الإنشاء</span>
+                        <span class="meta-value">${new Date(category.createdAt).toLocaleDateString('ar-EG')}</span>
+                    </div>
+                </div>
+                <div class="category-actions">
+                    <button class="btn btn-edit" onclick="editCategory(${category.id})">✏️ تعديل</button>
+                    <button class="btn btn-delete" onclick="deleteCategory(${category.id})">🗑️ حذف</button>
+                </div>
+            `;
+            categoriesGrid.appendChild(card);
+        }
+
+        // Pagination
+        function renderPagination() {
+            pagination.innerHTML = '';
+            
+            if (totalPages <= 1) return;
+
+            for (let i = 0; i < totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+                btn.textContent = i + 1;
+                btn.onclick = () => {
+                    currentPage = i;
+                    loadCategories();
+                };
+                pagination.appendChild(btn);
+            }
+        }
+
+        // Open Add Modal
+        function openAddModal() {
+            currentEditId = null;
+            modalTitle.textContent = 'إضافة فئة جديدة';
+            categoryForm.reset();
+            document.getElementById('categoryId').value = '';
+            categoryModal.classList.add('show');
+        }
+
+        // Edit Category
+        async function editCategory(id) {
+            try {
+                const response = await fetch(`${ADMIN_CATEGORIES_URL}/${id}`);
+                const category = await response.json();
+                
+                currentEditId = id;
+                modalTitle.textContent = 'تعديل الفئة';
+                document.getElementById('categoryId').value = id;
+                document.getElementById('categoryName').value = category.name;
+                document.getElementById('categoryDescription').value = category.description || '';
+
+                categoryModal.classList.add('show');
+            } catch (error) {
+                console.error('Error loading category:', error);
+                showMessage('فشل في تحميل بيانات الفئة', 'error');
+            }
+        }
+
+        // Close Modal
+        function closeCategoryModal() {
+            categoryModal.classList.remove('show');
+            categoryForm.reset();
+            currentEditId = null;
+        }
+
+        // Delete Category
+        async function deleteCategory(id) {
+            if (!confirm('هل أنت متأكد من حذف هذه الفئة؟')) return;
+
+            try {
+                const response = await fetch(`${ADMIN_CATEGORIES_URL}/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    showMessage('تم حذف الفئة بنجاح', 'success');
+                    loadCategories();
+                } else {
+                    throw new Error('فشل في حذف الفئة');
+                }
+            } catch (error) {
+                console.error('Error deleting category:', error);
+                showMessage('فشل في حذف الفئة', 'error');
+            }
+        }
+
+        // Submit Form
+        categoryForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const categoryData = {
+                name: document.getElementById('categoryName').value,
+                description: document.getElementById('categoryDescription').value
+            };
+
+            try {
+                let response;
+                if (currentEditId) {
+                    response = await fetch(`${ADMIN_CATEGORIES_URL}/${currentEditId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(categoryData)
+                    });
+                } else {
+                    response = await fetch(ADMIN_CATEGORIES_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(categoryData)
+                    });
+                }
+
+                if (response.ok) {
+                    showMessage(currentEditId ? 'تم تحديث الفئة بنجاح' : 'تم إضافة الفئة بنجاح', 'success');
+                    closeCategoryModal();
+                    loadCategories();
+                } else {
+                    throw new Error('فشل في حفظ الفئة');
+                }
+            } catch (error) {
+                console.error('Error saving category:', error);
+                showMessage('فشل في حفظ الفئة', 'error');
+            }
+        });
+
+        // Search
+        let searchTimeout;
+        searchBox.addEventListener('input', () => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                currentPage = 0;
+                loadCategories();
+            }, 500);
+        });
+
+        // Close modal on outside click
+        categoryModal.addEventListener('click', (e) => {
+            if (e.target === categoryModal) {
+                closeCategoryModal();
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initDarkMode();
+            loadCategories();
+        });
+    </script>
+</body>
+</html>

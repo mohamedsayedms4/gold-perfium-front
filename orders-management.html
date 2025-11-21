@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة الطلبات - عطور جولد</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #d4af37;
+            --primary-light: #ffd700;
+            --bg-color: #ffffff;
+            --bg-secondary: #f8f8f8;
+            --text-color: #333;
+            --text-secondary: #666;
+            --card-bg: #ffffff;
+            --border-color: #f0e6d2;
+            --shadow-color: rgba(212, 175, 55, 0.2);
+        }
+
+        .dark-mode {
+            --bg-color: #1a0000;
+            --bg-secondary: #4a1010;
+            --text-color: #fff;
+            --text-secondary: #ccc;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(212, 175, 55, 0.3);
+            --shadow-color: rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, var(--bg-secondary) 100%);
+            color: var(--text-color);
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        nav {
+            background: linear-gradient(135deg, var(--bg-color) 0%, var(--bg-secondary) 100%);
+            box-shadow: 0 2px 20px var(--shadow-color);
+            padding: 1.5rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .brand-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--primary-color), var(--primary-light), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .dark-mode-toggle {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 0.5rem;
+            border-radius: 50%;
+        }
+
+        .dark-mode-toggle:hover {
+            background: rgba(212, 175, 55, 0.1);
+            transform: scale(1.1);
+        }
+
+        .back-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 25px;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 100px auto 2rem;
+            padding: 2rem 5%;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            padding: 1rem;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+
+        .filter-select {
+            padding: 1rem;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            color: var(--text-color);
+            cursor: pointer;
+        }
+
+        .orders-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .order-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px var(--shadow-color);
+        }
+
+        .order-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .order-id {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .order-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .status-NEW {
+            background: #e3f2fd;
+            color: #2196f3;
+        }
+
+        .status-PROCESSING {
+            background: #fff3e0;
+            color: #ff9800;
+        }
+
+        .status-SHIPPED {
+            background: #f3e5f5;
+            color: #9c27b0;
+        }
+
+        .status-DELIVERED {
+            background: #e6ffe6;
+            color: #2ed573;
+        }
+
+        .status-CANCELED {
+            background: #ffe6e6;
+            color: #ff4757;
+        }
+
+        .order-info {
+            margin-bottom: 1rem;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .info-row strong {
+            color: var(--text-color);
+        }
+
+        .order-items {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-name {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .item-details {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .order-total {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-align: center;
+            padding: 0.8rem;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .order-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .btn-view {
+            background: linear-gradient(135deg, #2196f3, #64b5f6);
+            color: white;
+        }
+
+        .btn-edit {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+        }
+
+        .btn-delete {
+            background: #ff4757;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin: 2rem;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bg-color);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .page-btn {
+            padding: 0.8rem 1.2rem;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            color: var(--text-color);
+            font-weight: bold;
+        }
+
+        .page-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .page-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(212, 175, 55, 0.3);
+            border-left: 5px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        .message.show {
+            display: block;
+        }
+
+        .message.success {
+            background: #e6ffe6;
+            color: #2ed573;
+            border: 2px solid #2ed573;
+        }
+
+        .message.error {
+            background: #ffe6e6;
+            color: #ff4757;
+            border: 2px solid #ff4757;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+            grid-column: 1 / -1;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .detail-section {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin-top: 80px;
+                padding: 1rem 3%;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .orders-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters {
+                flex-direction: column;
+            }
+
+            .order-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="brand-name">إدارة الطلبات</div>
+        <div class="nav-actions">
+            <button class="dark-mode-toggle" id="darkModeToggle">🌙</button>
+            <a href="index.html" class="back-link">← المتجر</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="page-title">إدارة الطلبات</h1>
+
+        <div class="message" id="messageBox"></div>
+
+        <div class="filters">
+            <input type="text" class="search-box" id="searchBox" placeholder="🔍 بحث بالاسم أو الهاتف...">
+            <select class="filter-select" id="statusFilter">
+                <option value="">كل الحالات</option>
+                <option value="NEW">جديد</option>
+                <option value="PROCESSING">قيد المعالجة</option>
+                <option value="SHIPPED">تم الشحن</option>
+                <option value="DELIVERED">تم التوصيل</option>
+                <option value="CANCELED">ملغي</option>
+            </select>
+        </div>
+
+        <div class="loading" id="loadingIndicator">
+            <div class="spinner"></div>
+        </div>
+
+        <div class="orders-grid" id="ordersGrid"></div>
+
+        <div class="pagination" id="pagination"></div>
+    </div>
+
+    <!-- View Order Details Modal -->
+    <div class="modal" id="viewOrderModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">تفاصيل الطلب</h2>
+                <button class="close-modal" onclick="closeViewModal()">✕</button>
+            </div>
+            <div id="orderDetailsContent"></div>
+        </div>
+    </div>
+
+    <!-- Edit Order Status Modal -->
+    <div class="modal" id="editOrderModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">تعديل حالة الطلب</h2>
+                <button class="close-modal" onclick="closeEditModal()">✕</button>
+            </div>
+            <form id="editOrderForm">
+                <input type="hidden" id="editOrderId">
+                
+                <div class="form-group">
+                    <label for="orderStatus">حالة الطلب *</label>
+                    <select id="orderStatus" required>
+                        <option value="NEW">جديد</option>
+                        <option value="PROCESSING">قيد المعالجة</option>
+                        <option value="SHIPPED">تم الشحن</option>
+                        <option value="DELIVERED">تم التوصيل</option>
+                        <option value="CANCELED">ملغي</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="submit-btn">💾 حفظ التغييرات</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'https://api.gold-perfumes.com/api';
+        const ADMIN_ORDERS_URL = `${API_BASE_URL}/admin/orders`;
+
+        let currentPage = 0;
+        const pageSize = 12;
+        let totalPages = 0;
+        let allOrders = [];
+
+        // DOM Elements
+        const ordersGrid = document.getElementById('ordersGrid');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const messageBox = document.getElementById('messageBox');
+        const pagination = document.getElementById('pagination');
+        const viewOrderModal = document.getElementById('viewOrderModal');
+        const editOrderModal = document.getElementById('editOrderModal');
+        const editOrderForm = document.getElementById('editOrderForm');
+        const searchBox = document.getElementById('searchBox');
+        const statusFilter = document.getElementById('statusFilter');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+
+        // Status translations
+        const statusTranslations = {
+            'NEW': 'جديد',
+            'PROCESSING': 'قيد المعالجة',
+            'SHIPPED': 'تم الشحن',
+            'DELIVERED': 'تم التوصيل',
+            'CANCELED': 'ملغي'
+        };
+
+        // Dark Mode
+        function initDarkMode() {
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.textContent = '☀️';
+            }
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            const isDarkMode = document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode);
+            darkModeToggle.textContent = isDarkMode ? '☀️' : '🌙';
+        });
+
+        // Show Message
+        function showMessage(text, type) {
+            messageBox.textContent = text;
+            messageBox.className = `message ${type} show`;
+            setTimeout(() => messageBox.classList.remove('show'), 5000);
+        }
+
+        // Format Date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ar-EG', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Load Orders
+        async function loadOrders() {
+            loadingIndicator.style.display = 'flex';
+            ordersGrid.innerHTML = '';
+
+            try {
+                const response = await fetch(`${ADMIN_ORDERS_URL}?page=${currentPage}&size=${pageSize}`);
+                const data = await response.json();
+                
+                allOrders = data.content || [];
+                totalPages = data.totalPages || 0;
+
+                if (allOrders.length === 0) {
+                    ordersGrid.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📦</div>
+                            <h3>لا توجد طلبات</h3>
+                            <p>لم يتم تسجيل أي طلبات حتى الآن</p>
+                        </div>
+                    `;
+                } else {
+                    allOrders.forEach(order => displayOrder(order));
+                }
+
+                renderPagination();
+            } catch (error) {
+                console.error('Error loading orders:', error);
+                showMessage('فشل في تحميل الطلبات', 'error');
+            } finally {
+                loadingIndicator.style.display = 'none';
+            }
+        }
+
+        // Display Order Card
+        function displayOrder(order) {
+            const statusClass = `status-${order.status}`;
+            const statusText = statusTranslations[order.status] || order.status;
+
+            const card = document.createElement('div');
+            card.className = 'order-card';
+            card.innerHTML = `
+                <div class="order-header">
+                    <div class="order-id">طلب #${order.id}</div>
+                    <span class="order-status ${statusClass}">${statusText}</span>
+                </div>
+                <div class="order-info">
+                    <div class="info-row">
+                        <span>👤 العميل:</span>
+                        <strong>${order.customerName}</strong>
+                    </div>
+                    <div class="info-row">
+                        <span>📞 الهاتف:</span>
+                        <strong>${order.customerPhone || 'غير متوفر'}</strong>
+                    </div>
+                    <div class="info-row">
+                        <span>📅 التاريخ:</span>
+                        <strong>${formatDate(order.createdAt)}</strong>
+                    </div>
+                </div>
+                <div class="order-items">
+                    ${order.items.map(item => `
+                        <div class="order-item">
+                            <div>
+                                <div class="item-name">${item.product.name}</div>
+                                <div class="item-details">الكمية: ${item.quantity} × ${item.unitPrice} جنيه</div>
+                            </div>
+                            <strong>${item.subtotal} جنيه</strong>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="order-total">
+                    الإجمالي: ${order.totalAmount} جنيه
+                </div>
+                <div class="order-actions">
+                    <button class="btn btn-view" onclick="viewOrder(${order.id})">👁️ عرض</button>
+                    <button class="btn btn-edit" onclick="editOrder(${order.id})">✏️ تعديل</button>
+                    <button class="btn btn-delete" onclick="deleteOrder(${order.id})">🗑️ حذف</button>
+                </div>
+            `;
+            ordersGrid.appendChild(card);
+        }
+
+        // View Order Details
+        async function viewOrder(id) {
+            try {
+                const response = await fetch(`${ADMIN_ORDERS_URL}/${id}`);
+                const order = await response.json();
+                
+                const content = document.getElementById('orderDetailsContent');
+                content.innerHTML = `
+                    <div class="detail-section">
+                        <h3>معلومات الطلب</h3>
+                        <div class="detail-row">
+                            <span>رقم الطلب:</span>
+                            <strong>#${order.id}</strong>
+                        </div>
+                        <div class="detail-row">
+                            <span>الحالة:</span>
+                            <strong class="order-status status-${order.status}">${statusTranslations[order.status]}</strong>
+                        </div>
+                        <div class="detail-row">
+                            <span>تاريخ الإنشاء:</span>
+                            <strong>${formatDate(order.createdAt)}</strong>
+                        </div>
+                        <div class="detail-row">
+                            <span>آخر تحديث:</span>
+                            <strong>${formatDate(order.updatedAt)}</strong>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3>معلومات العميل</h3>
+                        <div class="detail-row">
+                            <span>الاسم:</span>
+                            <strong>${order.customerName}</strong>
+                        </div>
+                        <div class="detail-row">
+                            <span>الهاتف:</span>
+                            <strong>${order.customerPhone || 'غير متوفر'}</strong>
+                        </div>
+                        <div class="detail-row">
+                            <span>عنوان الشحن:</span>
+                            <strong>${order.shippingAddress || 'غير متوفر'}</strong>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3>المنتجات</h3>
+                        ${order.items.map(item => `
+                            <div class="detail-row">
+                                <div>
+                                    <div style="font-weight: 600; color: var(--text-color);">${item.product.name}</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">
+                                        ${item.quantity} × ${item.unitPrice} جنيه
+                                    </div>
+                                </div>
+                                <strong>${item.subtotal} جنيه</strong>
+                            </div>
+                        `).join('')}
+                        <div class="detail-row" style="margin-top: 1rem; font-size: 1.2rem; color: var(--primary-color);">
+                            <span>الإجمالي:</span>
+                            <strong>${order.totalAmount} جنيه</strong>
+                        </div>
+                    </div>
+                `;
+                
+                viewOrderModal.classList.add('show');
+            } catch (error) {
+                console.error('Error loading order:', error);
+                showMessage('فشل في تحميل بيانات الطلب', 'error');
+            }
+        }
+
+        // Edit Order
+        async function editOrder(id) {
+            try {
+                const response = await fetch(`${ADMIN_ORDERS_URL}/${id}`);
+                const order = await response.json();
+                
+                document.getElementById('editOrderId').value = id;
+                document.getElementById('orderStatus').value = order.status;
+                
+                editOrderModal.classList.add('show');
+            } catch (error) {
+                console.error('Error loading order:', error);
+                showMessage('فشل في تحميل بيانات الطلب', 'error');
+            }
+        }
+
+        // Close Modals
+        function closeViewModal() {
+            viewOrderModal.classList.remove('show');
+        }
+
+        function closeEditModal() {
+            editOrderModal.classList.remove('show');
+        }
+
+        // Delete Order
+        async function deleteOrder(id) {
+            if (!confirm('هل أنت متأكد من حذف هذا الطلب؟')) return;
+
+            try {
+                const response = await fetch(`${ADMIN_ORDERS_URL}/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    showMessage('تم حذف الطلب بنجاح', 'success');
+                    loadOrders();
+                } else {
+                    throw new Error('فشل في حذف الطلب');
+                }
+            } catch (error) {
+                console.error('Error deleting order:', error);
+                showMessage('فشل في حذف الطلب', 'error');
+            }
+        }
+
+        // Submit Edit Form
+        editOrderForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const orderId = document.getElementById('editOrderId').value;
+            const newStatus = document.getElementById('orderStatus').value;
+
+            try {
+                // Get current order data
+                const getResponse = await fetch(`${ADMIN_ORDERS_URL}/${orderId}`);
+                const currentOrder = await getResponse.json();
+
+                // Update only the status
+                currentOrder.status = newStatus;
+
+                const response = await fetch(`${ADMIN_ORDERS_URL}/${orderId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(currentOrder)
+                });
+
+                if (response.ok) {
+                    showMessage('تم تحديث حالة الطلب بنجاح', 'success');
+                    closeEditModal();
+                    loadOrders();
+                } else {
+                    throw new Error('فشل في تحديث الطلب');
+                }
+            } catch (error) {
+                console.error('Error updating order:', error);
+                showMessage('فشل في تحديث الطلب', 'error');
+            }
+        });
+
+        // Pagination
+        function renderPagination() {
+            pagination.innerHTML = '';
+            
+            if (totalPages <= 1) return;
+
+            for (let i = 0; i < totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+                btn.textContent = i + 1;
+                btn.onclick = () => {
+                    currentPage = i;
+                    loadOrders();
+                };
+                pagination.appendChild(btn);
+            }
+        }
+
+        // Search and Filter (client-side for now)
+        let searchTimeout;
+        searchBox.addEventListener('input', () => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                filterOrders();
+            }, 500);
+        });
+
+        statusFilter.addEventListener('change', () => {
+            filterOrders();
+        });
+
+        function filterOrders() {
+            const searchTerm = searchBox.value.toLowerCase();
+            const statusValue = statusFilter.value;
+
+            ordersGrid.innerHTML = '';
+            
+            let filtered = allOrders.filter(order => {
+                const matchesSearch = !searchTerm || 
+                    order.customerName.toLowerCase().includes(searchTerm) ||
+                    (order.customerPhone && order.customerPhone.includes(searchTerm)) ||
+                    order.id.toString().includes(searchTerm);
+                
+                const matchesStatus = !statusValue || order.status === statusValue;
+                
+                return matchesSearch && matchesStatus;
+            });
+
+            if (filtered.length === 0) {
+                ordersGrid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🔍</div>
+                        <h3>لا توجد نتائج</h3>
+                        <p>لم يتم العثور على طلبات تطابق البحث</p>
+                    </div>
+                `;
+            } else {
+                filtered.forEach(order => displayOrder(order));
+            }
+        }
+
+        // Close modals on outside click
+        viewOrderModal.addEventListener('click', (e) => {
+            if (e.target === viewOrderModal) {
+                closeViewModal();
+            }
+        });
+
+        editOrderModal.addEventListener('click', (e) => {
+            if (e.target === editOrderModal) {
+                closeEditModal();
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initDarkMode();
+            loadOrders();
+        });
+    </script>
+</body>
+</html>
