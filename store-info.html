@@ -452,10 +452,6 @@
                         <label for="phone">رقم الهاتف</label>
                         <input type="tel" id="phone" name="phone" placeholder="مثال: 01234567890">
                     </div>
-                    <div class="form-group">
-                        <!-- <label for="orderEmails">البريد الإلكتروني للطلبات</label>
-                        <input type="text" id="orderEmails" name="orderEmails" placeholder="email1@example.com, email2@example.com"> -->
-                    </div>
                 </div>
 
                 <!-- Social Media Section -->
@@ -518,7 +514,7 @@
     </div>
 
     <script>
-        const API_BASE_URL = 'https://api.gold-perfumes.com/api';
+        const API_BASE_URL = 'http://localhost:8082/api';
         const ADMIN_INFO_URL = `${API_BASE_URL}/admin/info`;
 
         // DOM Elements
@@ -532,7 +528,6 @@
 
         // Form inputs
         const phoneInput = document.getElementById('phone');
-        // const orderEmailsInput = document.getElementById('orderEmails');
         const facebookLinkInput = document.getElementById('facebookLink');
         const instagramLinkInput = document.getElementById('instagramLink');
         const tiktokLinkInput = document.getElementById('tiktokLink');
@@ -584,7 +579,7 @@
             if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
                 return imagePath;
             }
-            return `https://api.gold-perfumes.com${imagePath.startsWith('/') ? '' : '/'}${imagePath}`;
+            return `http://localhost:8082${imagePath.startsWith('/') ? '' : '/'}${imagePath}`;
         }
 
         // Load Current Admin Info
@@ -614,10 +609,6 @@
                     <span>${data.phone || 'غير محدد'}</span>
                 </div>
                 <div class="info-item">
-                    <label>البريد الإلكتروني:</label>
-                    <span>${data.orderEmails || 'غير محدد'}</span>
-                </div>
-                <div class="info-item">
                     <label>فيسبوك:</label>
                     <span>${data.facebookLink ? '✓ محدد' : 'غير محدد'}</span>
                 </div>
@@ -643,7 +634,6 @@
         // Populate Form with Current Data
         function populateForm(data) {
             phoneInput.value = data.phone || '';
-            orderEmailsInput.value = data.orderEmails || '';
             facebookLinkInput.value = data.facebookLink || '';
             instagramLinkInput.value = data.instagramLink || '';
             tiktokLinkInput.value = data.tiktokLink || '';
@@ -699,7 +689,6 @@
 
             // Add text fields
             if (phoneInput.value) formData.append('phone', phoneInput.value);
-            if (orderEmailsInput.value) formData.append('orderEmails', orderEmailsInput.value);
             if (facebookLinkInput.value) formData.append('facebookLink', facebookLinkInput.value);
             if (instagramLinkInput.value) formData.append('instagramLink', instagramLinkInput.value);
             if (tiktokLinkInput.value) formData.append('tiktokLink', tiktokLinkInput.value);

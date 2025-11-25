@@ -172,13 +172,41 @@
             box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
         }
 
-        .product-image {
+        .product-image-container {
+            position: relative;
             width: 100%;
             height: 200px;
-            object-fit: cover;
-            border-radius: 10px;
             margin-bottom: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
             border: 2px solid var(--border-color);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-image-slider {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 5px;
+        }
+
+        .image-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+        }
+
+        .image-dot.active {
+            background: white;
         }
 
         .product-header {
@@ -349,18 +377,37 @@
             width: auto;
         }
 
-        .image-preview {
-            width: 100%;
-            max-height: 200px;
-            object-fit: contain;
-            border-radius: 10px;
+        .image-preview-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
             margin-top: 1rem;
-            display: none;
-            border: 2px solid var(--border-color);
         }
 
-        .image-preview.show {
-            display: block;
+        .image-preview {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid var(--border-color);
+            position: relative;
+        }
+
+        .remove-image {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .submit-btn {
@@ -561,9 +608,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="productImage">صورة المنتج</label>
-                    <input type="file" id="productImage" accept="image/*">
-                    <img id="imagePreview" class="image-preview" alt="معاينة الصورة">
+                    <label for="productImages">صور المنتج (يمكن اختيار أكثر من صورة)</label>
+                    <input type="file" id="productImages" accept="image/*" multiple>
+                    <div class="image-preview-container" id="imagePreviewContainer"></div>
                 </div>
 
                 <div class="form-group">
@@ -579,7 +626,7 @@
     </div>
 
     <script>
-        const API_BASE_URL = 'https://api.gold-perfumes.com/api';
+        const API_BASE_URL = 'http://localhost:8082/api';
         const ADMIN_PRODUCTS_URL = `${API_BASE_URL}/admin/products`;
         const ADMIN_CATEGORIES_URL = `${API_BASE_URL}/admin/categories`;
 
@@ -588,6 +635,8 @@
         let totalPages = 0;
         let categories = [];
         let currentEditId = null;
+        let selectedImages = [];
+        let existingImages = [];
 
         // DOM Elements
         const productsGrid = document.getElementById('productsGrid');
@@ -601,8 +650,8 @@
         const categoryFilter = document.getElementById('categoryFilter');
         const statusFilter = document.getElementById('statusFilter');
         const darkModeToggle = document.getElementById('darkModeToggle');
-        const imagePreview = document.getElementById('imagePreview');
-        const productImage = document.getElementById('productImage');
+        const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+        const productImages = document.getElementById('productImages');
 
         // Dark Mode
         function initDarkMode() {
@@ -630,7 +679,7 @@
         function buildImageUrl(imagePath) {
             if (!imagePath) return '';
             if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) return imagePath;
-            return `https://api.gold-perfumes.com${imagePath.startsWith('/') ? '' : '/'}${imagePath}`;
+            return `http://localhost:8082${imagePath.startsWith('/') ? '' : '/'}${imagePath}`;
         }
 
         // Load Categories
@@ -692,14 +741,37 @@
 
         // Display Product Card
         function displayProduct(product) {
-            const imageUrl = product.imageUrl ? buildImageUrl(product.imageUrl) : '';
+            const images = product.images || [];
             const statusClass = product.active ? 'status-active' : 'status-inactive';
             const statusText = product.active ? 'نشط' : 'غير نشط';
 
             const card = document.createElement('div');
             card.className = 'product-card';
+            
+            let imageHtml = '';
+            if (images.length > 0) {
+                imageHtml = `
+                    <div class="product-image-container">
+                        <img src="${buildImageUrl(images[0])}" alt="${product.name}" class="product-image" onerror="this.style.display='none'">
+                        ${images.length > 1 ? `
+                            <div class="product-image-slider">
+                                ${images.map((_, index) => `
+                                    <div class="image-dot ${index === 0 ? 'active' : ''}" data-index="${index}"></div>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            } else {
+                imageHtml = `
+                    <div class="product-image-container" style="display: flex; align-items: center; justify-content: center; font-size: 4rem; background: var(--bg-secondary);">
+                        🌹
+                    </div>
+                `;
+            }
+
             card.innerHTML = `
-                ${imageUrl ? `<img src="${imageUrl}" alt="${product.name}" class="product-image" onerror="this.style.display='none'">` : '<div style="height: 200px; display: flex; align-items: center; justify-content: center; font-size: 4rem; background: var(--bg-secondary); border-radius: 10px; margin-bottom: 1rem;">🌹</div>'}
+                ${imageHtml}
                 <div class="product-header">
                     <h3 class="product-title">${product.name}</h3>
                     <span class="product-status ${statusClass}">${statusText}</span>
@@ -717,12 +789,34 @@
                         <span>الفئة:</span>
                         <strong>${product.category?.name || 'غير محدد'}</strong>
                     </div>
+                    <div class="info-row">
+                        <span>عدد الصور:</span>
+                        <strong>${images.length}</strong>
+                    </div>
                 </div>
                 <div class="product-actions">
                     <button class="btn btn-edit" onclick="editProduct(${product.id})">✏️ تعديل</button>
                     <button class="btn btn-delete" onclick="deleteProduct(${product.id})">🗑️ حذف</button>
                 </div>
             `;
+            
+            // Add image slider functionality
+            if (images.length > 1) {
+                const imageContainer = card.querySelector('.product-image-container');
+                const imageElement = card.querySelector('.product-image');
+                const dots = card.querySelectorAll('.image-dot');
+                
+                dots.forEach(dot => {
+                    dot.addEventListener('click', () => {
+                        const index = parseInt(dot.getAttribute('data-index'));
+                        imageElement.src = buildImageUrl(images[index]);
+                        
+                        dots.forEach(d => d.classList.remove('active'));
+                        dot.classList.add('active');
+                    });
+                });
+            }
+            
             productsGrid.appendChild(card);
         }
 
@@ -750,7 +844,9 @@
             modalTitle.textContent = 'إضافة منتج جديد';
             productForm.reset();
             document.getElementById('productId').value = '';
-            imagePreview.classList.remove('show');
+            imagePreviewContainer.innerHTML = '';
+            selectedImages = [];
+            existingImages = [];
             productModal.classList.add('show');
         }
 
@@ -770,11 +866,29 @@
                 document.getElementById('productCategory').value = product.category?.id || '';
                 document.getElementById('productActive').checked = product.active;
 
-                if (product.imageUrl) {
-                    imagePreview.src = buildImageUrl(product.imageUrl);
-                    imagePreview.classList.add('show');
-                }
+                // Display existing images
+                existingImages = product.images || [];
+                imagePreviewContainer.innerHTML = '';
+                existingImages.forEach((imageUrl, index) => {
+                    const img = document.createElement('img');
+                    img.src = buildImageUrl(imageUrl);
+                    img.className = 'image-preview';
+                    img.alt = `صورة المنتج ${index + 1}`;
+                    
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'remove-image';
+                    removeBtn.innerHTML = '✕';
+                    removeBtn.onclick = () => removeExistingImage(index);
+                    
+                    const container = document.createElement('div');
+                    container.style.position = 'relative';
+                    container.appendChild(img);
+                    container.appendChild(removeBtn);
+                    
+                    imagePreviewContainer.appendChild(container);
+                });
 
+                selectedImages = [];
                 productModal.classList.add('show');
             } catch (error) {
                 console.error('Error loading product:', error);
@@ -782,11 +896,19 @@
             }
         }
 
+        // Remove existing image
+        function removeExistingImage(index) {
+            existingImages.splice(index, 1);
+            editProduct(currentEditId); // Reload the form
+        }
+
         // Close Modal
         function closeProductModal() {
             productModal.classList.remove('show');
             productForm.reset();
             currentEditId = null;
+            selectedImages = [];
+            existingImages = [];
         }
 
         // Delete Product
@@ -811,17 +933,69 @@
         }
 
         // Image Preview
-        productImage.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
+        productImages.addEventListener('change', function(e) {
+            const files = Array.from(e.target.files);
+            selectedImages = files;
+            
+            imagePreviewContainer.innerHTML = '';
+            
+            // Display existing images
+            existingImages.forEach((imageUrl, index) => {
+                const img = document.createElement('img');
+                img.src = buildImageUrl(imageUrl);
+                img.className = 'image-preview';
+                img.alt = `صورة المنتج ${index + 1}`;
+                
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'remove-image';
+                removeBtn.innerHTML = '✕';
+                removeBtn.onclick = () => removeExistingImage(index);
+                
+                const container = document.createElement('div');
+                container.style.position = 'relative';
+                container.appendChild(img);
+                container.appendChild(removeBtn);
+                
+                imagePreviewContainer.appendChild(container);
+            });
+            
+            // Display new selected images
+            files.forEach((file, index) => {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    imagePreview.src = e.target.result;
-                    imagePreview.classList.add('show');
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'image-preview';
+                    img.alt = `صورة جديدة ${index + 1}`;
+                    
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'remove-image';
+                    removeBtn.innerHTML = '✕';
+                    removeBtn.onclick = () => removeSelectedImage(index);
+                    
+                    const container = document.createElement('div');
+                    container.style.position = 'relative';
+                    container.appendChild(img);
+                    container.appendChild(removeBtn);
+                    
+                    imagePreviewContainer.appendChild(container);
                 };
                 reader.readAsDataURL(file);
-            }
+            });
         });
+
+        // Remove selected image
+        function removeSelectedImage(index) {
+            selectedImages.splice(index, 1);
+            
+            // Update file input
+            const dt = new DataTransfer();
+            selectedImages.forEach(file => dt.items.add(file));
+            productImages.files = dt.files;
+            
+            // Refresh preview
+            productImages.dispatchEvent(new Event('change'));
+        }
 
         // Submit Form
         productForm.addEventListener('submit', async function(e) {
@@ -835,14 +1009,16 @@
             formData.append('categoryId', document.getElementById('productCategory').value);
             formData.append('active', document.getElementById('productActive').checked);
 
-            const imageFile = productImage.files[0];
-            if (imageFile) {
-                formData.append('image', imageFile);
-            }
+            // Add new images
+            selectedImages.forEach(image => {
+                formData.append('images', image);
+            });
 
             try {
                 let response;
                 if (currentEditId) {
+                    // For update, we need to handle existing images differently
+                    // This would require additional backend support
                     response = await fetch(`${ADMIN_PRODUCTS_URL}/${currentEditId}`, {
                         method: 'PUT',
                         body: formData

@@ -498,6 +498,11 @@
             color: white;
         }
 
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+        }
+
         .btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 5px 15px var(--shadow-color);
@@ -1666,10 +1671,6 @@
         function createProductCard(product, position) {
             const card = document.createElement('div');
             card.className = `product-card ${position}`;
-            card.onclick = () => {
-                // عند النقر على أي مكان في البطاقة، يتم التوجيه إلى صفحة المنتج
-                window.location.href = `product.html?id=${product.id}`;
-            };
             
             const imageUrl = product.images && product.images[0] ? buildImageUrl(product.images[0]) : 'https://via.placeholder.com/400x300?text=No+Image';
             const price = product.price ? product.price.toLocaleString('ar-EG') : '0';
@@ -1683,7 +1684,8 @@
                     <div class="product-footer">
                         <div class="product-price">${price} ج.م</div>
                         <div class="product-actions">
-                            <button class="btn btn-primary" onclick="event.stopPropagation(); addToCart(${product.id})">🛒</button>
+                            <button class="btn btn-primary" onclick="addToCart(${product.id})">🛒</button>
+                            <a href="product.html?id=${product.id}" class="btn btn-secondary">👁️</a>
                         </div>
                     </div>
                 </div>
