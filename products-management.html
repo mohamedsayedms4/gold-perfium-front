@@ -626,7 +626,7 @@
     </div>
 
     <script>
-        const API_BASE_URL = 'http://localhost:8082/api';
+        const API_BASE_URL = 'https://api.gold-perfumes.com/api';
         const ADMIN_PRODUCTS_URL = `${API_BASE_URL}/admin/products`;
         const ADMIN_CATEGORIES_URL = `${API_BASE_URL}/admin/categories`;
 
@@ -679,7 +679,7 @@
         function buildImageUrl(imagePath) {
             if (!imagePath) return '';
             if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) return imagePath;
-            return `http://localhost:8082${imagePath.startsWith('/') ? '' : '/'}${imagePath}`;
+            return `https://api.gold-perfumes.com${imagePath.startsWith('/') ? '' : '/'}${imagePath}`;
         }
 
         // Load Categories
@@ -1079,3 +1079,4 @@
     </script>
 </body>
 </html>
+

@@ -1266,7 +1266,7 @@
 
     <script>
         // API URLs
-        const API_BASE_URL = 'http://localhost:8082/api';
+        const API_BASE_URL = 'https://api.gold-perfumes.com/api';
         const PRODUCTS_URL = `${API_BASE_URL}/products/active`;
         const SEARCH_URL = `${API_BASE_URL}/products/search`;
         const ORDERS_URL = `${API_BASE_URL}/orders`;
@@ -1428,7 +1428,7 @@
             
             // إذا كان مسار ملف، أضف الـ base URL
             if (imagePath.startsWith('/') || imagePath.startsWith('uploads/')) {
-                return `http://localhost:8082${imagePath.startsWith('/') ? '' : '/'}${imagePath}`;
+                return `https://api.gold-perfumes.com${imagePath.startsWith('/') ? '' : '/'}${imagePath}`;
             }
             
             return imagePath;
