@@ -21,6 +21,9 @@
             --card-bg: #ffffff;
             --border-color: #f0e6d2;
             --shadow-color: rgba(212, 175, 55, 0.2);
+            --success-color: #2ed573;
+            --warning-color: #ffa502;
+            --danger-color: #ff4757;
         }
 
         .dark-mode {
@@ -116,23 +119,77 @@
             font-weight: 900;
         }
 
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .search-filter-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
         .search-box {
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto 2rem;
+            flex: 1;
+            min-width: 300px;
             padding: 1rem;
             background: var(--card-bg);
             border: 2px solid var(--border-color);
             border-radius: 10px;
             font-size: 1rem;
             color: var(--text-color);
-            display: block;
         }
 
         .search-box:focus {
             outline: none;
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+
+        .filter-select {
+            padding: 1rem;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            color: var(--text-color);
+            min-width: 150px;
         }
 
         .categories-grid {
@@ -149,12 +206,24 @@
             padding: 2rem;
             transition: all 0.3s;
             box-shadow: 0 5px 20px var(--shadow-color);
+            position: relative;
+            overflow: hidden;
         }
 
         .category-card:hover {
             transform: translateY(-5px);
             border-color: var(--primary-color);
             box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
         }
 
         .category-icon {
@@ -225,7 +294,7 @@
         }
 
         .btn-delete {
-            background: #ff4757;
+            background: var(--danger-color);
             color: white;
         }
 
@@ -249,6 +318,12 @@
 
         .modal.show {
             display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .modal-content {
@@ -258,6 +333,12 @@
             width: 90%;
             max-width: 500px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: scale(0.9);
+            animation: scaleIn 0.3s ease forwards;
+        }
+
+        @keyframes scaleIn {
+            to { transform: scale(1); }
         }
 
         .modal-header {
@@ -297,7 +378,8 @@
         }
 
         .form-group input,
-        .form-group textarea {
+        .form-group textarea,
+        .form-group select {
             width: 100%;
             padding: 1rem;
             background: var(--bg-color);
@@ -308,7 +390,8 @@
         }
 
         .form-group input:focus,
-        .form-group textarea:focus {
+        .form-group textarea:focus,
+        .form-group select:focus {
             outline: none;
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
@@ -347,6 +430,7 @@
             cursor: pointer;
             color: var(--text-color);
             font-weight: bold;
+            transition: all 0.3s;
         }
 
         .page-btn:hover {
@@ -393,18 +477,24 @@
 
         .message.show {
             display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .message.success {
             background: #e6ffe6;
-            color: #2ed573;
-            border: 2px solid #2ed573;
+            color: var(--success-color);
+            border: 2px solid var(--success-color);
         }
 
         .message.error {
             background: #ffe6e6;
-            color: #ff4757;
-            border: 2px solid #ff4757;
+            color: var(--danger-color);
+            border: 2px solid var(--danger-color);
         }
 
         .empty-state {
@@ -416,6 +506,65 @@
         .empty-state-icon {
             font-size: 4rem;
             margin-bottom: 1rem;
+        }
+
+        .confirm-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .confirm-modal.show {
+            display: flex;
+        }
+
+        .confirm-content {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .confirm-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--danger-color);
+        }
+
+        .confirm-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .confirm-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .confirm-cancel {
+            background: var(--bg-secondary);
+            color: var(--text-color);
+        }
+
+        .confirm-delete {
+            background: var(--danger-color);
+            color: white;
         }
 
         @media (max-width: 768px) {
@@ -430,6 +579,14 @@
 
             .categories-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .search-filter-container {
+                flex-direction: column;
+            }
+
+            .search-box {
+                min-width: 100%;
             }
         }
     </style>
@@ -447,9 +604,45 @@
     <div class="container">
         <h1 class="page-title">إدارة الفئات</h1>
 
+        <div class="stats-container" id="statsContainer">
+            <div class="stat-card">
+                <div class="stat-icon">📂</div>
+                <div class="stat-value" id="totalCategories">0</div>
+                <div class="stat-label">إجمالي الفئات</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📦</div>
+                <div class="stat-value" id="totalProducts">0</div>
+                <div class="stat-label">إجمالي المنتجات</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📈</div>
+                <div class="stat-value" id="avgProducts">0</div>
+                <div class="stat-label">متوسط المنتجات لكل فئة</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🆕</div>
+                <div class="stat-value" id="recentCategories">0</div>
+                <div class="stat-label">فئات جديدة هذا الشهر</div>
+            </div>
+        </div>
+
         <div class="message" id="messageBox"></div>
 
-        <input type="text" class="search-box" id="searchBox" placeholder="🔍 بحث عن فئة...">
+        <div class="search-filter-container">
+            <input type="text" class="search-box" id="searchBox" placeholder="🔍 بحث عن فئة...">
+            <select class="filter-select" id="sortSelect">
+                <option value="name">ترتيب أبجدي</option>
+                <option value="products">الأكثر منتجات</option>
+                <option value="recent">الأحدث</option>
+                <option value="oldest">الأقدم</option>
+            </select>
+            <select class="filter-select" id="statusSelect">
+                <option value="all">جميع الفئات</option>
+                <option value="active">الفئات النشطة</option>
+                <option value="inactive">الفئات غير النشطة</option>
+            </select>
+        </div>
 
         <div class="loading" id="loadingIndicator">
             <div class="spinner"></div>
@@ -480,8 +673,38 @@
                     <textarea id="categoryDescription" rows="4"></textarea>
                 </div>
 
+                <div class="form-group">
+                    <label for="parentCategory">الفئة الرئيسية</label>
+                    <select id="parentCategory">
+                        <option value="">لا توجد (فئة رئيسية)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="categoryStatus">حالة الفئة</label>
+                    <select id="categoryStatus">
+                        <option value="active">نشطة</option>
+                        <option value="inactive">غير نشطة</option>
+                    </select>
+                </div>
+
                 <button type="submit" class="submit-btn">💾 حفظ الفئة</button>
             </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="confirm-modal" id="deleteModal">
+        <div class="confirm-content">
+            <div class="confirm-icon">⚠️</div>
+            <h3>تأكيد الحذف</h3>
+            <p>هل أنت متأكد من أنك تريد حذف هذه الفئة؟</p>
+            <p id="deleteCategoryName" style="font-weight: bold; color: var(--danger-color); margin: 0.5rem 0;"></p>
+            <p style="color: var(--warning-color); font-size: 0.9rem;">هذا الإجراء لا يمكن التراجع عنه!</p>
+            <div class="confirm-buttons">
+                <button class="confirm-btn confirm-cancel" onclick="closeDeleteModal()">إلغاء</button>
+                <button class="confirm-btn confirm-delete" id="confirmDeleteBtn">حذف</button>
+            </div>
         </div>
     </div>
 
@@ -494,6 +717,7 @@
         let totalPages = 0;
         let currentEditId = null;
         let allCategories = [];
+        let categoryToDelete = null;
 
         // DOM Elements
         const categoriesGrid = document.getElementById('categoriesGrid');
@@ -504,7 +728,18 @@
         const categoryForm = document.getElementById('categoryForm');
         const modalTitle = document.getElementById('modalTitle');
         const searchBox = document.getElementById('searchBox');
+        const sortSelect = document.getElementById('sortSelect');
+        const statusSelect = document.getElementById('statusSelect');
         const darkModeToggle = document.getElementById('darkModeToggle');
+        const deleteModal = document.getElementById('deleteModal');
+        const deleteCategoryName = document.getElementById('deleteCategoryName');
+        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+        
+        // Stats elements
+        const totalCategoriesEl = document.getElementById('totalCategories');
+        const totalProductsEl = document.getElementById('totalProducts');
+        const avgProductsEl = document.getElementById('avgProducts');
+        const recentCategoriesEl = document.getElementById('recentCategories');
 
         // Dark Mode
         function initDarkMode() {
@@ -528,6 +763,26 @@
             setTimeout(() => messageBox.classList.remove('show'), 5000);
         }
 
+        // Update Stats
+        function updateStats(categories) {
+            const totalCategories = categories.length;
+            const totalProducts = categories.reduce((sum, category) => sum + (category.products?.length || 0), 0);
+            const avgProducts = totalCategories > 0 ? Math.round(totalProducts / totalCategories) : 0;
+            
+            // Calculate recent categories (created this month)
+            const currentMonth = new Date().getMonth();
+            const currentYear = new Date().getFullYear();
+            const recentCategories = categories.filter(category => {
+                const createdDate = new Date(category.createdAt);
+                return createdDate.getMonth() === currentMonth && createdDate.getFullYear() === currentYear;
+            }).length;
+
+            totalCategoriesEl.textContent = totalCategories;
+            totalProductsEl.textContent = totalProducts;
+            avgProductsEl.textContent = avgProducts;
+            recentCategoriesEl.textContent = recentCategories;
+        }
+
         // Load Categories
         async function loadCategories() {
             loadingIndicator.style.display = 'flex';
@@ -540,6 +795,9 @@
                 allCategories = data.content || [];
                 totalPages = data.totalPages || 0;
 
+                // Update stats
+                updateStats(allCategories);
+
                 if (allCategories.length === 0) {
                     categoriesGrid.innerHTML = `
                         <div class="empty-state">
@@ -549,7 +807,11 @@
                         </div>
                     `;
                 } else {
-                    allCategories.forEach(category => displayCategory(category));
+                    // Apply filters and sorting
+                    let filteredCategories = filterCategories(allCategories);
+                    filteredCategories = sortCategories(filteredCategories);
+                    
+                    filteredCategories.forEach(category => displayCategory(category));
                 }
 
                 renderPagination();
@@ -561,17 +823,58 @@
             }
         }
 
+        // Filter categories based on search and status
+        function filterCategories(categories) {
+            const searchTerm = searchBox.value.toLowerCase();
+            const statusFilter = statusSelect.value;
+            
+            return categories.filter(category => {
+                const matchesSearch = category.name.toLowerCase().includes(searchTerm) || 
+                                     (category.description && category.description.toLowerCase().includes(searchTerm));
+                
+                const matchesStatus = statusFilter === 'all' || 
+                                    (statusFilter === 'active' && category.status !== 'inactive') ||
+                                    (statusFilter === 'inactive' && category.status === 'inactive');
+                
+                return matchesSearch && matchesStatus;
+            });
+        }
+
+        // Sort categories
+        function sortCategories(categories) {
+            const sortBy = sortSelect.value;
+            
+            return categories.sort((a, b) => {
+                switch(sortBy) {
+                    case 'name':
+                        return a.name.localeCompare(b.name);
+                    case 'products':
+                        return (b.products?.length || 0) - (a.products?.length || 0);
+                    case 'recent':
+                        return new Date(b.createdAt) - new Date(a.createdAt);
+                    case 'oldest':
+                        return new Date(a.createdAt) - new Date(b.createdAt);
+                    default:
+                        return 0;
+                }
+            });
+        }
+
         // Display Category Card
         function displayCategory(category) {
             const productsCount = category.products?.length || 0;
             const icons = ['🌹', '💐', '🌺', '🌸', '🏵️', '🌻', '🌼'];
             const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+            
+            const statusBadge = category.status === 'inactive' ? 
+                '<span style="color: var(--danger-color); font-size: 0.8rem; background: rgba(255, 71, 87, 0.1); padding: 0.2rem 0.5rem; border-radius: 10px;">غير نشط</span>' : 
+                '<span style="color: var(--success-color); font-size: 0.8rem; background: rgba(46, 213, 115, 0.1); padding: 0.2rem 0.5rem; border-radius: 10px;">نشط</span>';
 
             const card = document.createElement('div');
             card.className = 'category-card';
             card.innerHTML = `
                 <div class="category-icon">${randomIcon}</div>
-                <h3 class="category-name">${category.name}</h3>
+                <h3 class="category-name">${category.name} ${statusBadge}</h3>
                 <p class="category-description">${category.description || 'لا يوجد وصف'}</p>
                 <div class="category-meta">
                     <div class="meta-item">
@@ -585,7 +888,7 @@
                 </div>
                 <div class="category-actions">
                     <button class="btn btn-edit" onclick="editCategory(${category.id})">✏️ تعديل</button>
-                    <button class="btn btn-delete" onclick="deleteCategory(${category.id})">🗑️ حذف</button>
+                    <button class="btn btn-delete" onclick="confirmDeleteCategory(${category.id}, '${category.name}')">🗑️ حذف</button>
                 </div>
             `;
             categoriesGrid.appendChild(card);
@@ -597,6 +900,19 @@
             
             if (totalPages <= 1) return;
 
+            // Previous button
+            if (currentPage > 0) {
+                const prevBtn = document.createElement('button');
+                prevBtn.className = 'page-btn';
+                prevBtn.textContent = 'السابق';
+                prevBtn.onclick = () => {
+                    currentPage--;
+                    loadCategories();
+                };
+                pagination.appendChild(prevBtn);
+            }
+
+            // Page numbers
             for (let i = 0; i < totalPages; i++) {
                 const btn = document.createElement('button');
                 btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
@@ -607,6 +923,18 @@
                 };
                 pagination.appendChild(btn);
             }
+
+            // Next button
+            if (currentPage < totalPages - 1) {
+                const nextBtn = document.createElement('button');
+                nextBtn.className = 'page-btn';
+                nextBtn.textContent = 'التالي';
+                nextBtn.onclick = () => {
+                    currentPage++;
+                    loadCategories();
+                };
+                pagination.appendChild(nextBtn);
+            }
         }
 
         // Open Add Modal
@@ -615,7 +943,26 @@
             modalTitle.textContent = 'إضافة فئة جديدة';
             categoryForm.reset();
             document.getElementById('categoryId').value = '';
+            document.getElementById('categoryStatus').value = 'active';
             categoryModal.classList.add('show');
+            
+            // Load parent categories for dropdown
+            loadParentCategories();
+        }
+
+        // Load parent categories for dropdown
+        function loadParentCategories() {
+            const parentSelect = document.getElementById('parentCategory');
+            parentSelect.innerHTML = '<option value="">لا توجد (فئة رئيسية)</option>';
+            
+            allCategories.forEach(category => {
+                if (!category.parentId) { // Only show categories without parents as potential parents
+                    const option = document.createElement('option');
+                    option.value = category.id;
+                    option.textContent = category.name;
+                    parentSelect.appendChild(option);
+                }
+            });
         }
 
         // Edit Category
@@ -629,6 +976,11 @@
                 document.getElementById('categoryId').value = id;
                 document.getElementById('categoryName').value = category.name;
                 document.getElementById('categoryDescription').value = category.description || '';
+                document.getElementById('categoryStatus').value = category.status || 'active';
+                
+                // Load parent categories and set current parent
+                loadParentCategories();
+                document.getElementById('parentCategory').value = category.parentId || '';
 
                 categoryModal.classList.add('show');
             } catch (error) {
@@ -644,17 +996,31 @@
             currentEditId = null;
         }
 
+        // Confirm Delete Category
+        function confirmDeleteCategory(id, name) {
+            categoryToDelete = id;
+            deleteCategoryName.textContent = name;
+            deleteModal.classList.add('show');
+        }
+
+        // Close Delete Modal
+        function closeDeleteModal() {
+            deleteModal.classList.remove('show');
+            categoryToDelete = null;
+        }
+
         // Delete Category
-        async function deleteCategory(id) {
-            if (!confirm('هل أنت متأكد من حذف هذه الفئة؟')) return;
+        async function deleteCategory() {
+            if (!categoryToDelete) return;
 
             try {
-                const response = await fetch(`${ADMIN_CATEGORIES_URL}/${id}`, {
+                const response = await fetch(`${ADMIN_CATEGORIES_URL}/${categoryToDelete}`, {
                     method: 'DELETE'
                 });
 
                 if (response.ok) {
                     showMessage('تم حذف الفئة بنجاح', 'success');
+                    closeDeleteModal();
                     loadCategories();
                 } else {
                     throw new Error('فشل في حذف الفئة');
@@ -662,6 +1028,8 @@
             } catch (error) {
                 console.error('Error deleting category:', error);
                 showMessage('فشل في حذف الفئة', 'error');
+            } finally {
+                categoryToDelete = null;
             }
         }
 
@@ -671,8 +1039,14 @@
 
             const categoryData = {
                 name: document.getElementById('categoryName').value,
-                description: document.getElementById('categoryDescription').value
+                description: document.getElementById('categoryDescription').value,
+                status: document.getElementById('categoryStatus').value
             };
+
+            const parentId = document.getElementById('parentCategory').value;
+            if (parentId) {
+                categoryData.parentId = parseInt(parentId);
+            }
 
             try {
                 let response;
@@ -707,7 +1081,7 @@
             }
         });
 
-        // Search
+        // Search and Filter
         let searchTimeout;
         searchBox.addEventListener('input', () => {
             clearTimeout(searchTimeout);
@@ -717,12 +1091,31 @@
             }, 500);
         });
 
+        sortSelect.addEventListener('change', () => {
+            currentPage = 0;
+            loadCategories();
+        });
+
+        statusSelect.addEventListener('change', () => {
+            currentPage = 0;
+            loadCategories();
+        });
+
         // Close modal on outside click
         categoryModal.addEventListener('click', (e) => {
             if (e.target === categoryModal) {
                 closeCategoryModal();
             }
         });
+
+        deleteModal.addEventListener('click', (e) => {
+            if (e.target === deleteModal) {
+                closeDeleteModal();
+            }
+        });
+
+        // Confirm delete button
+        confirmDeleteBtn.addEventListener('click', deleteCategory);
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {

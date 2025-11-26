@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - عطور جولد</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        button[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+        #message {
+            text-align: center;
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            display: none;
+        }
+
+        #message.show {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        #message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        #message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .icon {
+            display: inline-block;
+            margin-left: 5px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .logo p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <h1>عطور جولد</h1>
+            <p>نظام إدارة المتجر</p>
+        </div>
+        
+        <h2>تسجيل الدخول</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">اسم المستخدم</label>
+                <input type="text" id="username" required placeholder="أدخل اسم المستخدم">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">كلمة المرور</label>
+                <input type="password" id="password" required placeholder="أدخل كلمة المرور">
+            </div>
+            
+            <button type="submit" id="submitBtn">
+                تسجيل الدخول
+            </button>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                جاري التحقق...
+            </div>
+        </form>
+
+        <p id="message"></p>
+    </div>
+
+    <script>
+        const form = document.getElementById("loginForm");
+        const message = document.getElementById("message");
+        const submitBtn = document.getElementById("submitBtn");
+        const loading = document.getElementById("loading");
+
+        // التحقق إذا كان المستخدم مسجل بالفعل
+        function checkExistingAuth() {
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                const [name, value] = cookie.trim().split('=');
+                if (name === 'authToken' && value) {
+                    // إذا كان هناك توكن، تحقق من صحته
+                    verifyToken(value);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // التحقق من صحة التوكن الموجود
+        async function verifyToken(token) {
+            try {
+                loading.style.display = 'block';
+                submitBtn.disabled = true;
+                
+                const response = await fetch("https://api.gold-perfumes.com/api/admin/products?page=0&size=1", {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Basic ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    // إذا كان التوكن صالح، توجيه مباشر للوحة التحكم
+                    message.className = "success show";
+                    message.textContent = "✓ تم التحقق من الجلسة، جاري التوجيه...";
+                    setTimeout(() => {
+                        window.location.href = "admin.html";
+                    }, 1000);
+                } else {
+                    // إذا كان التوكن غير صالح، احذفه
+                    document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                    loading.style.display = 'none';
+                    submitBtn.disabled = false;
+                }
+            } catch (error) {
+                console.error("Error verifying token:", error);
+                loading.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        }
+
+        form.addEventListener("submit", async function(e) {
+            e.preventDefault();
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            if (!username || !password) {
+                message.className = "error show";
+                message.textContent = "✕ يرجى ملء جميع الحقول";
+                return;
+            }
+
+            // تحويل username:password إلى Base64
+            const token = btoa(`${username}:${password}`);
+
+            try {
+                // إظهار حالة التحميل
+                loading.style.display = 'block';
+                submitBtn.disabled = true;
+                message.className = "";
+
+                // إرسال request للمسار المحمي
+                const response = await fetch("https://api.gold-perfumes.com/api/admin/products?page=0&size=1", {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Basic ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    // إذا صحيح
+                    message.className = "success show";
+                    message.textContent = "✓ تم تسجيل الدخول بنجاح! جاري التحويل...";
+                    
+                    // حفظ الـ token في الكوكيز
+                    document.cookie = `authToken=${token}; path=/; max-age=86400; Secure; SameSite=Strict`;
+                    
+                } else if (response.status === 401) {
+                    // إذا غلط اليوزر أو الباسورد
+                    message.className = "error show";
+                    message.textContent = "✕ اسم المستخدم أو كلمة المرور غير صحيحة!";
+                } else {
+                    message.className = "error show";
+                    message.textContent = "✕ حدث خطأ أثناء تسجيل الدخول.";
+                }
+            } catch (err) {
+                console.error(err);
+                message.className = "error show";
+                message.textContent = "✕ خطأ في الاتصال بالخادم. يرجى المحاولة مرة أخرى.";
+            } finally {
+                loading.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        });
+
+        // التحقق من المصادقة الحالية عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            checkExistingAuth();
+        });
+
+        // إضافة إمكانية الدخول بالزر Enter
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                form.dispatchEvent(new Event('submit'));
+            }
+        });
+    </script>
+</body>
+</html>
