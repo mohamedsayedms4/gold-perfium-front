@@ -1487,6 +1487,21 @@
                 padding: 0.4rem 0.8rem;
                 font-size: 0.9rem;
             }
+
+            /* Mobile Navigation Icons */
+            .nav-icons {
+                display: flex;
+                gap: 0.5rem;
+                align-items: center;
+            }
+
+            .nav-icons .search-icon,
+            .nav-icons .dark-mode-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.3rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1519,29 +1534,110 @@
                 gap: 0.5rem;
             }
         }
+
+        /* Mobile Navigation Icons */
+        .nav-icons {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        /* Categories Slider */
+        .categories-slider-container {
+            position: relative;
+            overflow: hidden;
+            margin: 2rem 0;
+        }
+
+        .categories-slider-wrapper {
+            display: flex;
+            transition: transform 0.3s ease;
+            gap: 1rem;
+            padding: 0 1rem;
+        }
+
+        .category-slide {
+            flex: 0 0 auto;
+            width: 200px;
+        }
+
+        .category-slide .category-card {
+            width: 100%;
+            height: 100%;
+        }
+
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--card-bg);
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px var(--shadow-color);
+        }
+
+        .slider-arrow:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .slider-arrow.prev {
+            right: 0;
+        }
+
+        .slider-arrow.next {
+            left: 0;
+        }
+
+        @media (max-width: 768px) {
+            .category-slide {
+                width: 180px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .category-slide {
+                width: 160px;
+            }
+            
+            .slider-arrow {
+                width: 35px;
+                height: 35px;
+            }
+        }
     </style>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
 </head>
 <body>
     <!-- Navigation -->
     <nav>
-        <div class="logo-container">
+        <div class="logo-container" onclick="window.location.href='index.html'" style="cursor: pointer;">
             <img id="logoImage" src="" alt="Logo" class="logo" style="display: none;">
             <span class="brand-name">عطور جولد</span>
         </div>
-        <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+        
+        <!-- Mobile Icons (Search and Dark Mode) -->
+        <div class="nav-icons">
+            <button class="search-icon" id="searchIcon">🔍</button>
+            <button class="dark-mode-toggle" id="darkModeToggle">🌙</button>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+        </div>
+        
         <ul class="nav-links" id="navLinks">
             <li><a href="#home">الرئيسية</a></li>
             <li><a href="#categories">التصنيفات</a></li>
             <li><a href="#all-products">جميع المنتجات</a></li>
             <li><a href="#about">من نحن</a></li>
             <li><a href="#contact">تواصل معنا</a></li>
-            <li>
-                <button class="search-icon" id="searchIcon">🔍</button>
-            </li>
-            <li>
-                <button class="dark-mode-toggle" id="darkModeToggle">🌙</button>
-            </li>
         </ul>
     </nav>
 
@@ -1583,6 +1679,12 @@
         <div id="categoriesLoading" class="loading">
             <div class="spinner"></div>
             <p style="color: var(--primary-color); font-size: 1.2rem; font-weight: bold;">جاري تحميل التصنيفات...</p>
+        </div>
+
+        <div id="categoriesSliderContainer" class="categories-slider-container" style="display: none;">
+            <button class="slider-arrow prev" onclick="prevCategorySlide()">❮</button>
+            <div class="categories-slider-wrapper" id="categoriesSliderWrapper"></div>
+            <button class="slider-arrow next" onclick="nextCategorySlide()">❯</button>
         </div>
 
         <div id="categoriesGrid" class="categories-grid" style="display: none;"></div>
@@ -1752,6 +1854,10 @@
         let totalCategoryPages = 0;
         const pageSize = 8; // عدد المنتجات في كل صفحة
 
+        // متغيرات سلايدر التصنيفات
+        let currentCategorySlide = 0;
+        let categoriesPerSlide = 4;
+
         // DOM Elements
         const cartModal = document.getElementById('cartModal');
         const orderModal = document.getElementById('orderModal');
@@ -1781,6 +1887,8 @@
         const allProductsLoading = document.getElementById('allProductsLoading');
         const productsGrid = document.getElementById('productsGrid');
         const categoryProductsGrid = document.getElementById('categoryProductsGrid');
+        const categoriesSliderContainer = document.getElementById('categoriesSliderContainer');
+        const categoriesSliderWrapper = document.getElementById('categoriesSliderWrapper');
 
         const allProductsPagination = document.getElementById('allProductsPagination');
         const allProductsPageInfo = document.getElementById('allProductsPageInfo');
@@ -2109,11 +2217,68 @@
             }
         }
 
-        // عرض التصنيفات كأيقونات
+        // عرض التصنيفات كسلايدر
         function displayCategories() {
             categoriesLoading.style.display = 'none';
-            categoriesGrid.style.display = 'grid';
+            
+            // عرض التصنيفات كسلايدر في حالة الموبايل
+            if (window.innerWidth <= 768) {
+                categoriesSliderContainer.style.display = 'block';
+                categoriesGrid.style.display = 'none';
+                displayCategoriesSlider();
+            } else {
+                categoriesSliderContainer.style.display = 'none';
+                categoriesGrid.style.display = 'grid';
+                displayCategoriesGrid();
+            }
+        }
 
+        // عرض التصنيفات كسلايدر
+        function displayCategoriesSlider() {
+            categoriesSliderWrapper.innerHTML = '';
+
+            categories.forEach(category => {
+                const categorySlide = document.createElement('div');
+                categorySlide.className = 'category-slide';
+                categorySlide.onclick = () => showCategoryProducts(category);
+
+                // صور افتراضية للأيقونات حسب الاسم لو لم تأتِ صورة من الـ API
+                let iconUrl = category.image ? buildImageUrl(category.image) : '';
+
+                if (!iconUrl) {
+                    const name = (category.name || '').trim();
+                    if (name.includes('رجالي') || name.includes('رجالية')) {
+                        iconUrl = 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=200&h=200&fit=crop';
+                    } else if (name.includes('نسائي') || name.includes('نسائية')) {
+                        iconUrl = 'https://images.unsplash.com/photo-1590732870484-8bd8c0f964ca?w=200&h=200&fit=crop';
+                    } else if (name.includes('أطفال')) {
+                        iconUrl = 'https://images.unsplash.com/photo-1490077476659-095159692ab5?w=200&h=200&fit=crop';
+                    } else if (name.includes('عروض') || name.includes('عرض')) {
+                        iconUrl = 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=200&h=200&fit=crop';
+                    } else {
+                        iconUrl = 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=200&h=200&fit=crop';
+                    }
+                }
+
+                categorySlide.innerHTML = `
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <img src="${iconUrl}" alt="${category.name}" onerror="this.src='https://via.placeholder.com/200x200?text=عطور'">
+                        </div>
+                        <div class="category-content">
+                            <h3 class="category-name">${category.name}</h3>
+                            <p class="category-description">${category.description || 'تصنيف مميز من العطور'}</p>
+                            <div class="category-products-count">اضغط لعرض المنتجات</div>
+                        </div>
+                    </div>
+                `;
+
+                categoriesSliderWrapper.appendChild(categorySlide);
+            });
+        }
+
+        // عرض التصنيفات كشبكة
+        function displayCategoriesGrid() {
             categoriesGrid.innerHTML = '';
 
             categories.forEach(category => {
@@ -2152,6 +2317,25 @@
 
                 categoriesGrid.appendChild(categoryCard);
             });
+        }
+
+        // التنقل في سلايدر التصنيفات
+        function nextCategorySlide() {
+            const totalSlides = Math.ceil(categories.length / categoriesPerSlide);
+            currentCategorySlide = (currentCategorySlide + 1) % totalSlides;
+            updateCategorySlider();
+        }
+
+        function prevCategorySlide() {
+            const totalSlides = Math.ceil(categories.length / categoriesPerSlide);
+            currentCategorySlide = (currentCategorySlide - 1 + totalSlides) % totalSlides;
+            updateCategorySlider();
+        }
+
+        function updateCategorySlider() {
+            const slideWidth = 220; // عرض كل شريحة
+            const translateX = currentCategorySlide * slideWidth * categoriesPerSlide;
+            categoriesSliderWrapper.style.transform = `translateX(${translateX}px)`;
         }
 
         // إظهار مؤشر التحميل للتصنيفات
@@ -2617,15 +2801,17 @@
             }
         });
 
-        // إيقاف التمرير التلقائي عند التفاعل
-        document.addEventListener('DOMContentLoaded', () => {
-            if (sliderWrapper) {
-                sliderWrapper.addEventListener('mouseenter', stopAutoSlide);
-                sliderWrapper.addEventListener('mouseleave', startAutoSlide);
-            }
-            if (allProductsSlider) {
-                allProductsSlider.addEventListener('mouseenter', stopAllProductsAutoSlide);
-                allProductsSlider.addEventListener('mouseleave', startAllProductsAutoSlide);
+        // إعادة حساب عدد التصنيفات في كل شريحة عند تغيير حجم النافذة
+        window.addEventListener('resize', function() {
+            if (window.innerWidth <= 768) {
+                categoriesPerSlide = 3;
+                if (window.innerWidth <= 480) {
+                    categoriesPerSlide = 2;
+                }
+                displayCategories();
+            } else {
+                categoriesPerSlide = 4;
+                displayCategories();
             }
         });
 
