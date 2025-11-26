@@ -2131,7 +2131,7 @@
                     throw new Error('فشل في جلب التصنيفات');
                 }
                 const data = await response.json();
-                
+
                 // استخراج التصنيفات من الاستجابة
                 categories = data.content || data._embedded?.categories || data;
                 
@@ -2183,17 +2183,11 @@
         // عرض التصنيفات كسلايدر
         function displayCategories() {
             categoriesLoading.style.display = 'none';
-            
-            // عرض التصنيفات كسلايدر في حالة الموبايل
-            if (window.innerWidth <= 768) {
-                categoriesSliderContainer.style.display = 'block';
-                categoriesGrid.style.display = 'none';
-                displayCategoriesSlider();
-            } else {
-                categoriesSliderContainer.style.display = 'none';
-                categoriesGrid.style.display = 'grid';
-                displayCategoriesGrid();
-            }
+
+            // إلغاء السلايدر نهائياً وعرض الشبكة فقط على كل المقاسات
+            categoriesSliderContainer.style.display = 'none';
+            categoriesGrid.style.display = 'grid';
+            displayCategoriesGrid();
         }
 
         // عرض التصنيفات كسلايدر

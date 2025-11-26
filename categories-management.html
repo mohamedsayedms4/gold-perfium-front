@@ -226,10 +226,25 @@
             background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
         }
 
-        .category-icon {
-            font-size: 3rem;
-            text-align: center;
+        .category-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
             margin-bottom: 1rem;
+            background-color: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 3rem;
+        }
+
+        .category-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
         }
 
         .category-name {
@@ -290,6 +305,11 @@
 
         .btn-edit {
             background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+        }
+
+        .btn-image {
+            background: linear-gradient(135deg, #3498db, #2980b9);
             color: white;
         }
 
@@ -395,6 +415,15 @@
             outline: none;
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+
+        .image-preview {
+            width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: none;
         }
 
         .submit-btn {
@@ -693,6 +722,30 @@
         </div>
     </div>
 
+    <!-- Upload Image Modal -->
+    <div class="modal" id="imageModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">تغيير صورة الفئة</h2>
+                <button class="close-modal" onclick="closeImageModal()">✕</button>
+            </div>
+            <form id="imageForm">
+                <input type="hidden" id="imageCategoryId">
+                
+                <div class="form-group">
+                    <label for="categoryImage">اختر صورة جديدة</label>
+                    <input type="file" id="categoryImage" accept="image/*" required>
+                </div>
+
+                <div class="form-group">
+                    <img id="imagePreview" class="image-preview" alt="معاينة الصورة">
+                </div>
+
+                <button type="submit" class="submit-btn">📤 رفع الصورة</button>
+            </form>
+        </div>
+    </div>
+
     <!-- Delete Confirmation Modal -->
     <div class="confirm-modal" id="deleteModal">
         <div class="confirm-content">
@@ -709,7 +762,7 @@
     </div>
 
     <script>
-        const API_BASE_URL = 'https://api.gold-perfumes.com/api';
+        const API_BASE_URL = 'http://localhost:8082/api';
         const ADMIN_CATEGORIES_URL = `${API_BASE_URL}/admin/categories`;
 
         let currentPage = 0;
@@ -718,6 +771,7 @@
         let currentEditId = null;
         let allCategories = [];
         let categoryToDelete = null;
+        let categoryToChangeImage = null;
 
         // DOM Elements
         const categoriesGrid = document.getElementById('categoriesGrid');
@@ -725,7 +779,9 @@
         const messageBox = document.getElementById('messageBox');
         const pagination = document.getElementById('pagination');
         const categoryModal = document.getElementById('categoryModal');
+        const imageModal = document.getElementById('imageModal');
         const categoryForm = document.getElementById('categoryForm');
+        const imageForm = document.getElementById('imageForm');
         const modalTitle = document.getElementById('modalTitle');
         const searchBox = document.getElementById('searchBox');
         const sortSelect = document.getElementById('sortSelect');
@@ -734,6 +790,8 @@
         const deleteModal = document.getElementById('deleteModal');
         const deleteCategoryName = document.getElementById('deleteCategoryName');
         const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+        const categoryImageInput = document.getElementById('categoryImage');
+        const imagePreview = document.getElementById('imagePreview');
         
         // Stats elements
         const totalCategoriesEl = document.getElementById('totalCategories');
@@ -872,8 +930,17 @@
 
             const card = document.createElement('div');
             card.className = 'category-card';
+            
+            // Determine what to show in the image section
+            let imageContent = '';
+            if (category.image) {
+                imageContent = `<img src="${category.image}" alt="${category.name}" onerror="this.style.display='none'; this.parentElement.innerHTML='${randomIcon}'; this.parentElement.style.fontSize='3rem'; this.parentElement.style.color='var(--text-secondary)';">`;
+            } else {
+                imageContent = randomIcon;
+            }
+            
             card.innerHTML = `
-                <div class="category-icon">${randomIcon}</div>
+                <div class="category-image">${imageContent}</div>
                 <h3 class="category-name">${category.name} ${statusBadge}</h3>
                 <p class="category-description">${category.description || 'لا يوجد وصف'}</p>
                 <div class="category-meta">
@@ -888,6 +955,7 @@
                 </div>
                 <div class="category-actions">
                     <button class="btn btn-edit" onclick="editCategory(${category.id})">✏️ تعديل</button>
+                    <button class="btn btn-image" onclick="changeCategoryImage(${category.id})">🖼️ صورة</button>
                     <button class="btn btn-delete" onclick="confirmDeleteCategory(${category.id}, '${category.name}')">🗑️ حذف</button>
                 </div>
             `;
@@ -989,11 +1057,27 @@
             }
         }
 
-        // Close Modal
+        // Change Category Image
+        function changeCategoryImage(id) {
+            categoryToChangeImage = id;
+            imageForm.reset();
+            imagePreview.style.display = 'none';
+            document.getElementById('imageCategoryId').value = id;
+            imageModal.classList.add('show');
+        }
+
+        // Close Modals
         function closeCategoryModal() {
             categoryModal.classList.remove('show');
             categoryForm.reset();
             currentEditId = null;
+        }
+
+        function closeImageModal() {
+            imageModal.classList.remove('show');
+            imageForm.reset();
+            imagePreview.style.display = 'none';
+            categoryToChangeImage = null;
         }
 
         // Confirm Delete Category
@@ -1033,7 +1117,7 @@
             }
         }
 
-        // Submit Form
+        // Submit Category Form
         categoryForm.addEventListener('submit', async function(e) {
             e.preventDefault();
 
@@ -1081,6 +1165,46 @@
             }
         });
 
+        // Submit Image Form
+        imageForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('image', categoryImageInput.files[0]);
+            
+            try {
+                const response = await fetch(`${ADMIN_CATEGORIES_URL}/${categoryToChangeImage}/image`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    showMessage('تم رفع الصورة بنجاح', 'success');
+                    closeImageModal();
+                    loadCategories();
+                } else {
+                    throw new Error('فشل في رفع الصورة');
+                }
+            } catch (error) {
+                console.error('Error uploading image:', error);
+                showMessage('فشل في رفع الصورة', 'error');
+            }
+        });
+
+        // Image preview
+        categoryImageInput.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                }
+                
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
         // Search and Filter
         let searchTimeout;
         searchBox.addEventListener('input', () => {
@@ -1105,6 +1229,12 @@
         categoryModal.addEventListener('click', (e) => {
             if (e.target === categoryModal) {
                 closeCategoryModal();
+            }
+        });
+
+        imageModal.addEventListener('click', (e) => {
+            if (e.target === imageModal) {
+                closeImageModal();
             }
         });
 
