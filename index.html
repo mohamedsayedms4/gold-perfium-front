@@ -1551,9 +1551,11 @@
 
         .categories-slider-wrapper {
             display: flex;
-            transition: transform 0.3s ease;
             gap: 1rem;
             padding: 0 1rem;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
         }
 
         .category-slide {
@@ -1566,38 +1568,6 @@
             height: 100%;
         }
 
-        .slider-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: var(--card-bg);
-            border: 2px solid var(--primary-color);
-            color: var(--primary-color);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 10;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 10px var(--shadow-color);
-        }
-
-        .slider-arrow:hover {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        .slider-arrow.prev {
-            right: 0;
-        }
-
-        .slider-arrow.next {
-            left: 0;
-        }
-
         @media (max-width: 768px) {
             .category-slide {
                 width: 180px;
@@ -1607,11 +1577,6 @@
         @media (max-width: 480px) {
             .category-slide {
                 width: 160px;
-            }
-            
-            .slider-arrow {
-                width: 35px;
-                height: 35px;
             }
         }
     </style>
@@ -1682,9 +1647,7 @@
         </div>
 
         <div id="categoriesSliderContainer" class="categories-slider-container" style="display: none;">
-            <button class="slider-arrow prev" onclick="prevCategorySlide()">❮</button>
             <div class="categories-slider-wrapper" id="categoriesSliderWrapper"></div>
-            <button class="slider-arrow next" onclick="nextCategorySlide()">❯</button>
         </div>
 
         <div id="categoriesGrid" class="categories-grid" style="display: none;"></div>
