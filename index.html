@@ -358,7 +358,7 @@
             box-shadow: 0 8px 35px rgba(212, 175, 55, 0.5);
         }
 
-        /* Categories Section */
+        /* Categories Section - NEW DESIGN */
         .categories {
             padding: 4rem 5%;
             background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-color) 100%);
@@ -375,65 +375,60 @@
             font-weight: 900;
         }
 
-        .categories-grid {
+        /* NEW: Categories Grid with Small Rounded Icons */
+        .categories-grid-new {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(5, 1fr);
             gap: 1.5rem;
             margin-bottom: 3rem;
         }
 
-        .category-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 1.5rem 1rem;
-            box-shadow: 0 10px 30px var(--shadow-color);
-            transition: all 0.3s;
-            cursor: pointer;
-            border: 2px solid var(--border-color);
+        .category-item-new {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 1rem;
+            border-radius: 15px;
         }
 
-        .category-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.3);
-            border-color: var(--primary-color);
+        .category-item-new:hover {
+            transform: translateY(-5px);
+            background: rgba(212, 175, 55, 0.1);
         }
 
-        .category-icon {
+        .category-icon-new {
             width: 80px;
             height: 80px;
             border-radius: 50%;
             overflow: hidden;
             border: 3px solid var(--primary-color);
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--card-bg);
+            box-shadow: 0 5px 15px var(--shadow-color);
         }
 
-        .category-icon img {
+        .category-icon-new img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .category-name {
-            font-size: 1.2rem;
+        .category-name-new {
+            font-size: 1rem;
             color: var(--text-color);
+            font-weight: 600;
             margin-bottom: 0.25rem;
-            font-weight: bold;
         }
 
-        .category-description {
+        .category-description-new {
             color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .category-products-count {
-            color: var(--primary-color);
-            font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         /* All Products Section */
@@ -450,140 +445,223 @@
             margin-bottom: 2rem;
         }
 
-        .view-toggle {
+        /* Slider Container */
+        .slider-container {
+            position: relative;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) var(--bg-secondary);
+            margin: 2rem 0;
+            padding: 10px 0;
+        }
+
+        .slider-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .slider-container::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: 10px;
+        }
+
+        .slider-container::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+
+        .slider-container::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-light);
+        }
+
+        .slider-wrapper {
             display: flex;
-            gap: 1rem;
+            gap: 20px;
+            padding: 10px 0;
         }
 
-        .view-btn {
-            background: var(--card-bg);
-            border: 2px solid var(--border-color);
-            color: var(--text-color);
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: bold;
-        }
-
-        .view-btn.active {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            color: white;
-            border-color: var(--primary-color);
-        }
-
-        .view-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px var(--shadow-color);
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .product-grid-card {
+        /* Product Card Design */
+        .product-card {
+            min-width: 300px;
+            max-width: 300px;
             background: var(--card-bg);
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 10px 25px var(--shadow-color);
-            transition: all 0.3s;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            transition: transform 0.3s;
+            flex-shrink: 0;
             border: 2px solid var(--border-color);
         }
 
-        .product-grid-card:hover {
+        .product-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.2);
             border-color: var(--primary-color);
         }
 
-        .product-grid-image {
+        .product-image {
             width: 100%;
-            height: 250px;
+            height: 200px;
             object-fit: cover;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--border-color) 100%);
         }
 
-        .product-grid-content {
-            padding: 1.5rem;
+        .product-content {
+            padding: 20px;
         }
 
-        .product-grid-category {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            color: white;
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            margin-bottom: 8px;
-        }
-
-        .product-grid-name {
+        .product-title {
             font-size: 1.3rem;
             color: var(--text-color);
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-weight: bold;
         }
 
-        .product-grid-description {
+        .product-description {
             color: var(--text-secondary);
-            margin-bottom: 12px;
-            line-height: 1.5;
             font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            height: 60px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
         }
 
-        .product-grid-footer {
+        .product-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
         }
 
-        .product-grid-price {
+        .product-price {
             font-size: 1.5rem;
             color: var(--primary-color);
             font-weight: bold;
         }
 
-        .product-grid-actions {
-            display: flex;
-            gap: 8px;
+        .product-quantity {
+            background: var(--bg-secondary);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
         }
 
-        .btn-grid {
-            width: 40px;
-            height: 40px;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            font-size: 1.1rem;
-        }
-
-        .btn-primary {
+        .product-category {
+            display: inline-block;
             background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
             color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 10px;
         }
 
-        .btn-grid:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px var(--shadow-color);
+        .product-status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-top: 10px;
         }
 
-        /* Products Section - SLIDER DESIGN */
-        .products {
+        .product-status.active {
+            background: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+        }
+
+        .product-status.inactive {
+            background: rgba(220, 53, 69, 0.2);
+            color: #dc3545;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .add-to-cart-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .add-to-cart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .add-to-cart-btn:disabled {
+            background: var(--text-secondary);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Category Products Section */
+        .category-products {
             padding: 4rem 5%;
             background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-color) 100%);
             transition: background-color 0.3s;
+            display: none;
         }
 
-        .products-header {
+        .category-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .category-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--card-bg);
+            box-shadow: 0 5px 15px var(--shadow-color);
+        }
+
+        .category-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .category-title {
+            font-size: 2rem;
+            color: var(--text-color);
+            font-weight: bold;
+        }
+
+        .category-description {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-top: 5px;
         }
 
         .back-to-categories {
@@ -599,192 +677,12 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            margin-bottom: 2rem;
         }
 
         .back-to-categories:hover {
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
-        }
-
-        .slider-wrapper {
-            position: relative;
-            height: 500px;
-            margin-bottom: 40px;
-        }
-
-        .slider-container {
-            position: relative;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            perspective: 1000px;
-        }
-
-        .product-card {
-            position: absolute;
-            width: 400px;
-            background: var(--card-bg);
-            border-radius: 20px;
-            box-shadow: 0 20px 60px var(--shadow-color);
-            overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            border: 2px solid var(--border-color);
-        }
-
-        .product-card.center {
-            transform: translateX(0) scale(1);
-            z-index: 3;
-            opacity: 1;
-        }
-
-        .product-card.left {
-            transform: translateX(-450px) scale(0.85);
-            z-index: 1;
-            opacity: 0.5;
-        }
-
-        .product-card.right {
-            transform: translateX(450px) scale(0.85);
-            z-index: 1;
-            opacity: 0.5;
-        }
-
-        .product-card.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .product-image {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            transition: transform 0.3s;
-        }
-
-        .product-card:hover .product-image {
-            transform: scale(1.1);
-        }
-
-        .product-content {
-            padding: 25px;
-        }
-
-        .product-category {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            margin-bottom: 10px;
-        }
-
-        .product-name {
-            font-size: 1.5rem;
-            color: var(--text-color);
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-
-        .product-description {
-            color: var(--text-secondary);
-            margin-bottom: 15px;
-            line-height: 1.6;
-        }
-
-        .product-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .product-price {
-            font-size: 1.8rem;
-            color: var(--primary-color);
-            font-weight: bold;
-        }
-
-        .product-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn {
-            width: 45px;
-            height: 45px;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            font-size: 1.2rem;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px var(--shadow-color);
-        }
-
-        .slider-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 10;
-        }
-
-        .slider-nav.prev {
-            left: 20px;
-        }
-
-        .slider-nav.next {
-            right: 20px;
-        }
-
-        .nav-btn {
-            width: 60px;
-            height: 60px;
-            border: none;
-            border-radius: 50%;
-            background: var(--card-bg);
-            box-shadow: 0 5px 20px var(--shadow-color);
-            cursor: pointer;
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .nav-btn:hover {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            color: white;
-            transform: scale(1.1);
-        }
-
-        .slider-dots {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--border-color);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .dot.active {
-            background: var(--primary-color);
-            width: 30px;
-            border-radius: 6px;
         }
 
         /* Features Section */
@@ -1189,6 +1087,8 @@
             justify-content: center;
             align-items: center;
             padding: 2rem;
+            flex-direction: column;
+            gap: 1rem;
         }
 
         .spinner {
@@ -1238,156 +1138,20 @@
             cursor: pointer;
         }
 
-        /* Pagination Styles */
-        .pagination {
+        /* Mobile Navigation Icons */
+        .nav-icons {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
-            margin-top: 2rem;
-            padding: 1rem;
-        }
-
-        .pagination-btn {
-            background: var(--card-bg);
-            border: 2px solid var(--border-color);
-            color: var(--text-color);
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: bold;
-        }
-
-        .pagination-btn:hover:not(:disabled) {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            color: white;
-            border-color: var(--primary-color);
-            transform: translateY(-2px);
-        }
-
-        .pagination-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .pagination-info {
-            color: var(--text-secondary);
-            font-weight: bold;
-        }
-
-        /* Category Buttons */
-        .categories-container {
-            overflow-x: auto;
-            padding: 1rem 0;
-            scrollbar-width: none; /* Hide scrollbar for Firefox */
-            -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
-        }
-        
-        .categories-container::-webkit-scrollbar {
-            display: none; /* Hide scrollbar for Chrome, Safari and Opera */
-        }
-        
-        .categories-slider {
-            display: flex;
-            gap: 1rem;
-            padding: 0 1rem;
-            transition: transform 0.3s ease;
-        }
-        
-        .category-btn {
-            background: var(--card-bg);
-            border: 2px solid var(--primary-color);
-            color: var(--primary-color);
-            padding: 0.75rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.3s ease;
-            flex-shrink: 0;
-        }
-        
-        .category-btn:hover, .category-btn.active {
-            background: var(--primary-color);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-        }
-        
-        /* Products Slider */
-        .products-slider {
-            position: relative;
-            overflow: hidden;
-            padding: 2rem 0;
-        }
-        
-        .products-container {
-            display: flex;
-            transition: transform 0.5s ease;
-            padding: 1rem 0;
-        }
-        
-        .product-slide {
-            min-width: 100%;
-            padding: 0 1rem;
-            box-sizing: border-box;
-        }
-        
-        .slider-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-            transition: all 0.3s ease;
-        }
-        
-        .slider-nav:hover {
-            background: var(--primary-color);
-            transform: translateY(-50%) scale(1.1);
-        }
-        
-        .slider-prev {
-            right: 10px;
-        }
-        
-        .slider-next {
-            left: 10px;
-        }
-        
-        .slider-dots {
-            display: flex;
-            justify-content: center;
-            margin-top: 1rem;
             gap: 0.5rem;
-        }
-        
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #ccc;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .dot.active {
-            background: var(--primary-color);
-            transform: scale(1.2);
+            align-items: center;
         }
 
-        /* Responsive Design Improvements */
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .categories-grid-new {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -1446,71 +1210,44 @@
                 font-size: 1.3rem;
             }
 
-            .product-card {
-                width: 320px;
-            }
-
-            .product-card.left {
-                transform: translateX(-340px) scale(0.8);
-            }
-
-            .product-card.right {
-                transform: translateX(340px) scale(0.8);
-            }
-
-            .slider-nav {
-                display: none;
-            }
-
             .all-products-header {
                 flex-direction: column;
                 gap: 1rem;
                 align-items: flex-start;
             }
 
-            .view-toggle {
-                width: 100%;
-                justify-content: center;
+            /* Categories Grid for Mobile */
+            .categories-grid-new {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
             }
-
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                gap: 1.5rem;
+            
+            .category-icon-new {
+                width: 70px;
+                height: 70px;
             }
-
-            .pagination {
-                flex-wrap: wrap;
-                gap: 0.5rem;
-            }
-
-            .pagination-btn {
-                padding: 0.4rem 0.8rem;
+            
+            .category-name-new {
                 font-size: 0.9rem;
             }
-
-            /* Mobile Navigation Icons */
-            .nav-icons {
-                display: flex;
-                gap: 0.5rem;
-                align-items: center;
+            
+            .category-description-new {
+                font-size: 0.75rem;
             }
 
-            .nav-icons .search-icon,
-            .nav-icons .dark-mode-toggle {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 1.3rem;
+            .category-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .category-title {
+                font-size: 1.5rem;
             }
         }
 
         @media (max-width: 480px) {
-            .product-card {
-                width: 280px;
-            }
-            
-            .products-grid {
-                grid-template-columns: 1fr;
+            .categories-grid-new {
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .hero h1 {
@@ -1523,60 +1260,6 @@
 
             .section-title {
                 font-size: 1.8rem;
-            }
-
-            .categories-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .pagination {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-        }
-
-        /* Mobile Navigation Icons */
-        .nav-icons {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-        }
-
-        /* Categories Slider */
-        .categories-slider-container {
-            position: relative;
-            overflow: hidden;
-            margin: 2rem 0;
-        }
-
-        .categories-slider-wrapper {
-            display: flex;
-            gap: 1rem;
-            padding: 0 1rem;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .category-slide {
-            flex: 0 0 auto;
-            width: 200px;
-        }
-
-        .category-slide .category-card {
-            width: 100%;
-            height: 100%;
-        }
-
-        @media (max-width: 768px) {
-            .category-slide {
-                width: 180px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .category-slide {
-                width: 160px;
             }
         }
     </style>
@@ -1633,11 +1316,11 @@
         <div class="hero-content">
             <h1>عالم من العطور الفاخرة</h1>
             <p>اكتشف تشكيلتنا الحصرية من أرقى العطور العالمية والعربية الأصلية</p>
-            <button class="cta-button" onclick="document.getElementById('all-products').scrollIntoView({behavior: 'smooth'})">استكشف المنتجات</button>
+            <button class="cta-button" onclick="document.getElementById('categories').scrollIntoView({behavior: 'smooth'})">استكشف المنتجات</button>
         </div>
     </section>
 
-    <!-- Categories Section -->
+    <!-- Categories Section - NEW DESIGN -->
     <section class="categories" id="categories">
         <h2 class="section-title">تصنيفاتنا</h2>
         
@@ -1646,32 +1329,8 @@
             <p style="color: var(--primary-color); font-size: 1.2rem; font-weight: bold;">جاري تحميل التصنيفات...</p>
         </div>
 
-        <div id="categoriesSliderContainer" class="categories-slider-container" style="display: none;">
-            <div class="categories-slider-wrapper" id="categoriesSliderWrapper"></div>
-        </div>
-
-        <div id="categoriesGrid" class="categories-grid" style="display: none;"></div>
-    </section>
-
-    <!-- Products Section (Category products with same grid design) -->
-    <section class="products" id="products" style="display: none;">
-        <div class="products-header">
-            <button class="back-to-categories" onclick="showCategories()">
-                ← العودة للتصنيفات
-            </button>
-            <h2 class="section-title" id="categoryTitle">منتجات التصنيف</h2>
-        </div>
-        
-        <div id="productsLoading" class="loading" style="display: none;"></div>
-
-        <div id="categoryProductsGrid" class="products-grid" style="display: none;"></div>
-
-        <!-- Pagination Controls -->
-        <div class="pagination" id="productsPagination" style="display: none;">
-            <button class="pagination-btn" id="prevCategoryPageBtn" onclick="changeCategoryPage(currentCategoryPage - 1)">السابق</button>
-            <span class="pagination-info" id="categoryPageInfo">الصفحة 1 من 1</span>
-            <button class="pagination-btn" id="nextCategoryPageBtn" onclick="changeCategoryPage(currentCategoryPage + 1)">التالي</button>
-        </div>
+        <!-- NEW: Categories Grid with Small Rounded Icons -->
+        <div id="categoriesGridNew" class="categories-grid-new" style="display: none;"></div>
     </section>
 
     <!-- All Products Section -->
@@ -1682,13 +1341,32 @@
         
         <div id="allProductsLoading" class="loading" style="display: none;"></div>
 
-        <div id="productsGrid" class="products-grid" style="display: none;"></div>
+        <!-- Products Slider for All Products -->
+        <div class="slider-container" id="allProductsSlider">
+            <div class="slider-wrapper" id="allProductsWrapper"></div>
+        </div>
+    </section>
 
-        <!-- Pagination Controls -->
-        <div class="pagination" id="allProductsPagination" style="display: none;">
-            <button class="pagination-btn" id="prevPageBtn" onclick="changeAllProductsPage(currentAllProductsPage - 1)">السابق</button>
-            <span class="pagination-info" id="allProductsPageInfo">الصفحة 1 من 1</span>
-            <button class="pagination-btn" id="nextPageBtn" onclick="changeAllProductsPage(currentAllProductsPage + 1)">التالي</button>
+    <!-- Category Products Section -->
+    <section class="category-products" id="categoryProducts">
+        <button class="back-to-categories" onclick="showAllProducts()">
+            ← العودة للتصنيفات
+        </button>
+        <div class="category-header">
+            <div class="category-icon">
+                <img id="categoryProductsImage" src="" alt="Category" onerror="this.src='https://via.placeholder.com/200x200?text=عطور'">
+            </div>
+            <div>
+                <h2 class="category-title" id="categoryProductsTitle">منتجات التصنيف</h2>
+                <p class="category-description" id="categoryProductsDescription">وصف التصنيف</p>
+            </div>
+        </div>
+        
+        <div id="categoryProductsLoading" class="loading" style="display: none;"></div>
+
+        <!-- Products Slider for Category Products -->
+        <div class="slider-container" id="categoryProductsSlider">
+            <div class="slider-wrapper" id="categoryProductsWrapper"></div>
         </div>
     </section>
 
@@ -1798,28 +1476,10 @@
 
         // متغيرات التطبيق
         let categories = [];
-        let products = [];
         let allProducts = [];
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         let adminInfo = null;
-        let currentIndex = 0;
-        let allProductsCurrentIndex = 0; // لم يعد يستخدم للسلايدر لكن نحتفظ به لو احتجناه لاحقاً
-        let autoSlideInterval;
-        let allProductsAutoSlideInterval;
-
-        let currentCategoryId = null;
-        let currentView = 'grid';
-        
-        // متغيرات الباجنيشن
-        let currentAllProductsPage = 0;
-        let totalAllProductsPages = 0;
-        let currentCategoryPage = 0;
-        let totalCategoryPages = 0;
-        const pageSize = 8; // عدد المنتجات في كل صفحة
-
-        // متغيرات سلايدر التصنيفات
-        let currentCategorySlide = 0;
-        let categoriesPerSlide = 4;
+        let currentCategory = null;
 
         // DOM Elements
         const cartModal = document.getElementById('cartModal');
@@ -1841,23 +1501,17 @@
         const contactInfo = document.getElementById('contactInfo');
         const darkModeToggle = document.getElementById('darkModeToggle');
         const searchIcon = document.getElementById('searchIcon');
-        const categoriesGrid = document.getElementById('categoriesGrid');
+        const categoriesGridNew = document.getElementById('categoriesGridNew');
         const categoriesLoading = document.getElementById('categoriesLoading');
-        const productsSection = document.getElementById('products');
-        const productsLoading = document.getElementById('productsLoading');
-        const categoryTitle = document.getElementById('categoryTitle');
         const allProductsSection = document.getElementById('all-products');
         const allProductsLoading = document.getElementById('allProductsLoading');
-        const productsGrid = document.getElementById('productsGrid');
-        const categoryProductsGrid = document.getElementById('categoryProductsGrid');
-        const categoriesSliderContainer = document.getElementById('categoriesSliderContainer');
-        const categoriesSliderWrapper = document.getElementById('categoriesSliderWrapper');
-
-        const allProductsPagination = document.getElementById('allProductsPagination');
-        const allProductsPageInfo = document.getElementById('allProductsPageInfo');
-        const prevPageBtn = document.getElementById('prevPageBtn');
-        const nextPageBtn = document.getElementById('nextPageBtn');
-        const productsPagination = document.getElementById('productsPagination');
+        const allProductsWrapper = document.getElementById('allProductsWrapper');
+        const categoryProductsSection = document.getElementById('categoryProducts');
+        const categoryProductsTitle = document.getElementById('categoryProductsTitle');
+        const categoryProductsDescription = document.getElementById('categoryProductsDescription');
+        const categoryProductsImage = document.getElementById('categoryProductsImage');
+        const categoryProductsLoading = document.getElementById('categoryProductsLoading');
+        const categoryProductsWrapper = document.getElementById('categoryProductsWrapper');
 
         // Dark Mode Functionality
         function initDarkMode() {
@@ -1949,7 +1603,6 @@
                     <div class="search-result-price">${product.price || 0} جنيه</div>
                 `;
                 resultItem.addEventListener('click', () => {
-                    // افتح صفحة المنتج عند النقر على نتيجة البحث
                     window.location.href = `product.html?id=${product.id}`;
                 });
                 searchResults.appendChild(resultItem);
@@ -1967,7 +1620,6 @@
                 updateAdminInfo();
             } catch (error) {
                 console.error('Error fetching admin info:', error);
-                // استخدام قيم افتراضية في حالة الخطأ
                 useDefaultImages();
             }
         }
@@ -1976,12 +1628,10 @@
         function buildImageUrl(imagePath) {
             if (!imagePath) return '';
             
-            // إذا كان الرابط يحتوي على http أو https، استخدمه مباشرة
             if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
                 return imagePath;
             }
             
-            // إذا كان مسار ملف، أضف الـ base URL
             if (imagePath.startsWith('/') || imagePath.startsWith('uploads/')) {
                 return `https://api.gold-perfumes.com${imagePath.startsWith('/') ? '' : '/'}${imagePath}`;
             }
@@ -2000,7 +1650,6 @@
         // استخدام لوجو افتراضي
         function useDefaultLogo() {
             logoImage.style.display = 'none';
-            // يمكنك إضافة نص بديل أو أيقونة بديلة هنا
         }
 
         // استخدام خلفية افتراضية للـ Hero
@@ -2018,13 +1667,11 @@
 
             // تحديث اللوجو
             if (adminInfo.logoImage) {
-                // بناء URL كامل للصورة
                 const logoUrl = buildImageUrl(adminInfo.logoImage);
                 logoImage.src = logoUrl;
                 logoImage.style.display = 'block';
                 logoImage.alt = 'شعار عطور جولد';
                 
-                // إضافة معالجة للخطأ في تحميل الصورة
                 logoImage.onerror = function() {
                     console.error('فشل في تحميل صورة اللوجو:', logoUrl);
                     useDefaultLogo();
@@ -2038,13 +1685,11 @@
                 const mainImageUrl = buildImageUrl(adminInfo.mainDivImage);
                 const hero = document.querySelector('.hero');
                 
-                // استخدام الصورة كخلفية مع تأثيرات
                 hero.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('${mainImageUrl}')`;
                 hero.style.backgroundSize = 'cover';
                 hero.style.backgroundPosition = 'center';
                 hero.style.backgroundRepeat = 'no-repeat';
                 
-                // إضافة معالجة للخطأ في تحميل الصورة
                 const tempImage = new Image();
                 tempImage.onload = function() {
                     console.log('تم تحميل الصورة الرئيسية بنجاح');
@@ -2089,7 +1734,7 @@
                 const whatsappLink = `https://wa.me/${adminInfo.phone.replace(/[^0-9]/g, '')}`;
                 socialHTML += `<a href="${whatsappLink}" target="_blank" title="واتساب">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893c0 0-2.164-1.9-3.262-2.123-.931-.188-1.875-.087-2.607.197-.731.284-1.438.867-1.832 1.417-.394.55-.788 1.102-1.182 1.653-.394.55-.788 1.102-1.182 1.653z"/>
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893c0 0-2.164-1.9-3.262-2.123-.931-.188-1.875-.087-2.607.197-.731.284-1.438.867-1.832 1.417-.394.55-.788 1.102-1.182 1.653z"/>
                     </svg>
                 </a>`;
             }
@@ -2136,7 +1781,7 @@
                 categories = data.content || data._embedded?.categories || data;
                 
                 if (categories && categories.length > 0) {
-                    displayCategories();
+                    displayCategoriesNew();
                 } else {
                     throw new Error('No categories found');
                 }
@@ -2173,31 +1818,57 @@
                         name: 'عروض خاصة',
                         description: 'خصومات وعروض حصرية',
                         image: 'https://images.unsplash.com/photo-1590736969955-1d0c72c4222f?w=500'
+                    },
+                    { 
+                        id: 6, 
+                        name: 'عطور عربية',
+                        description: 'عطور ذات رائحة عربية أصيلة',
+                        image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=500'
+                    },
+                    { 
+                        id: 7, 
+                        name: 'عطور فرنسية',
+                        description: 'عطور فرنسية فاخرة',
+                        image: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=500'
+                    },
+                    { 
+                        id: 8, 
+                        name: 'عطور تركية',
+                        description: 'عطور تركية عالية الجودة',
+                        image: 'https://images.unsplash.com/photo-1590732870484-8bd8c0f964ca?w=500'
+                    },
+                    { 
+                        id: 9, 
+                        name: 'عطور صيفية',
+                        description: 'عطور منعشة للصيف',
+                        image: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=500'
+                    },
+                    { 
+                        id: 10, 
+                        name: 'عطور شتوية',
+                        description: 'عطور دافئة للشتاء',
+                        image: 'https://images.unsplash.com/photo-1590732870484-8bd8c0f964ca?w=500'
                     }
                 ];
                 
-                displayCategories();
+                displayCategoriesNew();
             }
         }
 
-        // عرض التصنيفات كسلايدر
-        function displayCategories() {
+        // NEW: عرض التصنيفات كأيقونات دائرية صغيرة
+        function displayCategoriesNew() {
             categoriesLoading.style.display = 'none';
+            categoriesGridNew.style.display = 'grid';
 
-            // إلغاء السلايدر نهائياً وعرض الشبكة فقط على كل المقاسات
-            categoriesSliderContainer.style.display = 'none';
-            categoriesGrid.style.display = 'grid';
-            displayCategoriesGrid();
-        }
+            categoriesGridNew.innerHTML = '';
 
-        // عرض التصنيفات كسلايدر
-        function displayCategoriesSlider() {
-            categoriesSliderWrapper.innerHTML = '';
+            // عرض أول 10 تصنيفات فقط (صفين كل صف 5)
+            const displayedCategories = categories.slice(0, 10);
 
-            categories.forEach(category => {
-                const categorySlide = document.createElement('div');
-                categorySlide.className = 'category-slide';
-                categorySlide.onclick = () => showCategoryProducts(category);
+            displayedCategories.forEach(category => {
+                const categoryItem = document.createElement('div');
+                categoryItem.className = 'category-item-new';
+                categoryItem.onclick = () => showCategoryProducts(category);
 
                 // صور افتراضية للأيقونات حسب الاسم لو لم تأتِ صورة من الـ API
                 let iconUrl = category.image ? buildImageUrl(category.image) : '';
@@ -2217,82 +1888,18 @@
                     }
                 }
 
-                categorySlide.innerHTML = `
-                    <div class="category-card">
-                        <div class="category-icon">
-                            <img src="${iconUrl}" alt="${category.name}" onerror="this.src='https://via.placeholder.com/200x200?text=عطور'">
-                        </div>
-                        <div class="category-content">
-                            <h3 class="category-name">${category.name}</h3>
-                            <p class="category-description">${category.description || 'تصنيف مميز من العطور'}</p>
-                            <div class="category-products-count">اضغط لعرض المنتجات</div>
-                        </div>
-                    </div>
-                `;
-
-                categoriesSliderWrapper.appendChild(categorySlide);
-            });
-        }
-
-        // عرض التصنيفات كشبكة
-        function displayCategoriesGrid() {
-            categoriesGrid.innerHTML = '';
-
-            categories.forEach(category => {
-                const categoryCard = document.createElement('div');
-                categoryCard.className = 'category-card';
-                categoryCard.onclick = () => showCategoryProducts(category);
-
-                // صور افتراضية للأيقونات حسب الاسم لو لم تأتِ صورة من الـ API
-                let iconUrl = category.image ? buildImageUrl(category.image) : '';
-
-                if (!iconUrl) {
-                    const name = (category.name || '').trim();
-                    if (name.includes('رجالي') || name.includes('رجالية')) {
-                        iconUrl = 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=200&h=200&fit=crop';
-                    } else if (name.includes('نسائي') || name.includes('نسائية')) {
-                        iconUrl = 'https://images.unsplash.com/photo-1590732870484-8bd8c0f964ca?w=200&h=200&fit=crop';
-                    } else if (name.includes('أطفال')) {
-                        iconUrl = 'https://images.unsplash.com/photo-1490077476659-095159692ab5?w=200&h=200&fit=crop';
-                    } else if (name.includes('عروض') || name.includes('عرض')) {
-                        iconUrl = 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=200&h=200&fit=crop';
-                    } else {
-                        iconUrl = 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=200&h=200&fit=crop';
-                    }
-                }
-
-                categoryCard.innerHTML = `
-                    <div class="category-icon">
+                categoryItem.innerHTML = `
+                    <div class="category-icon-new">
                         <img src="${iconUrl}" alt="${category.name}" onerror="this.src='https://via.placeholder.com/200x200?text=عطور'">
                     </div>
                     <div class="category-content">
-                        <h3 class="category-name">${category.name}</h3>
-                        <p class="category-description">${category.description || 'تصنيف مميز من العطور'}</p>
-                        <div class="category-products-count">اضغط لعرض المنتجات</div>
+                        <h3 class="category-name-new">${category.name}</h3>
+                        <p class="category-description-new">${category.description || 'تصنيف مميز'}</p>
                     </div>
                 `;
 
-                categoriesGrid.appendChild(categoryCard);
+                categoriesGridNew.appendChild(categoryItem);
             });
-        }
-
-        // التنقل في سلايدر التصنيفات
-        function nextCategorySlide() {
-            const totalSlides = Math.ceil(categories.length / categoriesPerSlide);
-            currentCategorySlide = (currentCategorySlide + 1) % totalSlides;
-            updateCategorySlider();
-        }
-
-        function prevCategorySlide() {
-            const totalSlides = Math.ceil(categories.length / categoriesPerSlide);
-            currentCategorySlide = (currentCategorySlide - 1 + totalSlides) % totalSlides;
-            updateCategorySlider();
-        }
-
-        function updateCategorySlider() {
-            const slideWidth = 220; // عرض كل شريحة
-            const translateX = currentCategorySlide * slideWidth * categoriesPerSlide;
-            categoriesSliderWrapper.style.transform = `translateX(${translateX}px)`;
         }
 
         // إظهار مؤشر التحميل للتصنيفات
@@ -2300,69 +1907,11 @@
             categoriesLoading.style.display = 'flex';
         }
 
-        // إظهار منتجات التصنيف
-        async function showCategoryProducts(category) {
-            currentCategoryId = category.id;
-            currentCategoryPage = 0; // إعادة تعيين الصفحة
-            categoryTitle.textContent = `منتجات ${category.name}`;
-            
-            // إخفاء قسم التصنيفات وإظهار قسم المنتجات
-            document.getElementById('categories').style.display = 'none';
-            productsSection.style.display = 'block';
-            
-            // جلب منتجات التصنيف
-            await fetchProductsByCategory(category.id, currentCategoryPage);
-        }
-
-        // العودة لعرض التصنيفات
-        function showCategories() {
-            productsSection.style.display = 'none';
-            document.getElementById('categories').style.display = 'block';
-            currentCategoryId = null;
-        }
-
-        // جلب المنتجات حسب التصنيف مع الباجنيشن (عرض Grid)
-        async function fetchProductsByCategory(categoryId, page = 0) {
-            try {
-                showProductsLoading();
-                
-                const response = await fetch(`${PRODUCTS_BY_CATEGORY_URL}/${categoryId}?page=${page}&size=${pageSize}`);
-                if (!response.ok) {
-                    throw new Error('فشل في جلب المنتجات');
-                }
-                const data = await response.json();
-
-                // استخراج المنتجات من الاستجابة
-                products = data.content || data._embedded?.products || data;
-
-                // حساب عدد الصفحات
-                totalCategoryPages = data.totalPages || Math.ceil((products?.length || 0) / pageSize);
-
-                if (!products || products.length === 0) {
-                    productsLoading.style.display = 'none';
-                    categoryProductsGrid.style.display = 'none';
-                    productsPagination.style.display = 'none';
-                    productsSection.insertAdjacentHTML('beforeend', '<div class="error-message">لا توجد منتجات متاحة حالياً لهذا التصنيف.</div>');
-                    return;
-                }
-
-                displayCategoryProductsGrid();
-                updateCategoryPagination();
-            } catch (error) {
-                console.error('Error fetching products by category:', error);
-                productsLoading.style.display = 'none';
-                categoryProductsGrid.style.display = 'none';
-                productsPagination.style.display = 'none';
-                productsSection.insertAdjacentHTML('beforeend', '<div class="error-message">حدث خطأ أثناء تحميل المنتجات، يرجى المحاولة لاحقاً.</div>');
-            }
-        }
-
-        // جلب جميع المنتجات مع الباجنيشن (عرض Grid)
-        async function fetchAllProducts(page = 0) {
-            
+        // جلب جميع المنتجات (عرض سلايدر)
+        async function fetchAllProducts() {
             try {
                 showAllProductsLoading();
-                const response = await fetch(`${PRODUCTS_URL}?page=${page}&size=${pageSize}`);
+                const response = await fetch(`${PRODUCTS_URL}?page=0&size=100`);
                 if (!response.ok) {
                     throw new Error('فشل في جلب المنتجات');
                 }
@@ -2371,156 +1920,262 @@
                 // استخراج المنتجات من الاستجابة
                 allProducts = data.content || data._embedded?.products || data;
 
-                // حساب عدد الصفحات
-                totalAllProductsPages = data.totalPages || Math.ceil((allProducts?.length || 0) / pageSize);
-
                 if (!allProducts || allProducts.length === 0) {
                     allProductsLoading.style.display = 'none';
-                    productsGrid.style.display = 'none';
-                    allProductsPagination.style.display = 'none';
-                    allProductsSection.insertAdjacentHTML('beforeend', '<div class="error-message">لا توجد منتجات متاحة حالياً.</div>');
+                    allProductsSection.style.display = 'none';
                     return;
                 }
 
-                displayAllProductsGrid();
-                updateAllProductsPagination();
+                displayAllProductsSlider();
             } catch (error) {
                 console.error('Error fetching all products:', error);
                 allProductsLoading.style.display = 'none';
-                productsGrid.style.display = 'none';
-                allProductsPagination.style.display = 'none';
-                allProductsSection.insertAdjacentHTML('beforeend', '<div class="error-message">حدث خطأ أثناء تحميل المنتجات، يرجى المحاولة لاحقاً.</div>');
+                allProductsSection.style.display = 'none';
+                // استخدام بيانات تجريبية
+                useMockProducts();
             }
         }
 
-        // تحديث الباجنيشن لجميع المنتجات
-        function updateAllProductsPagination() {
-            allProductsPagination.style.display = 'flex';
-            allProductsPageInfo.textContent = `الصفحة ${currentAllProductsPage + 1} من ${totalAllProductsPages}`;
-            
-            prevPageBtn.disabled = currentAllProductsPage === 0;
-            nextPageBtn.disabled = currentAllProductsPage === totalAllProductsPages - 1;
+        // استخدام بيانات تجريبية للمنتجات
+        function useMockProducts() {
+            allProducts = [
+                { 
+                    id: 1, 
+                    name: 'عطر الذهب الملكي', 
+                    description: 'عطر فاخر برائحة خشبية مميزة للرجال', 
+                    price: 299.99, 
+                    quantity: 15,
+                    active: true,
+                    images: ['https://images.unsplash.com/photo-1541643600914-78b084683601?w=300&h=200&fit=crop'],
+                    categoryName: 'عطور رجالية',
+                    categoryId: 1,
+                    createdAt: '2024-01-15T10:00:00Z',
+                    updatedAt: '2024-01-15T10:00:00Z'
+                },
+                { 
+                    id: 2, 
+                    name: 'عطر الورد الفرنسي', 
+                    description: 'عطر نسائي برائحة الورد والفل الفرنسي', 
+                    price: 349.99, 
+                    quantity: 8,
+                    active: true,
+                    images: ['https://images.unsplash.com/photo-1590732870484-8bd8c0f964ca?w=300&h=200&fit=crop'],
+                    categoryName: 'عطور نسائية',
+                    categoryId: 2,
+                    createdAt: '2024-01-16T11:00:00Z',
+                    updatedAt: '2024-01-16T11:00:00Z'
+                },
+                { 
+                    id: 3, 
+                    name: 'عطر العنبر العربي', 
+                    description: 'عطر عربي أصيل برائحة العنبر والمسك', 
+                    price: 399.99, 
+                    quantity: 12,
+                    active: true,
+                    images: ['https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=300&h=200&fit=crop'],
+                    categoryName: 'عطور عربية',
+                    categoryId: 3,
+                    createdAt: '2024-01-17T12:00:00Z',
+                    updatedAt: '2024-01-17T12:00:00Z'
+                },
+                { 
+                    id: 4, 
+                    name: 'عطر الفانيليا الحلو', 
+                    description: 'عطر حلو برائحة الفانيليا والكاراميل', 
+                    price: 279.99, 
+                    quantity: 20,
+                    active: true,
+                    images: ['https://images.unsplash.com/photo-1590736969955-1d0c72c4222f?w=300&h=200&fit=crop'],
+                    categoryName: 'عطور نسائية',
+                    categoryId: 2,
+                    createdAt: '2024-01-18T13:00:00Z',
+                    updatedAt: '2024-01-18T13:00:00Z'
+                },
+                { 
+                    id: 5, 
+                    name: 'عطر الأخشاب النادرة', 
+                    description: 'عطر رجالي برائحة الأخشاب النادرة والتوابل', 
+                    price: 459.99, 
+                    quantity: 5,
+                    active: true,
+                    images: ['https://images.unsplash.com/photo-1541643600914-78b084683601?w=300&h=200&fit=crop'],
+                    categoryName: 'عطور رجالية',
+                    categoryId: 1,
+                    createdAt: '2024-01-19T14:00:00Z',
+                    updatedAt: '2024-01-19T14:00:00Z'
+                },
+                { 
+                    id: 6, 
+                    name: 'عطر الياسمين الأبيض', 
+                    description: 'عطر ناعم برائحة الياسمين الأبيض النقي', 
+                    price: 319.99, 
+                    quantity: 0,
+                    active: false,
+                    images: ['https://images.unsplash.com/photo-1590732870484-8bd8c0f964ca?w=300&h=200&fit=crop'],
+                    categoryName: 'عطور نسائية',
+                    categoryId: 2,
+                    createdAt: '2024-01-20T15:00:00Z',
+                    updatedAt: '2024-01-20T15:00:00Z'
+                }
+            ];
+
+            displayAllProductsSlider();
         }
 
-        // تغيير صفحة جميع المنتجات
-        function changeAllProductsPage(page) {
-            if (page < 0 || page >= totalAllProductsPages) return;
-            
-            currentAllProductsPage = page;
-            fetchAllProducts(currentAllProductsPage);
-        }
+        // NEW: عرض جميع المنتجات في السلايدر
+        function displayAllProductsSlider() {
+            allProductsLoading.style.display = 'none';
+            allProductsSection.style.display = 'block';
 
-        // تحديث الباجنيشن لمنتجات التصنيف
-        function updateCategoryPagination() {
-            productsPagination.style.display = 'flex';
-            categoryPageInfo.textContent = `الصفحة ${currentCategoryPage + 1} من ${totalCategoryPages}`;
-            
-            prevCategoryPageBtn.disabled = currentCategoryPage === 0;
-            nextCategoryPageBtn.disabled = currentCategoryPage === totalCategoryPages - 1;
-        }
+            allProductsWrapper.innerHTML = '';
 
-        // تغيير صفحة منتجات التصنيف
-        function changeCategoryPage(page) {
-            if (page < 0 || page >= totalCategoryPages) return;
-            
-            currentCategoryPage = page;
-            fetchProductsByCategory(currentCategoryId, currentCategoryPage);
+            if (!allProducts || allProducts.length === 0) {
+                allProductsWrapper.innerHTML = '<div class="no-products">لا توجد منتجات متاحة</div>';
+                return;
+            }
+
+            allProducts.forEach(product => {
+                const productCard = createProductCard(product);
+                allProductsWrapper.appendChild(productCard);
+            });
         }
 
         // إظهار مؤشر التحميل لجميع المنتجات
         function showAllProductsLoading() {
             allProductsLoading.style.display = 'flex';
-            productsGrid.style.display = 'none';
-            allProductsPagination.style.display = 'none';
+            allProductsSection.style.display = 'none';
         }
 
-        // عرض جميع المنتجات في شكل شبكي
-        function displayAllProductsGrid() {
-            productsGrid.style.display = 'grid';
+        // إظهار منتجات التصنيف
+        async function showCategoryProducts(category) {
+            currentCategory = category;
             
-            productsGrid.innerHTML = '';
+            // إخفاء قسم جميع المنتجات وإظهار قسم منتجات التصنيف
+            allProductsSection.style.display = 'none';
+            categoryProductsSection.style.display = 'block';
             
-            allProducts.forEach(product => {
-                const productCard = document.createElement('div');
-                productCard.className = 'product-grid-card';
-                
-                const imageUrl = product.images && product.images[0] ? buildImageUrl(product.images[0]) : 'https://via.placeholder.com/400x300?text=No+Image';
-                const price = product.price ? product.price.toLocaleString('ar-EG') : '0';
-                
-                productCard.innerHTML = `
-                    <img src="${imageUrl}" alt="${product.name}" class="product-grid-image" onerror="this.src='https://via.placeholder.com/400x300?text=صورة+غير+متوفرة'">
-                    <div class="product-grid-content">
-                        <span class="product-grid-category">${product.categoryName || 'عطور'}</span>
-                        <h3 class="product-grid-name">${product.name}</h3>
-                        <p class="product-grid-description">${product.description || 'عطر فاخر بجودة عالية'}</p>
-                        <div class="product-grid-footer">
-                            <div class="product-grid-price">${price} ج.م</div>
-                            <div class="product-grid-actions">
-                                <button class="btn-grid btn-primary" onclick="addToCartFromAllProducts(${product.id})">🛒</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                
-                productCard.addEventListener('click', (e) => {
-                    if (!e.target.closest('.product-grid-actions')) {
-                        window.location.href = `product.html?id=${product.id}`;
-                    }
-                });
-                
-                productsGrid.appendChild(productCard);
-            });
+            // تحديث معلومات التصنيف
+            categoryProductsTitle.textContent = category.name;
+            categoryProductsDescription.textContent = category.description || 'تصنيف مميز';
+            
+            // تحديث صورة التصنيف
+            let categoryImage = category.image ? buildImageUrl(category.image) : '';
+            if (!categoryImage) {
+                categoryImage = 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=200&h=200&fit=crop';
+            }
+            categoryProductsImage.src = categoryImage;
+            
+            // جلب منتجات التصنيف
+            await fetchProductsByCategory(category.id);
         }
 
-        // عرض منتجات التصنيف في شكل شبكي
-        function displayCategoryProductsGrid() {
-            productsLoading.style.display = 'none';
-            categoryProductsGrid.style.display = 'grid';
+        // العودة لعرض جميع المنتجات
+        function showAllProducts() {
+            categoryProductsSection.style.display = 'none';
+            allProductsSection.style.display = 'block';
+            currentCategory = null;
+        }
 
-            categoryProductsGrid.innerHTML = '';
+        // جلب المنتجات حسب التصنيف
+        async function fetchProductsByCategory(categoryId) {
+            try {
+                showCategoryProductsLoading();
+                
+                const response = await fetch(`${PRODUCTS_BY_CATEGORY_URL}/${categoryId}?page=0&size=50`);
+                if (!response.ok) {
+                    throw new Error('فشل في جلب المنتجات');
+                }
+                const data = await response.json();
+
+                // استخراج المنتجات من الاستجابة
+                const products = data.content || data._embedded?.products || data;
+
+                displayCategoryProducts(products);
+            } catch (error) {
+                console.error('Error fetching products by category:', error);
+                // استخدام منتجات من البيانات المحلية
+                const categoryProducts = allProducts.filter(product => 
+                    product.categoryId === categoryId || product.categoryName === currentCategory.name
+                );
+                displayCategoryProducts(categoryProducts);
+            }
+        }
+
+        // عرض منتجات التصنيف
+        function displayCategoryProducts(products) {
+            categoryProductsLoading.style.display = 'none';
+            categoryProductsWrapper.innerHTML = '';
+
+            if (!products || products.length === 0) {
+                categoryProductsWrapper.innerHTML = '<div class="no-products">لا توجد منتجات متاحة لهذا التصنيف</div>';
+                return;
+            }
 
             products.forEach(product => {
-                const productCard = document.createElement('div');
-                productCard.className = 'product-grid-card';
-
-                const imageUrl = product.images && product.images[0] ? buildImageUrl(product.images[0]) : 'https://via.placeholder.com/400x300?text=No+Image';
-                const price = product.price ? product.price.toLocaleString('ar-EG') : '0';
-
-                productCard.innerHTML = `
-                    <img src="${imageUrl}" alt="${product.name}" class="product-grid-image" onerror="this.src='https://via.placeholder.com/400x300?text=صورة+غير+متوفرة'">
-                    <div class="product-grid-content">
-                        <span class="product-grid-category">${product.categoryName || 'عطور'}</span>
-                        <h3 class="product-grid-name">${product.name}</h3>
-                        <p class="product-grid-description">${product.description || 'عطر فاخر بجودة عالية'}</p>
-                        <div class="product-grid-footer">
-                            <div class="product-grid-price">${price} ج.م</div>
-                            <div class="product-grid-actions">
-                                <button class="btn-grid btn-primary" onclick="addToCart(${product.id})">🛒</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-
-                productCard.addEventListener('click', (e) => {
-                    if (!e.target.closest('.product-grid-actions')) {
-                        window.location.href = `product.html?id=${product.id}`;
-                    }
-                });
-
-                categoryProductsGrid.appendChild(productCard);
+                const productCard = createProductCard(product);
+                categoryProductsWrapper.appendChild(productCard);
             });
         }
 
-        // إظهار مؤشر التحميل للمنتجات
-        function showProductsLoading() {
-            productsLoading.style.display = 'flex';
-            categoryProductsGrid.style.display = 'none';
-            productsPagination.style.display = 'none';
+        // إظهار مؤشر التحميل لمنتجات التصنيف
+        function showCategoryProductsLoading() {
+            categoryProductsLoading.style.display = 'flex';
+            categoryProductsWrapper.innerHTML = '';
+        }
+
+        // إنشاء بطاقة منتج
+        function createProductCard(product) {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+            
+            const imageUrl = product.images && product.images[0] ? buildImageUrl(product.images[0]) : 'https://via.placeholder.com/300x200?text=No+Image';
+            const price = product.price ? product.price.toLocaleString('ar-EG') : '0';
+            const quantity = product.quantity || 0;
+            const isActive = product.active !== false;
+            
+            productCard.innerHTML = `
+                <img src="${imageUrl}" alt="${product.name}" class="product-image" onerror="this.src='https://via.placeholder.com/300x200?text=صورة+غير+متوفرة'">
+                <div class="product-content">
+                    <div class="product-title">${product.name}</div>
+                    <div class="product-description">${product.description || 'عطر فاخر بجودة عالية'}</div>
+                    ${product.categoryName ? `<div class="product-category">${product.categoryName}</div>` : ''}
+                    <div class="product-footer">
+                        <div class="product-price">${price} ج.م</div>
+                        <div class="product-quantity">الكمية: ${quantity}</div>
+                    </div>
+                    <div class="product-status ${isActive ? 'active' : 'inactive'}">
+                        ${isActive ? '✓ متاح' : '✗ غير متاح'}
+                    </div>
+                    <div class="product-actions">
+                        <button class="add-to-cart-btn" onclick="addToCart(${product.id})" ${!isActive ? 'disabled' : ''}>
+                            🛒 أضف للسلة
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            productCard.addEventListener('click', (e) => {
+                if (!e.target.closest('.product-actions')) {
+                    window.location.href = `product.html?id=${product.id}`;
+                }
+            });
+            
+            return productCard;
         }
 
         // إدارة سلة التسوق
         function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
+            let product;
+            
+            // البحث عن المنتج في البيانات الحالية
+            if (currentCategory) {
+                // إذا كنا في عرض تصنيف، نبحث في منتجات التصنيف
+                product = allProducts.find(p => p.id === productId);
+            } else {
+                // إذا كنا في عرض جميع المنتجات
+                product = allProducts.find(p => p.id === productId);
+            }
+            
             if (!product) return;
 
             const existingItem = cart.find(item => item.product.id === productId);
@@ -2540,37 +2195,7 @@
             // إشعار بصري
             const button = event.target;
             const originalText = button.textContent;
-            button.textContent = '✓';
-            button.disabled = true;
-            
-            setTimeout(() => {
-                button.textContent = originalText;
-                button.disabled = false;
-            }, 2000);
-        }
-
-        function addToCartFromAllProducts(productId) {
-            const product = allProducts.find(p => p.id === productId);
-            if (!product) return;
-
-            const existingItem = cart.find(item => item.product.id === productId);
-            
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({
-                    product: product,
-                    quantity: 1,
-                    unitPrice: product.price || 0
-                });
-            }
-            
-            updateCart();
-            
-            // إشعار بصري
-            const button = event.target;
-            const originalText = button.textContent;
-            button.textContent = '✓';
+            button.textContent = '✓ تمت الإضافة';
             button.disabled = true;
             
             setTimeout(() => {
@@ -2755,32 +2380,6 @@
             }
             if (e.target === searchModal) {
                 closeSearch();
-            }
-        });
-
-        // إعادة حساب عدد التصنيفات في كل شريحة عند تغيير حجم النافذة
-        window.addEventListener('resize', function() {
-            if (window.innerWidth <= 768) {
-                categoriesPerSlide = 3;
-                if (window.innerWidth <= 480) {
-                    categoriesPerSlide = 2;
-                }
-                displayCategories();
-            } else {
-                categoriesPerSlide = 4;
-                displayCategories();
-            }
-        });
-
-        // التحكم بالكيبورد
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') {
-                if (currentCategoryId) nextSlide();
-                else nextAllProductsSlide();
-            }
-            if (e.key === 'ArrowRight') {
-                if (currentCategoryId) prevSlide();
-                else prevAllProductsSlide();
             }
         });
 
