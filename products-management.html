@@ -21,6 +21,9 @@
             --card-bg: #ffffff;
             --border-color: #f0e6d2;
             --shadow-color: rgba(212, 175, 55, 0.2);
+            --success-color: #2ed573;
+            --warning-color: #ffa502;
+            --danger-color: #ff4757;
         }
 
         .dark-mode {
@@ -39,6 +42,118 @@
             color: var(--text-color);
             min-height: 100vh;
             transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Login Modal Styles */
+        .login-modal {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-content {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 20px 50px rgba(212, 175, 55, 0.3);
+            text-align: center;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .login-title {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            background: var(--bg-color);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            color: var(--text-color);
+            transition: all 0.3s;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.3);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .login-error {
+            color: var(--danger-color);
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .login-error.show {
+            display: block;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
         }
 
         nav {
@@ -100,10 +215,31 @@
             color: white;
         }
 
+        .logout-btn {
+            background: var(--danger-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #ff3333;
+            transform: scale(1.05);
+        }
+
         .container {
             max-width: 1400px;
             margin: 100px auto 2rem;
             padding: 2rem 5%;
+            display: none;
+        }
+
+        .container.show {
+            display: block;
         }
 
         .page-title {
@@ -231,12 +367,12 @@
 
         .status-active {
             background: #e6ffe6;
-            color: #2ed573;
+            color: var(--success-color);
         }
 
         .status-inactive {
             background: #ffe6e6;
-            color: #ff4757;
+            color: var(--danger-color);
         }
 
         .product-info {
@@ -272,7 +408,7 @@
         }
 
         .btn-delete {
-            background: #ff4757;
+            background: var(--danger-color);
             color: white;
         }
 
@@ -397,7 +533,7 @@
             position: absolute;
             top: -8px;
             right: -8px;
-            background: #ff4757;
+            background: var(--danger-color);
             color: white;
             border: none;
             border-radius: 50%;
@@ -489,18 +625,24 @@
 
         .message.show {
             display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .message.success {
             background: #e6ffe6;
-            color: #2ed573;
-            border: 2px solid #2ed573;
+            color: var(--success-color);
+            border: 2px solid var(--success-color);
         }
 
         .message.error {
             background: #ffe6e6;
-            color: #ff4757;
-            border: 2px solid #ff4757;
+            color: var(--danger-color);
+            border: 2px solid var(--danger-color);
         }
 
         .empty-state {
@@ -531,20 +673,52 @@
             .filters {
                 flex-direction: column;
             }
+
+            .login-content {
+                padding: 2rem;
+                margin: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <nav>
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-content">
+            <div class="login-icon">🔐</div>
+            <h2 class="login-title">تسجيل الدخول</h2>
+            <form id="loginForm">
+                <input type="text" 
+                       class="login-input" 
+                       id="loginUsername" 
+                       placeholder="اسم المستخدم" 
+                       required>
+                <input type="password" 
+                       class="login-input" 
+                       id="loginPassword" 
+                       placeholder="كلمة المرور" 
+                       required>
+                <button type="submit" class="login-btn">دخول</button>
+            </form>
+            <div class="login-error" id="loginError">
+                ❌ اسم المستخدم أو كلمة المرور غير صحيحة
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation (Hidden initially) -->
+    <nav style="display: none;" id="mainNav">
         <div class="brand-name">إدارة المنتجات</div>
         <div class="nav-actions">
             <button class="add-btn" onclick="openAddModal()" title="إضافة منتج جديد">➕</button>
             <button class="dark-mode-toggle" id="darkModeToggle">🌙</button>
+            <button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
             <a href="index.html" class="back-link">← المتجر</a>
         </div>
     </nav>
 
-    <div class="container">
+    <!-- Main Content (Hidden initially) -->
+    <div class="container" id="mainContainer">
         <h1 class="page-title">إدارة المنتجات</h1>
 
         <div class="message" id="messageBox"></div>
@@ -630,6 +804,7 @@
         const ADMIN_PRODUCTS_URL = `${API_BASE_URL}/admin/products`;
         const ADMIN_CATEGORIES_URL = `${API_BASE_URL}/admin/categories`;
 
+        // Global variables
         let currentPage = 0;
         const pageSize = 12;
         let totalPages = 0;
@@ -637,8 +812,14 @@
         let currentEditId = null;
         let selectedImages = [];
         let existingImages = [];
+        let authToken = null;
 
         // DOM Elements
+        const loginModal = document.getElementById('loginModal');
+        const loginForm = document.getElementById('loginForm');
+        const loginError = document.getElementById('loginError');
+        const mainNav = document.getElementById('mainNav');
+        const mainContainer = document.getElementById('mainContainer');
         const productsGrid = document.getElementById('productsGrid');
         const loadingIndicator = document.getElementById('loadingIndicator');
         const messageBox = document.getElementById('messageBox');
@@ -652,6 +833,155 @@
         const darkModeToggle = document.getElementById('darkModeToggle');
         const imagePreviewContainer = document.getElementById('imagePreviewContainer');
         const productImages = document.getElementById('productImages');
+
+        // Check if user is already logged in
+        function checkAuth() {
+            const savedToken = localStorage.getItem('authToken');
+            const savedUsername = localStorage.getItem('username');
+            
+            if (savedToken && savedUsername) {
+                authToken = savedToken;
+                showMainInterface(savedUsername);
+                loadCategories();
+                loadProducts();
+            } else {
+                showLoginModal();
+            }
+        }
+
+        // Show login modal
+        function showLoginModal() {
+            loginModal.style.display = 'flex';
+            mainNav.style.display = 'none';
+            mainContainer.classList.remove('show');
+            
+            // Clear any previous input
+            document.getElementById('loginUsername').value = '';
+            document.getElementById('loginPassword').value = '';
+            loginError.classList.remove('show');
+        }
+
+        // Show main interface after login
+        function showMainInterface(username) {
+            loginModal.style.display = 'none';
+            mainNav.style.display = 'flex';
+            mainContainer.classList.add('show');
+            
+            // Update brand name with username
+            document.querySelector('.brand-name').textContent = `إدارة المنتجات - ${username}`;
+            
+            // Initialize dark mode
+            initDarkMode();
+        }
+
+        // Handle login
+        async function handleLogin(username, password) {
+            try {
+                // Create Basic Auth token
+                const token = btoa(`${username}:${password}`);
+                
+                // Test authentication with a simple request to categories
+                const testResponse = await fetch(`${ADMIN_CATEGORIES_URL}?page=0&size=1`, {
+                    headers: {
+                        'Authorization': `Basic ${token}`
+                    }
+                });
+                
+                if (testResponse.status === 401) {
+                    throw new Error('Invalid credentials');
+                }
+                
+                if (!testResponse.ok) {
+                    throw new Error('Authentication failed');
+                }
+                
+                // Save authentication
+                authToken = token;
+                localStorage.setItem('authToken', token);
+                localStorage.setItem('username', username);
+                
+                showMainInterface(username);
+                loadCategories();
+                loadProducts();
+                
+            } catch (error) {
+                console.error('Login error:', error);
+                loginError.classList.add('show');
+                
+                // Shake animation for error
+                loginError.style.animation = 'none';
+                setTimeout(() => {
+                    loginError.style.animation = 'shake 0.5s ease';
+                }, 10);
+            }
+        }
+
+        // Logout function
+        function logout() {
+            authToken = null;
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('username');
+            showLoginModal();
+            showMessage('تم تسجيل الخروج بنجاح', 'success');
+        }
+
+        // دالة لإضافة الـ Authorization header إلى الطلبات
+        function getAuthHeaders(contentType = 'application/json') {
+            if (!authToken) {
+                logout();
+                throw new Error('Not authenticated');
+            }
+            
+            const headers = {
+                'Authorization': `Basic ${authToken}`
+            };
+            
+            if (contentType && contentType !== 'multipart/form-data') {
+                headers['Content-Type'] = contentType;
+            }
+            
+            return headers;
+        }
+
+        // دالة لإرسال الطلبات مع المصادقة
+        async function fetchWithAuth(url, options = {}) {
+            const defaultOptions = {
+                headers: getAuthHeaders(options.contentType || 'application/json')
+            };
+            
+            const mergedOptions = {
+                ...defaultOptions,
+                ...options,
+                headers: {
+                    ...defaultOptions.headers,
+                    ...options.headers
+                }
+            };
+            
+            // Remove Content-Type for FormData
+            if (options.body instanceof FormData) {
+                delete mergedOptions.headers['Content-Type'];
+            }
+            
+            try {
+                const response = await fetch(url, mergedOptions);
+                
+                // التحقق من حالة المصادقة
+                if (response.status === 401) {
+                    showMessage('انتهت صلاحية الجلسة، يرجى تسجيل الدخول مرة أخرى', 'error');
+                    logout();
+                    throw new Error('Unauthorized');
+                }
+                
+                return response;
+            } catch (error) {
+                console.error('Error in fetchWithAuth:', error);
+                if (error.message !== 'Unauthorized') {
+                    showMessage('فشل في تنفيذ العملية', 'error');
+                }
+                throw error;
+            }
+        }
 
         // Dark Mode
         function initDarkMode() {
@@ -685,7 +1015,7 @@
         // Load Categories
         async function loadCategories() {
             try {
-                const response = await fetch(`${ADMIN_CATEGORIES_URL}?page=0&size=100`);
+                const response = await fetchWithAuth(`${ADMIN_CATEGORIES_URL}?page=0&size=100`);
                 const data = await response.json();
                 categories = data.content || [];
                 
@@ -703,6 +1033,9 @@
                 });
             } catch (error) {
                 console.error('Error loading categories:', error);
+                if (error.message !== 'Unauthorized') {
+                    showMessage('فشل في تحميل الفئات', 'error');
+                }
             }
         }
 
@@ -712,7 +1045,7 @@
             productsGrid.innerHTML = '';
 
             try {
-                const response = await fetch(`${ADMIN_PRODUCTS_URL}?page=${currentPage}&size=${pageSize}`);
+                const response = await fetchWithAuth(`${ADMIN_PRODUCTS_URL}?page=${currentPage}&size=${pageSize}`);
                 const data = await response.json();
                 
                 const products = data.content || [];
@@ -733,7 +1066,9 @@
                 renderPagination();
             } catch (error) {
                 console.error('Error loading products:', error);
-                showMessage('فشل في تحميل المنتجات', 'error');
+                if (error.message !== 'Unauthorized') {
+                    showMessage('فشل في تحميل المنتجات', 'error');
+                }
             } finally {
                 loadingIndicator.style.display = 'none';
             }
@@ -844,6 +1179,7 @@
             modalTitle.textContent = 'إضافة منتج جديد';
             productForm.reset();
             document.getElementById('productId').value = '';
+            document.getElementById('productActive').checked = true;
             imagePreviewContainer.innerHTML = '';
             selectedImages = [];
             existingImages = [];
@@ -853,7 +1189,7 @@
         // Edit Product
         async function editProduct(id) {
             try {
-                const response = await fetch(`${ADMIN_PRODUCTS_URL}/${id}`);
+                const response = await fetchWithAuth(`${ADMIN_PRODUCTS_URL}/${id}`);
                 const product = await response.json();
                 
                 currentEditId = id;
@@ -892,7 +1228,9 @@
                 productModal.classList.add('show');
             } catch (error) {
                 console.error('Error loading product:', error);
-                showMessage('فشل في تحميل بيانات المنتج', 'error');
+                if (error.message !== 'Unauthorized') {
+                    showMessage('فشل في تحميل بيانات المنتج', 'error');
+                }
             }
         }
 
@@ -916,7 +1254,7 @@
             if (!confirm('هل أنت متأكد من حذف هذا المنتج؟')) return;
 
             try {
-                const response = await fetch(`${ADMIN_PRODUCTS_URL}/${id}`, {
+                const response = await fetchWithAuth(`${ADMIN_PRODUCTS_URL}/${id}`, {
                     method: 'DELETE'
                 });
 
@@ -928,7 +1266,9 @@
                 }
             } catch (error) {
                 console.error('Error deleting product:', error);
-                showMessage('فشل في حذف المنتج', 'error');
+                if (error.message !== 'Unauthorized') {
+                    showMessage('فشل في حذف المنتج', 'error');
+                }
             }
         }
 
@@ -1014,19 +1354,28 @@
                 formData.append('images', image);
             });
 
+            // Add existing images (for update)
+            if (currentEditId && existingImages.length > 0) {
+                existingImages.forEach((image, index) => {
+                    formData.append('existingImages', image);
+                });
+            }
+
             try {
                 let response;
                 if (currentEditId) {
-                    // For update, we need to handle existing images differently
-                    // This would require additional backend support
-                    response = await fetch(`${ADMIN_PRODUCTS_URL}/${currentEditId}`, {
+                    // For update
+                    response = await fetchWithAuth(`${ADMIN_PRODUCTS_URL}/${currentEditId}`, {
                         method: 'PUT',
-                        body: formData
+                        body: formData,
+                        contentType: 'multipart/form-data'
                     });
                 } else {
-                    response = await fetch(`${ADMIN_PRODUCTS_URL}/upload`, {
+                    // For create
+                    response = await fetchWithAuth(`${ADMIN_PRODUCTS_URL}/upload`, {
                         method: 'POST',
-                        body: formData
+                        body: formData,
+                        contentType: 'multipart/form-data'
                     });
                 }
 
@@ -1035,11 +1384,12 @@
                     closeProductModal();
                     loadProducts();
                 } else {
-                    throw new Error('فشل في حفظ المنتج');
+                    const errorText = await response.text();
+                    throw new Error(errorText || 'فشل في حفظ المنتج');
                 }
             } catch (error) {
                 console.error('Error saving product:', error);
-                showMessage('فشل في حفظ المنتج', 'error');
+                showMessage('فشل في حفظ المنتج: ' + error.message, 'error');
             }
         });
 
@@ -1070,13 +1420,41 @@
             }
         });
 
+        // Login form submission
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            
+            if (!username || !password) {
+                loginError.textContent = '❌ يرجى ملء جميع الحقول';
+                loginError.classList.add('show');
+                return;
+            }
+            
+            handleLogin(username, password);
+        });
+
+        // Handle Enter key in login form
+        document.getElementById('loginUsername').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('loginPassword').focus();
+            }
+        });
+
+        document.getElementById('loginPassword').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                loginForm.dispatchEvent(new Event('submit'));
+            }
+        });
+
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            initDarkMode();
-            loadCategories();
-            loadProducts();
+            checkAuth();
         });
     </script>
 </body>
 </html>
-

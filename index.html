@@ -358,7 +358,7 @@
             box-shadow: 0 8px 35px rgba(212, 175, 55, 0.5);
         }
 
-        /* Categories Section - NEW DESIGN */
+        /* Categories Section */
         .categories {
             padding: 4rem 5%;
             background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-color) 100%);
@@ -375,7 +375,7 @@
             font-weight: 900;
         }
 
-        /* NEW: Categories Grid with Small Rounded Icons */
+        /* Categories Grid with Small Rounded Icons */
         .categories-grid-new {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -482,10 +482,61 @@
             padding: 10px 0;
         }
 
+        /* Category Products by Category Section */
+        .category-products-section {
+            padding: 4rem 5%;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-color) 100%);
+            transition: background-color 0.3s;
+        }
+
+        /* Category Header in Category Products Section */
+        .category-with-products {
+            margin-bottom: 4rem;
+        }
+
+        .category-with-products-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .category-with-products-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--primary-color);
+            flex-shrink: 0;
+        }
+
+        .category-with-products-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .category-with-products-title {
+            font-size: 2rem;
+            color: var(--text-color);
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .category-with-products-description {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+
         /* Product Card Design */
         .product-card {
-            min-width: 300px;
-            max-width: 300px;
+            min-width: 280px;
+            max-width: 280px;
             background: var(--card-bg);
             border-radius: 15px;
             overflow: hidden;
@@ -509,21 +560,21 @@
         }
 
         .product-content {
-            padding: 20px;
+            padding: 15px;
         }
 
         .product-title {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: var(--text-color);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-weight: bold;
         }
 
         .product-description {
             color: var(--text-secondary);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             line-height: 1.5;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             height: 60px;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -536,22 +587,22 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 15px;
-            padding-top: 15px;
+            margin-top: 12px;
+            padding-top: 12px;
             border-top: 1px solid var(--border-color);
         }
 
         .product-price {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: var(--primary-color);
             font-weight: bold;
         }
 
         .product-quantity {
             background: var(--bg-secondary);
-            padding: 5px 10px;
+            padding: 4px 8px;
             border-radius: 5px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-secondary);
         }
 
@@ -559,19 +610,19 @@
             display: inline-block;
             background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
             color: white;
-            padding: 5px 15px;
+            padding: 4px 12px;
             border-radius: 20px;
-            font-size: 0.85rem;
-            margin-top: 10px;
+            font-size: 0.8rem;
+            margin-top: 8px;
         }
 
         .product-status {
             display: inline-block;
-            padding: 5px 10px;
+            padding: 4px 8px;
             border-radius: 5px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: bold;
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
         .product-status.active {
@@ -596,12 +647,14 @@
             border: none;
             padding: 8px 15px;
             border-radius: 25px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: all 0.3s;
             display: flex;
             align-items: center;
             gap: 5px;
+            width: 100%;
+            justify-content: center;
         }
 
         .add-to-cart-btn:hover {
@@ -616,15 +669,15 @@
             box-shadow: none;
         }
 
-        /* Category Products Section */
-        .category-products {
+        /* Category Products Single Section */
+        .category-products-single {
             padding: 4rem 5%;
             background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-color) 100%);
             transition: background-color 0.3s;
             display: none;
         }
 
-        .category-header {
+        .category-single-header {
             display: flex;
             align-items: center;
             gap: 15px;
@@ -633,7 +686,7 @@
             border-bottom: 2px solid var(--border-color);
         }
 
-        .category-icon {
+        .category-single-icon {
             width: 60px;
             height: 60px;
             border-radius: 50%;
@@ -646,25 +699,25 @@
             box-shadow: 0 5px 15px var(--shadow-color);
         }
 
-        .category-icon img {
+        .category-single-icon img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .category-title {
+        .category-single-title {
             font-size: 2rem;
             color: var(--text-color);
             font-weight: bold;
         }
 
-        .category-description {
+        .category-single-description {
             color: var(--text-secondary);
             font-size: 1.1rem;
             margin-top: 5px;
         }
 
-        .back-to-categories {
+        .back-to-all {
             background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
             color: white;
             border: none;
@@ -680,7 +733,7 @@
             margin-bottom: 2rem;
         }
 
-        .back-to-categories:hover {
+        .back-to-all:hover {
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
         }
@@ -1150,6 +1203,11 @@
             .categories-grid-new {
                 grid-template-columns: repeat(5, 1fr);
             }
+            
+            .product-card {
+                min-width: 250px;
+                max-width: 250px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1216,7 +1274,6 @@
                 align-items: flex-start;
             }
 
-            /* Categories Grid for Mobile */
             .categories-grid-new {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 1rem;
@@ -1235,13 +1292,18 @@
                 font-size: 0.75rem;
             }
 
-            .category-header {
+            .category-with-products-header {
                 flex-direction: column;
                 text-align: center;
             }
 
-            .category-title {
+            .category-with-products-title {
                 font-size: 1.5rem;
+            }
+            
+            .product-card {
+                min-width: 220px;
+                max-width: 220px;
             }
         }
 
@@ -1260,6 +1322,11 @@
 
             .section-title {
                 font-size: 1.8rem;
+            }
+            
+            .product-card {
+                min-width: 180px;
+                max-width: 180px;
             }
         }
     </style>
@@ -1283,7 +1350,7 @@
         <ul class="nav-links" id="navLinks">
             <li><a href="#home">الرئيسية</a></li>
             <li><a href="#categories">التصنيفات</a></li>
-            <li><a href="#all-products">جميع المنتجات</a></li>
+            <li><a href="#category-products-section">المنتجات حسب التصنيف</a></li>
             <li><a href="#about">من نحن</a></li>
             <li><a href="#contact">تواصل معنا</a></li>
         </ul>
@@ -1320,7 +1387,7 @@
         </div>
     </section>
 
-    <!-- Categories Section - NEW DESIGN -->
+    <!-- Categories Section -->
     <section class="categories" id="categories">
         <h2 class="section-title">تصنيفاتنا</h2>
         
@@ -1329,44 +1396,43 @@
             <p style="color: var(--primary-color); font-size: 1.2rem; font-weight: bold;">جاري تحميل التصنيفات...</p>
         </div>
 
-        <!-- NEW: Categories Grid with Small Rounded Icons -->
+        <!-- Categories Grid with Small Rounded Icons -->
         <div id="categoriesGridNew" class="categories-grid-new" style="display: none;"></div>
     </section>
 
-    <!-- All Products Section -->
-    <section class="all-products" id="all-products">
-        <div class="all-products-header">
-            <h2 class="section-title">جميع المنتجات</h2>
-        </div>
+    <!-- Category Products Section - Shows ALL categories with their products in slider -->
+    <section class="category-products-section" id="category-products-section">
+        <h2 class="section-title">المنتجات حسب التصنيفات</h2>
         
-        <div id="allProductsLoading" class="loading" style="display: none;"></div>
-
-        <!-- Products Slider for All Products -->
-        <div class="slider-container" id="allProductsSlider">
-            <div class="slider-wrapper" id="allProductsWrapper"></div>
+        <div id="categoryProductsSectionLoading" class="loading">
+            <div class="spinner"></div>
+            <p style="color: var(--primary-color); font-size: 1.2rem; font-weight: bold;">جاري تحميل المنتجات حسب التصنيفات...</p>
         </div>
+
+        <!-- Container for all categories with their products -->
+        <div id="allCategoriesWithProducts" style="display: none;"></div>
     </section>
 
-    <!-- Category Products Section -->
-    <section class="category-products" id="categoryProducts">
-        <button class="back-to-categories" onclick="showAllProducts()">
-            ← العودة للتصنيفات
+    <!-- Single Category Products Section -->
+    <section class="category-products-single" id="categoryProductsSingle">
+        <button class="back-to-all" onclick="showAllCategories()">
+            ← العودة لجميع التصنيفات
         </button>
-        <div class="category-header">
-            <div class="category-icon">
-                <img id="categoryProductsImage" src="" alt="Category" onerror="this.src='https://via.placeholder.com/200x200?text=عطور'">
+        <div class="category-single-header">
+            <div class="category-single-icon">
+                <img id="categorySingleImage" src="" alt="Category" onerror="this.src='https://via.placeholder.com/200x200?text=عطور'">
             </div>
             <div>
-                <h2 class="category-title" id="categoryProductsTitle">منتجات التصنيف</h2>
-                <p class="category-description" id="categoryProductsDescription">وصف التصنيف</p>
+                <h2 class="category-single-title" id="categorySingleTitle">منتجات التصنيف</h2>
+                <p class="category-single-description" id="categorySingleDescription">وصف التصنيف</p>
             </div>
         </div>
         
-        <div id="categoryProductsLoading" class="loading" style="display: none;"></div>
+        <div id="categorySingleLoading" class="loading" style="display: none;"></div>
 
-        <!-- Products Slider for Category Products -->
-        <div class="slider-container" id="categoryProductsSlider">
-            <div class="slider-wrapper" id="categoryProductsWrapper"></div>
+        <!-- Products Slider for Single Category -->
+        <div class="slider-container" id="categorySingleSlider">
+            <div class="slider-wrapper" id="categorySingleWrapper"></div>
         </div>
     </section>
 
@@ -1476,7 +1542,7 @@
 
         // متغيرات التطبيق
         let categories = [];
-        let allProducts = [];
+        let allCategoriesWithProducts = {};
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         let adminInfo = null;
         let currentCategory = null;
@@ -1503,15 +1569,15 @@
         const searchIcon = document.getElementById('searchIcon');
         const categoriesGridNew = document.getElementById('categoriesGridNew');
         const categoriesLoading = document.getElementById('categoriesLoading');
-        const allProductsSection = document.getElementById('all-products');
-        const allProductsLoading = document.getElementById('allProductsLoading');
-        const allProductsWrapper = document.getElementById('allProductsWrapper');
-        const categoryProductsSection = document.getElementById('categoryProducts');
-        const categoryProductsTitle = document.getElementById('categoryProductsTitle');
-        const categoryProductsDescription = document.getElementById('categoryProductsDescription');
-        const categoryProductsImage = document.getElementById('categoryProductsImage');
-        const categoryProductsLoading = document.getElementById('categoryProductsLoading');
-        const categoryProductsWrapper = document.getElementById('categoryProductsWrapper');
+        const categoryProductsSection = document.getElementById('category-products-section');
+        const categoryProductsSectionLoading = document.getElementById('categoryProductsSectionLoading');
+        const allCategoriesWithProductsContainer = document.getElementById('allCategoriesWithProducts');
+        const categoryProductsSingle = document.getElementById('categoryProductsSingle');
+        const categorySingleTitle = document.getElementById('categorySingleTitle');
+        const categorySingleDescription = document.getElementById('categorySingleDescription');
+        const categorySingleImage = document.getElementById('categorySingleImage');
+        const categorySingleLoading = document.getElementById('categorySingleLoading');
+        const categorySingleWrapper = document.getElementById('categorySingleWrapper');
 
         // Dark Mode Functionality
         function initDarkMode() {
@@ -1782,93 +1848,67 @@
                 
                 if (categories && categories.length > 0) {
                     displayCategoriesNew();
+                    // بعد جلب التصنيفات، نجلب المنتجات لكل فئة
+                    fetchAllCategoriesWithProducts();
                 } else {
                     throw new Error('No categories found');
                 }
             } catch (error) {
                 console.error('Error fetching categories:', error);
-                // استخدام تصنيفات افتراضية في حالة الخطأ
-                categories = [
-                    { 
-                        id: 1, 
-                        name: 'عطور رجالية',
-                        description: 'عطور قوية تناسب الرجال',
-                        image: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=500'
-                    },
-                    { 
-                        id: 2, 
-                        name: 'عطور نسائية',
-                        description: 'عطور ناعمة تناسب النساء',
-                        image: 'https://images.unsplash.com/photo-1590732870484-8bd8c0f964ca?w=500'
-                    },
-                    { 
-                        id: 3, 
-                        name: 'عطور أطفال',
-                        description: 'عطور لطيفة مناسبة للأطفال',
-                        image: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=500'
-                    },
-                    { 
-                        id: 4, 
-                        name: 'عطور فاخرة',
-                        description: 'أفخم العطور وأغلاها',
-                        image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=500'
-                    },
-                    { 
-                        id: 5, 
-                        name: 'عروض خاصة',
-                        description: 'خصومات وعروض حصرية',
-                        image: 'https://images.unsplash.com/photo-1590736969955-1d0c72c4222f?w=500'
-                    },
-                    { 
-                        id: 6, 
-                        name: 'عطور عربية',
-                        description: 'عطور ذات رائحة عربية أصيلة',
-                        image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=500'
-                    },
-                    { 
-                        id: 7, 
-                        name: 'عطور فرنسية',
-                        description: 'عطور فرنسية فاخرة',
-                        image: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=500'
-                    },
-                    { 
-                        id: 8, 
-                        name: 'عطور تركية',
-                        description: 'عطور تركية عالية الجودة',
-                        image: 'https://images.unsplash.com/photo-1590732870484-8bd8c0f964ca?w=500'
-                    },
-                    { 
-                        id: 9, 
-                        name: 'عطور صيفية',
-                        description: 'عطور منعشة للصيف',
-                        image: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=500'
-                    },
-                    { 
-                        id: 10, 
-                        name: 'عطور شتوية',
-                        description: 'عطور دافئة للشتاء',
-                        image: 'https://images.unsplash.com/photo-1590732870484-8bd8c0f964ca?w=500'
-                    }
-                ];
-                
-                displayCategoriesNew();
+                useMockCategories();
             }
         }
 
-        // NEW: عرض التصنيفات كأيقونات دائرية صغيرة
+        // استخدام تصنيفات افتراضية
+        function useMockCategories() {
+            categories = [
+                { 
+                    id: 1, 
+                    name: 'عطور رجالية',
+                    description: 'عطور قوية تناسب الرجال',
+                    image: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=500'
+                },
+                { 
+                    id: 2, 
+                    name: 'عطور نسائية',
+                    description: 'عطور ناعمة تناسب النساء',
+                    image: 'https://images.unsplash.com/photo-1590732870484-8bd8c0f964ca?w=500'
+                },
+                { 
+                    id: 3, 
+                    name: 'عطور أطفال',
+                    description: 'عطور لطيفة مناسبة للأطفال',
+                    image: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=500'
+                },
+                { 
+                    id: 4, 
+                    name: 'عطور فاخرة',
+                    description: 'أفخم العطور وأغلاها',
+                    image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=500'
+                },
+                { 
+                    id: 5, 
+                    name: 'عروض خاصة',
+                    description: 'خصومات وعروض حصرية',
+                    image: 'https://images.unsplash.com/photo-1590736969955-1d0c72c4222f?w=500'
+                }
+            ];
+            
+            displayCategoriesNew();
+            useMockProductsForAllCategories();
+        }
+
+        // عرض التصنيفات كأيقونات دائرية
         function displayCategoriesNew() {
             categoriesLoading.style.display = 'none';
             categoriesGridNew.style.display = 'grid';
 
             categoriesGridNew.innerHTML = '';
 
-            // عرض أول 10 تصنيفات فقط (صفين كل صف 5)
-            const displayedCategories = categories.slice(0, 10);
-
-            displayedCategories.forEach(category => {
+            categories.forEach(category => {
                 const categoryItem = document.createElement('div');
                 categoryItem.className = 'category-item-new';
-                categoryItem.onclick = () => showCategoryProducts(category);
+                categoryItem.onclick = () => showSingleCategoryProducts(category);
 
                 // صور افتراضية للأيقونات حسب الاسم لو لم تأتِ صورة من الـ API
                 let iconUrl = category.image ? buildImageUrl(category.image) : '';
@@ -1907,181 +1947,269 @@
             categoriesLoading.style.display = 'flex';
         }
 
-        // جلب جميع المنتجات (عرض سلايدر)
-        async function fetchAllProducts() {
+        // جلب المنتجات لكل تصنيف من endpoint /api/products/category/{categoryId}
+        async function fetchAllCategoriesWithProducts() {
             try {
-                showAllProductsLoading();
-                const response = await fetch(`${PRODUCTS_URL}?page=0&size=100`);
-                if (!response.ok) {
-                    throw new Error('فشل في جلب المنتجات');
+                showCategoryProductsSectionLoading();
+                
+                allCategoriesWithProducts = {};
+
+                // جلب المنتجات لكل تصنيف
+                for (const category of categories) {
+                    try {
+                        const productsResponse = await fetch(`${PRODUCTS_BY_CATEGORY_URL}/${category.id}?page=0&size=100`);
+                        if (productsResponse.ok) {
+                            const productsData = await productsResponse.json();
+                            const products = productsData.content || productsData._embedded?.products || productsData;
+                            
+                            if (products && products.length > 0) {
+                                allCategoriesWithProducts[category.id] = {
+                                    category: category,
+                                    products: products
+                                };
+                            }
+                        }
+                    } catch (error) {
+                        console.error(`Error fetching products for category ${category.id}:`, error);
+                    }
                 }
-                const data = await response.json();
 
-                // استخراج المنتجات من الاستجابة
-                allProducts = data.content || data._embedded?.products || data;
+                displayAllCategoriesWithProducts();
+                categoryProductsSectionLoading.style.display = 'none';
 
-                if (!allProducts || allProducts.length === 0) {
-                    allProductsLoading.style.display = 'none';
-                    allProductsSection.style.display = 'none';
-                    return;
-                }
-
-                displayAllProductsSlider();
             } catch (error) {
-                console.error('Error fetching all products:', error);
-                allProductsLoading.style.display = 'none';
-                allProductsSection.style.display = 'none';
-                // استخدام بيانات تجريبية
-                useMockProducts();
+                console.error('Error fetching categories with products:', error);
+                categoryProductsSectionLoading.style.display = 'none';
+                useMockProductsForAllCategories();
             }
         }
 
-        // استخدام بيانات تجريبية للمنتجات
-        function useMockProducts() {
-            allProducts = [
-                { 
-                    id: 1, 
-                    name: 'عطر الذهب الملكي', 
-                    description: 'عطر فاخر برائحة خشبية مميزة للرجال', 
-                    price: 299.99, 
-                    quantity: 15,
-                    active: true,
-                    images: ['https://images.unsplash.com/photo-1541643600914-78b084683601?w=300&h=200&fit=crop'],
-                    categoryName: 'عطور رجالية',
-                    categoryId: 1,
-                    createdAt: '2024-01-15T10:00:00Z',
-                    updatedAt: '2024-01-15T10:00:00Z'
-                },
-                { 
-                    id: 2, 
-                    name: 'عطر الورد الفرنسي', 
-                    description: 'عطر نسائي برائحة الورد والفل الفرنسي', 
-                    price: 349.99, 
-                    quantity: 8,
-                    active: true,
-                    images: ['https://images.unsplash.com/photo-1590732870484-8bd8c0f964ca?w=300&h=200&fit=crop'],
-                    categoryName: 'عطور نسائية',
-                    categoryId: 2,
-                    createdAt: '2024-01-16T11:00:00Z',
-                    updatedAt: '2024-01-16T11:00:00Z'
-                },
-                { 
-                    id: 3, 
-                    name: 'عطر العنبر العربي', 
-                    description: 'عطر عربي أصيل برائحة العنبر والمسك', 
-                    price: 399.99, 
-                    quantity: 12,
-                    active: true,
-                    images: ['https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=300&h=200&fit=crop'],
-                    categoryName: 'عطور عربية',
-                    categoryId: 3,
-                    createdAt: '2024-01-17T12:00:00Z',
-                    updatedAt: '2024-01-17T12:00:00Z'
-                },
-                { 
-                    id: 4, 
-                    name: 'عطر الفانيليا الحلو', 
-                    description: 'عطر حلو برائحة الفانيليا والكاراميل', 
-                    price: 279.99, 
-                    quantity: 20,
-                    active: true,
-                    images: ['https://images.unsplash.com/photo-1590736969955-1d0c72c4222f?w=300&h=200&fit=crop'],
-                    categoryName: 'عطور نسائية',
-                    categoryId: 2,
-                    createdAt: '2024-01-18T13:00:00Z',
-                    updatedAt: '2024-01-18T13:00:00Z'
-                },
-                { 
-                    id: 5, 
-                    name: 'عطر الأخشاب النادرة', 
-                    description: 'عطر رجالي برائحة الأخشاب النادرة والتوابل', 
-                    price: 459.99, 
-                    quantity: 5,
-                    active: true,
-                    images: ['https://images.unsplash.com/photo-1541643600914-78b084683601?w=300&h=200&fit=crop'],
-                    categoryName: 'عطور رجالية',
-                    categoryId: 1,
-                    createdAt: '2024-01-19T14:00:00Z',
-                    updatedAt: '2024-01-19T14:00:00Z'
-                },
-                { 
-                    id: 6, 
-                    name: 'عطر الياسمين الأبيض', 
-                    description: 'عطر ناعم برائحة الياسمين الأبيض النقي', 
-                    price: 319.99, 
-                    quantity: 0,
-                    active: false,
-                    images: ['https://images.unsplash.com/photo-1590732870484-8bd8c0f964ca?w=300&h=200&fit=crop'],
-                    categoryName: 'عطور نسائية',
-                    categoryId: 2,
-                    createdAt: '2024-01-20T15:00:00Z',
-                    updatedAt: '2024-01-20T15:00:00Z'
-                }
-            ];
-
-            displayAllProductsSlider();
+        // إظهار مؤشر التحميل لقسم المنتجات حسب التصنيف
+        function showCategoryProductsSectionLoading() {
+            categoryProductsSectionLoading.style.display = 'flex';
+            allCategoriesWithProductsContainer.style.display = 'none';
         }
 
-        // NEW: عرض جميع المنتجات في السلايدر
-        function displayAllProductsSlider() {
-            allProductsLoading.style.display = 'none';
-            allProductsSection.style.display = 'block';
+        // عرض جميع التصنيفات مع منتجاتها في سلايدر
+        function displayAllCategoriesWithProducts() {
+            categoryProductsSectionLoading.style.display = 'none';
+            allCategoriesWithProductsContainer.style.display = 'block';
+            allCategoriesWithProductsContainer.innerHTML = '';
 
-            allProductsWrapper.innerHTML = '';
-
-            if (!allProducts || allProducts.length === 0) {
-                allProductsWrapper.innerHTML = '<div class="no-products">لا توجد منتجات متاحة</div>';
+            if (Object.keys(allCategoriesWithProducts).length === 0) {
+                allCategoriesWithProductsContainer.innerHTML = `
+                    <div class="no-products" style="text-align: center; padding: 2rem; color: var(--text-secondary);">
+                        لا توجد منتجات متاحة للتصنيفات
+                    </div>
+                `;
                 return;
             }
 
-            allProducts.forEach(product => {
-                const productCard = createProductCard(product);
-                allProductsWrapper.appendChild(productCard);
+            // عرض كل تصنيف ومنتجاته
+            Object.values(allCategoriesWithProducts).forEach(categoryData => {
+                if (categoryData.products.length === 0) return;
+
+                const categorySection = document.createElement('div');
+                categorySection.className = 'category-with-products';
+
+                // صورة التصنيف
+                let categoryImage = categoryData.category.image ? buildImageUrl(categoryData.category.image) : '';
+                if (!categoryImage) {
+                    categoryImage = 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=200&h=200&fit=crop';
+                }
+
+                categorySection.innerHTML = `
+                    <div class="category-with-products-header" onclick="showSingleCategoryProducts(${JSON.stringify(categoryData.category).replace(/"/g, '&quot;')})" style="cursor: pointer;">
+                        <div class="category-with-products-icon">
+                            <img src="${categoryImage}" alt="${categoryData.category.name}" 
+                                 onerror="this.src='https://via.placeholder.com/100x100?text=عطور'">
+                        </div>
+                        <div>
+                            <h3 class="category-with-products-title">${categoryData.category.name}</h3>
+                            <p class="category-with-products-description">${categoryData.category.description || 'تصنيف مميز'}</p>
+                        </div>
+                    </div>
+                    <div class="slider-container" id="slider-${categoryData.category.id}">
+                        <div class="slider-wrapper" id="slider-wrapper-${categoryData.category.id}"></div>
+                    </div>
+                `;
+
+                const sliderWrapper = categorySection.querySelector(`#slider-wrapper-${categoryData.category.id}`);
+                
+                // إضافة جميع المنتجات للسلايدر
+                categoryData.products.forEach(product => {
+                    const productCard = createProductCard(product);
+                    sliderWrapper.appendChild(productCard);
+                });
+
+                allCategoriesWithProductsContainer.appendChild(categorySection);
             });
         }
 
-        // إظهار مؤشر التحميل لجميع المنتجات
-        function showAllProductsLoading() {
-            allProductsLoading.style.display = 'flex';
-            allProductsSection.style.display = 'none';
+        // استخدام بيانات تجريبية للمنتجات حسب التصنيف
+        function useMockProductsForAllCategories() {
+            allCategoriesWithProducts = {
+                1: {
+                    category: { id: 1, name: 'عطور رجالية', description: 'عطور قوية تناسب الرجال' },
+                    products: [
+                        { 
+                            id: 1, 
+                            name: 'عطر الذهب الملكي', 
+                            description: 'عطر فاخر برائحة خشبية مميزة للرجال', 
+                            price: 299.99, 
+                            quantity: 15,
+                            active: true,
+                            images: ['https://images.unsplash.com/photo-1541643600914-78b084683601?w=300&h=200&fit=crop'],
+                            categoryName: 'عطور رجالية',
+                            categoryId: 1
+                        },
+                        { 
+                            id: 2, 
+                            name: 'عطر الأخشاب النادرة', 
+                            description: 'عطر رجالي برائحة الأخشاب النادرة والتوابل', 
+                            price: 459.99, 
+                            quantity: 5,
+                            active: true,
+                            images: ['https://images.unsplash.com/photo-1541643600914-78b084683601?w=300&h=200&fit=crop'],
+                            categoryName: 'عطور رجالية',
+                            categoryId: 1
+                        },
+                        { 
+                            id: 3, 
+                            name: 'عطر العنبر العربي', 
+                            description: 'عطر عربي أصيل برائحة العنبر والمسك', 
+                            price: 399.99, 
+                            quantity: 12,
+                            active: true,
+                            images: ['https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=300&h=200&fit=crop'],
+                            categoryName: 'عطور رجالية',
+                            categoryId: 1
+                        },
+                        { 
+                            id: 4, 
+                            name: 'عطر الفاخر الذهبي', 
+                            description: 'عطر ذهبي برائحة التوابل والخشب', 
+                            price: 549.99, 
+                            quantity: 8,
+                            active: true,
+                            images: ['https://images.unsplash.com/photo-1541643600914-78b084683601?w=300&h=200&fit=crop'],
+                            categoryName: 'عطور رجالية',
+                            categoryId: 1
+                        },
+                        { 
+                            id: 5, 
+                            name: 'عطر السهول', 
+                            description: 'عطر نقي برائحة الحمضيات الخفيفة', 
+                            price: 329.99, 
+                            quantity: 20,
+                            active: true,
+                            images: ['https://images.unsplash.com/photo-1541643600914-78b084683601?w=300&h=200&fit=crop'],
+                            categoryName: 'عطور رجالية',
+                            categoryId: 1
+                        }
+                    ]
+                },
+                2: {
+                    category: { id: 2, name: 'عطور نسائية', description: 'عطور ناعمة تناسب النساء' },
+                    products: [
+                        { 
+                            id: 6, 
+                            name: 'عطر الورد الفرنسي', 
+                            description: 'عطر نسائي برائحة الورد والفل الفرنسي', 
+                            price: 349.99, 
+                            quantity: 8,
+                            active: true,
+                            images: ['https://images.unsplash.com/photo-1590732870484-8bd8c0f964ca?w=300&h=200&fit=crop'],
+                            categoryName: 'عطور نسائية',
+                            categoryId: 2
+                        },
+                        { 
+                            id: 7, 
+                            name: 'عطر الفانيليا الحلو', 
+                            description: 'عطر حلو برائحة الفانيليا والكاراميل', 
+                            price: 279.99, 
+                            quantity: 20,
+                            active: true,
+                            images: ['https://images.unsplash.com/photo-1590736969955-1d0c72c4222f?w=300&h=200&fit=crop'],
+                            categoryName: 'عطور نسائية',
+                            categoryId: 2
+                        },
+                        { 
+                            id: 8, 
+                            name: 'عطر الياسمين الأبيض', 
+                            description: 'عطر ناعم برائحة الياسمين الأبيض النقي', 
+                            price: 319.99, 
+                            quantity: 0,
+                            active: false,
+                            images: ['https://images.unsplash.com/photo-1590732870484-8bd8c0f964ca?w=300&h=200&fit=crop'],
+                            categoryName: 'عطور نسائية',
+                            categoryId: 2
+                        },
+                        { 
+                            id: 9, 
+                            name: 'عطر الورد التركي', 
+                            description: 'عطر تركي برائحة الورد التركي النادر', 
+                            price: 389.99, 
+                            quantity: 15,
+                            active: true,
+                            images: ['https://images.unsplash.com/photo-1590732870484-8bd8c0f964ca?w=300&h=200&fit=crop'],
+                            categoryName: 'عطور نسائية',
+                            categoryId: 2
+                        },
+                        { 
+                            id: 10, 
+                            name: 'عطر السحاب الأبيض', 
+                            description: 'عطر خفيف برائحة الزهور البيضاء', 
+                            price: 299.99, 
+                            quantity: 25,
+                            active: true,
+                            images: ['https://images.unsplash.com/photo-1590732870484-8bd8c0f964ca?w=300&h=200&fit=crop'],
+                            categoryName: 'عطور نسائية',
+                            categoryId: 2
+                        }
+                    ]
+                }
+            };
+            
+            displayAllCategoriesWithProducts();
         }
 
-        // إظهار منتجات التصنيف
-        async function showCategoryProducts(category) {
+        // إظهار منتجات تصنيف واحد
+        async function showSingleCategoryProducts(category) {
             currentCategory = category;
             
-            // إخفاء قسم جميع المنتجات وإظهار قسم منتجات التصنيف
-            allProductsSection.style.display = 'none';
-            categoryProductsSection.style.display = 'block';
+            // إخفاء قسم جميع التصنيفات وإظهار قسم التصنيف الواحد
+            categoryProductsSection.style.display = 'none';
+            categoryProductsSingle.style.display = 'block';
             
             // تحديث معلومات التصنيف
-            categoryProductsTitle.textContent = category.name;
-            categoryProductsDescription.textContent = category.description || 'تصنيف مميز';
+            categorySingleTitle.textContent = category.name;
+            categorySingleDescription.textContent = category.description || 'تصنيف مميز';
             
             // تحديث صورة التصنيف
             let categoryImage = category.image ? buildImageUrl(category.image) : '';
             if (!categoryImage) {
                 categoryImage = 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=200&h=200&fit=crop';
             }
-            categoryProductsImage.src = categoryImage;
+            categorySingleImage.src = categoryImage;
             
             // جلب منتجات التصنيف
-            await fetchProductsByCategory(category.id);
+            await fetchProductsForSingleCategory(category.id);
         }
 
-        // العودة لعرض جميع المنتجات
-        function showAllProducts() {
-            categoryProductsSection.style.display = 'none';
-            allProductsSection.style.display = 'block';
+        // العودة لعرض جميع التصنيفات
+        function showAllCategories() {
+            categoryProductsSingle.style.display = 'none';
+            categoryProductsSection.style.display = 'block';
             currentCategory = null;
         }
 
-        // جلب المنتجات حسب التصنيف
-        async function fetchProductsByCategory(categoryId) {
+        // جلب المنتجات لتصنيف واحد
+        async function fetchProductsForSingleCategory(categoryId) {
             try {
-                showCategoryProductsLoading();
+                showCategorySingleLoading();
                 
-                const response = await fetch(`${PRODUCTS_BY_CATEGORY_URL}/${categoryId}?page=0&size=50`);
+                const response = await fetch(`${PRODUCTS_BY_CATEGORY_URL}/${categoryId}?page=0&size=100`);
                 if (!response.ok) {
                     throw new Error('فشل في جلب المنتجات');
                 }
@@ -2090,37 +2218,35 @@
                 // استخراج المنتجات من الاستجابة
                 const products = data.content || data._embedded?.products || data;
 
-                displayCategoryProducts(products);
+                displayCategorySingleProducts(products);
             } catch (error) {
-                console.error('Error fetching products by category:', error);
+                console.error('Error fetching products for single category:', error);
                 // استخدام منتجات من البيانات المحلية
-                const categoryProducts = allProducts.filter(product => 
-                    product.categoryId === categoryId || product.categoryName === currentCategory.name
-                );
-                displayCategoryProducts(categoryProducts);
+                const categoryProducts = allCategoriesWithProducts[categoryId]?.products || [];
+                displayCategorySingleProducts(categoryProducts);
             }
         }
 
-        // عرض منتجات التصنيف
-        function displayCategoryProducts(products) {
-            categoryProductsLoading.style.display = 'none';
-            categoryProductsWrapper.innerHTML = '';
+        // عرض منتجات تصنيف واحد
+        function displayCategorySingleProducts(products) {
+            categorySingleLoading.style.display = 'none';
+            categorySingleWrapper.innerHTML = '';
 
             if (!products || products.length === 0) {
-                categoryProductsWrapper.innerHTML = '<div class="no-products">لا توجد منتجات متاحة لهذا التصنيف</div>';
+                categorySingleWrapper.innerHTML = '<div class="no-products" style="text-align: center; padding: 2rem; color: var(--text-secondary);">لا توجد منتجات متاحة لهذا التصنيف</div>';
                 return;
             }
 
             products.forEach(product => {
                 const productCard = createProductCard(product);
-                categoryProductsWrapper.appendChild(productCard);
+                categorySingleWrapper.appendChild(productCard);
             });
         }
 
-        // إظهار مؤشر التحميل لمنتجات التصنيف
-        function showCategoryProductsLoading() {
-            categoryProductsLoading.style.display = 'flex';
-            categoryProductsWrapper.innerHTML = '';
+        // إظهار مؤشر التحميل لمنتجات التصنيف الواحد
+        function showCategorySingleLoading() {
+            categorySingleLoading.style.display = 'flex';
+            categorySingleWrapper.innerHTML = '';
         }
 
         // إنشاء بطاقة منتج
@@ -2167,13 +2293,11 @@
         function addToCart(productId) {
             let product;
             
-            // البحث عن المنتج في البيانات الحالية
-            if (currentCategory) {
-                // إذا كنا في عرض تصنيف، نبحث في منتجات التصنيف
-                product = allProducts.find(p => p.id === productId);
-            } else {
-                // إذا كنا في عرض جميع المنتجات
-                product = allProducts.find(p => p.id === productId);
+            // البحث عن المنتج في جميع البيانات
+            for (const categoryId in allCategoriesWithProducts) {
+                const category = allCategoriesWithProducts[categoryId];
+                product = category.products.find(p => p.id === productId);
+                if (product) break;
             }
             
             if (!product) return;
@@ -2392,7 +2516,6 @@
                 console.error('فشل في تحميل معلومات الأدمن:', error);
             });
             fetchCategories();
-            fetchAllProducts();
             updateCart();
             
             // إضافة مستمع الحدث لزر Dark Mode
