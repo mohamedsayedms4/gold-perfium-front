@@ -1434,7 +1434,7 @@
         <div class="category-single-header">
             <div class="category-single-icon">
                 <img id="categorySingleImage" src="" alt="Category"
-                    onerror="this.src='https://via.placeholder.com/200x200?text=عطور'">
+                    onerror="this.src='https://placehold.co/200x200/d4af37/ffffff?text=فئة'">
             </div>
             <div>
                 <h2 class="category-single-title" id="categorySingleTitle">منتجات التصنيف</h2>
@@ -2038,7 +2038,7 @@
                     <div class="category-with-products-header" onclick="showSingleCategoryProducts(${JSON.stringify(categoryData.category).replace(/"/g, '&quot;')})" style="cursor: pointer;">
                         <div class="category-with-products-icon">
                             <img src="${categoryImage}" alt="${categoryData.category.name}" 
-                                 onerror="this.src='https://via.placeholder.com/100x100?text=عطور'">
+                                 onerror="this.src='https://placehold.co/100x100/d4af37/ffffff?text=فئة'">
                         </div>
                         <div>
                             <h3 class="category-with-products-title">${categoryData.category.name}</h3>
@@ -2270,13 +2270,13 @@
             const productCard = document.createElement('div');
             productCard.className = 'product-card';
 
-            const imageUrl = product.images && product.images[0] ? buildImageUrl(product.images[0]) : 'https://via.placeholder.com/300x200?text=No+Image';
+            const imageUrl = product.images && product.images[0] ? buildImageUrl(product.images[0]) : 'https://placehold.co/300x200/d4af37/ffffff?text=منتج';
             const price = product.price ? product.price.toLocaleString('ar-EG') : '0';
             const quantity = product.quantity || 0;
             const isActive = product.active !== false;
 
             productCard.innerHTML = `
-                <img src="${imageUrl}" alt="${product.name}" class="product-image" onerror="this.src='https://via.placeholder.com/300x200?text=صورة+غير+متوفرة'">
+                <img src="${imageUrl}" alt="${product.name}" class="product-image" onerror="this.src='https://placehold.co/300x200/d4af37/ffffff?text=صورة+غير+متوفرة'">
                 <div class="product-content">
                     <div class="product-title">${product.name}</div>
                     <div class="product-description">${product.description || 'عطر فاخر بجودة عالية'}</div>
